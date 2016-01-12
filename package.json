@@ -1,11 +1,27 @@
 {
-  "name": "test-soap",
-  "version": "1.0.0",
-  "description": "",
+  "name": "rwth-courses",
+  "version": "0.1.0",
+  "description": "RWTH Courses: a better CampusOffice for everybody!",
   "main": "index.js",
+  "dependencies": {
+    "soap": "^0.11.4"
+  },
+  "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },
-  "author": "",
-  "license": "MIT"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebTech2-Group123/rwth-courses.git"
+  },
+  "keywords": [
+    "RWTH",
+    "courses"
+  ],
+  "author": "Group 123",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WebTech2-Group123/rwth-courses/issues"
+  },
+  "homepage": "https://github.com/WebTech2-Group123/rwth-courses#readme"
 }

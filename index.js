@@ -2,10 +2,20 @@
 const WSDL_FIELD = 'http://www.campus.rwth-aachen.de/anonapi/FieldSrv.asmx?WSDL';
 const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL';
 
+// this does the magic
 var soap = require('soap');
 
 // fields client
 soap.createClient(WSDL_FIELD, function (err, client) {
+
+    // get all sub-study-b-tree for M.Sc Computer Science
+    client.GetLinked({
+        'sGuid': '0x04FA11478F05804CA71DBF7573B80160',
+        'bTree': true,
+        'bIncludeEvents': true
+    }, function (err, result) {
+        console.log(result);
+    });
 
     // get all courses for M.Sc Computer Science -> Theoretical Informatic
     client.GetLinked({
