@@ -1,9 +1,27 @@
 // const WSDL = 'http://www.campus.rwth-aachen.de/anonapi/Campus.asmx?WSDL';
+const WSDL_TERM = 'http://www.campus.rwth-aachen.de/anonapi/TermSrv.asmx?WSDL'
 const WSDL_FIELD = 'http://www.campus.rwth-aachen.de/anonapi/FieldSrv.asmx?WSDL';
 const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL';
 
 // this does the magic
 var soap = require('soap');
+
+// terms client
+soap.createClient(WSDL_TERM, function (err, client) {
+
+    // get all semesters codes (GGUIDS)
+    // ordered by time desc
+    client.GetAll({}, function (err, result) {
+        console.log(result);
+    });
+
+    // study-fields for WS 2015/16
+    client.GetFields({
+        'sGuid': '0x0B473CF286B45B4984CD02565C07D6F8'
+    }, function (err, result) {
+        console.log(result);
+    });
+});
 
 // fields client
 soap.createClient(WSDL_FIELD, function (err, client) {
