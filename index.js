@@ -6,16 +6,24 @@ const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL'
 // this does the magic
 var soap = require('soap');
 
+// GUIDE
+// 1) get the semesters list
+// 2*) select the wanted semester (the current one should be the first in the list)
+// 3) get all study-courses for the given semester
+// 4) get all sub-study fields for the study-course
+// 5) get all courses for the sub-study fields
+// 6) get course details given one course
+
 // terms client
 soap.createClient(WSDL_TERM, function (err, client) {
 
-    // get all semesters codes (GGUIDS)
+    // 1) get all semesters codes (GGUIDS)
     // ordered by time desc
     client.GetAll({}, function (err, result) {
         console.log(result);
     });
 
-    // study-fields for WS 2015/16
+    // 3) study-fields for WS 2015/16
     client.GetFields({
         'sGuid': '0x0B473CF286B45B4984CD02565C07D6F8'
     }, function (err, result) {
@@ -26,7 +34,7 @@ soap.createClient(WSDL_TERM, function (err, client) {
 // fields client
 soap.createClient(WSDL_FIELD, function (err, client) {
 
-    // get all sub-study-b-tree for M.Sc Computer Science
+    // 4) get all sub-study-b-tree for M.Sc Computer Science
     client.GetLinked({
         'sGuid': '0x04FA11478F05804CA71DBF7573B80160',
         'bTree': true,
@@ -35,7 +43,7 @@ soap.createClient(WSDL_FIELD, function (err, client) {
         console.log(result);
     });
 
-    // get all courses for M.Sc Computer Science -> Theoretical Informatic
+    // 5) get all courses for M.Sc Computer Science -> Theoretical Informatic
     client.GetLinked({
         'sGuid': '0x614EBE7FF82A6A4E9961C73D0E8FD225',
         'bTree': true,
@@ -48,13 +56,13 @@ soap.createClient(WSDL_FIELD, function (err, client) {
 // events client
 soap.createClient(WSDL_EVENT, function (err, client) {
 
-    // get course detail for one GGUID
+    // 6) get course detail for one GGUID
     client.GetLinked({
         'sEvtSpec': '0x3D4824C6F312EA4DB691342B824CF9E7',
-        'bIncludeFields': false,
-        'bIncludeAdresses': false,
-        'bIncludeAppointments': false,
-        'bIncludeUnits': false
+        'bIncludeFields': true,
+        'bIncludeAdresses': true,
+        'bIncludeAppointments': true,
+        'bIncludeUnits': true
     }, function (err, result) {
         console.log(result);
     });
