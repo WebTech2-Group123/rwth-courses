@@ -26,6 +26,11 @@ soap.createClient(WSDL_TERM, function (err, client) {
         console.log(result);
     });
 
+    // [OPTIONAL]: get the current semester
+    client.GetCurrent({}, function (err, result) {
+        console.log(result);
+    });
+
     // 3) study-fields for WS 2015/16
     client.GetFields({
         'sGuid': '0x0B473CF286B45B4984CD02565C07D6F8'
