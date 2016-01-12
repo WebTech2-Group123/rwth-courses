@@ -17,6 +17,14 @@ var soap = require('soap');
 // 5) get all courses for the sub-study fields
 // 6) get course details given one course
 
+// DOCS details:
+// TERM ->  http://www.campus.rwth-aachen.de/anonapi/doc/Term.aspx
+//          http://www.campus.rwth-aachen.de/anonapi/TermSrv.asmx
+// FIELD -> http://www.campus.rwth-aachen.de/anonapi/doc/Field.aspx
+//          http://www.campus.rwth-aachen.de/anonapi/FieldSrv.asmx
+// EVENT -> http://www.campus.rwth-aachen.de/anonapi/doc/Event.aspx
+//          http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx
+
 // terms client
 soap.createClient(WSDL_TERM, function (err, client) {
 
