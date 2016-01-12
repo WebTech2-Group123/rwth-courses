@@ -6,6 +6,9 @@ const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL'
 // this does the magic
 var soap = require('soap');
 
+// DOCS link
+// http://www.campus.rwth-aachen.de/anonapi/doc/
+
 // GUIDE
 // 1) get the semesters list
 // 2*) select the wanted semester (the current one should be the first in the list)
