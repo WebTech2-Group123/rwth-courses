@@ -16,4 +16,18 @@ function parseSemesters(result) {
         });
 }
 
+function parseFieldOfStudies(result){
+
+    return result['GetFieldsResult']['Field']
+        .map(el => {
+            var field = el['attributes'];
+            return {
+                gguid: field['gguid'],
+                semester: field['termname'],
+                name: field['name']
+            }
+        })
+}
+
 exports.parseSemesters = parseSemesters;
+exports.parseFieldOfStudies = parseFieldOfStudies;

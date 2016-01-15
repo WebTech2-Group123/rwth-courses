@@ -38,6 +38,35 @@ const SEMESTERS_RESPONSE = {
     }
 };
 
+const FIELD_RESPONSE =
+{
+    "GetFieldsResult": {
+        "Field": [
+            {
+                "attributes": {
+                    "gguid": "0x5A266C5046CF0E46AFFEBA62F34B5F85",
+                    "name": "Architektur (D)",
+                    "termname": "WS 2015/2016"
+                },
+                "group": "Diplomstudiengänge (D)",
+                "fieldname": "Architektur (D)",
+                "email": "klinkhammer@architektur.rwth-aachen.de"
+            },
+            {
+                "attributes": {
+                    "gguid": "0xEFD420E5D2646C41BFC83FE2A1F152E9",
+                    "name": "Bauingenieurwesen (D)",
+                    "termname": "WS 2015/2016"
+                },
+                "group": "Diplomstudiengänge (D)",
+                "fieldname": "Bauingenieurwesen (D)",
+                "notes": "Studierende der Studienrichtung &quot;Vertiefung nach freier Wahl&quot; k&ouml;nnen unter Ber&uuml;cksichtigung der in DPO 98 und DPO 2004 festgelegten Regeln den Pr&uuml;fungsplan aus den F&auml;chern der anderen Studienrichtungen frei zusammenstellen.",
+                "email": "lehrveranstaltungsmanagement@fb3.rwth-aachen.de"
+            }
+        ]
+    }
+};
+
 describe('parse.js', function () {
     describe('#parseSemesters()', function () {
         it('should return the last 2 semsters (current and last one)', function () {
@@ -54,6 +83,20 @@ describe('parse.js', function () {
             };
             assert.deepEqual(semesters[0], SEMESTER_1);
             assert.deepEqual(semesters[1], SEMESTER_2);
+        });
+    });
+
+    describe('#parseFieldOfStudies()', function(){
+        it('should return all field of studies of the selected semester', function() {
+            var fields = parser.parseFieldOfStudies(FIELD_RESPONSE);
+            const FIELD = {
+                gguid: '0x5A266C5046CF0E46AFFEBA62F34B5F85',
+                name: 'Architektur (D)',
+                semester: 'WS 2015/2016'
+            };
+
+            assert.deepEqual(fields[0], FIELD);
+            assert.equal(fields.length, 2);
         });
     });
 });
