@@ -26,8 +26,21 @@ function parseFieldOfStudies(result){
                 semester: field['termname'],
                 name: field['name']
             }
+        });
+}
+
+function parseSubFields(result){
+
+    return result['field']['subfield']
+        .map(el => {
+            var subfield = el['attributes'];
+            return {
+                gguid: subfield['gguid'],
+                name: subfield['name']
+            }
         })
 }
 
 exports.parseSemesters = parseSemesters;
 exports.parseFieldOfStudies = parseFieldOfStudies;
+exports.parseSubFields = parseSubFields;
