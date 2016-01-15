@@ -16,7 +16,7 @@ function parseSemesters(result) {
         });
 }
 
-function parseFieldOfStudies(result){
+function parseFieldOfStudies(result) {
 
     return result['GetFieldsResult']['Field']
         .map(el => {
@@ -29,7 +29,7 @@ function parseFieldOfStudies(result){
         });
 }
 
-function parseSubFields(result){
+function parseSubFields(result) {
 
     return result['field']['subfield']
         .map(el => {
@@ -41,6 +41,13 @@ function parseSubFields(result){
         })
 }
 
+function parseCoursesList(result) {
+    return result['field']['event']
+        .map(course => course['attributes']['gguid']);
+}
+
+
 exports.parseSemesters = parseSemesters;
 exports.parseFieldOfStudies = parseFieldOfStudies;
 exports.parseSubFields = parseSubFields;
+exports.parseCoursesList = parseCoursesList;

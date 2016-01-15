@@ -240,6 +240,157 @@ const SUB_FIELD_RESPONSE = {
     }
 };
 
+const COURSES_LIST_RESPONSE = {
+    "field": {
+        "attributes": {
+            "gguid": "0x614EBE7FF82A6A4E9961C73D0E8FD225",
+            "name": "Theoretische Informatik",
+            "termname": "WS 2015/2016"
+        },
+        "event": [
+            {
+                "attributes": {
+                    "gguid": "0x008FFF190AD4614A8BBF5592EABB52AF",
+                    "nr": "15ws-46810",
+                    "termname": "WS 2015/2016",
+                    "type": "Seminar (S)",
+                    "sws": "2",
+                    "ects": "4",
+                    "language": "English",
+                    "copy": "false",
+                    "vvz": "false",
+                    "kvvz": "false",
+                    "confirmed": "true",
+                    "notpublished": "false"
+                },
+                "info": [
+                    {
+                        "attributes": {
+                            "lang": "gb"
+                        },
+                        "title": "Seminar Computational Complexity Theory"
+                    },
+                    {
+                        "attributes": {
+                            "lang": "de"
+                        },
+                        "title": "Seminar Komplexitätstheorie"
+                    }
+                ],
+                "link": [
+                    {
+                        "attributes": {
+                            "type": "Homepage",
+                            "href": "https://www.lii.rwth-aachen.de/de/2-uncategorised/90-complexity-seminar-ws-2015-16.html"
+                        }
+                    }
+                ],
+                "l2p": {
+                    "attributes": {
+                        "use": "true",
+                        "reset": "false",
+                        "lang": "1033"
+                    }
+                }
+            },
+            {
+                "attributes": {
+                    "gguid": "0x0144A6E4B414274EAD37B7631F2B088F",
+                    "nr": "15ws-45349",
+                    "termname": "WS 2015/2016",
+                    "type": "Vorlesung (V)",
+                    "sws": "3",
+                    "ects": "6",
+                    "language": "Deutsch oder Englisch",
+                    "copy": "true",
+                    "vvz": "true",
+                    "kvvz": "true",
+                    "confirmed": "true",
+                    "notpublished": "false"
+                },
+                "test": "<span><span>\r\n<p>Zuordnung: Wahlpflichtfach Theoretische Informatik  (f&#252;r Bachelor),</p>\r\n<p>Theoretische Informatik (f&#252;r Master Informatik),</p>\r\n<p>Theoretische Informatik &#38; Informatik Vertiefung  (f&#252;r Master SSE)</p>\r\n</span></span>",
+                "prereq": "&#160;Grundkenntnisse in \"Programmierung\" sind ausreichend.<br /> \r\n<ul>\r\n<li>Da es sich um eine \"einf&#252;hrende Master-Veranstaltung\" handelt, kann sie auch als  Bachelor-Wahlpflichtveranstaltung (Theorie) im Studiengang Bachelor Informatik geh&#246;rt werden.</li>\r\n<li>Ebenso ist es m&#246;glich, die Vorlesung bereits im Bachelor-Studiengang    zu h&#246;ren und zu pr&#252;fen und sie sich sp&#228;ter f&#252;r den    Master-Studiengang  anerkennen zu lassen. </li>\r\n</ul>",
+                "otherevents": "<ul>\r\n<li>&#220;bung \"Termersetzungssysteme\"</li>\r\n<li>Seminar \"Termersetzungssysteme - Aktuelle Themen und Erweiterungen\" </li>\r\n</ul>",
+                "literature": "<p>Das Skript zur Vorlesung wird elektronisch zur Verf&#252;gung gestellt.</p>\r\n<p>Weitere Literatur:</p>\r\n<ul>\r\n<li>J. Avenhaus. Reduktionssysteme. Springer-Verlag, 1995. </li>\r\n<li> F. Baader und T. Nipkow: Term Rewriting and All That, Cambridge  University Press, 1998. </li>\r\n<li>R. B&#252;ndgen: Termersetzungssysteme, Vieweg, 1998.</li>\r\n<li>N. Dershowitz and J.-P. Jouannaud. Rewrite Systems. Handbook of  Theoretical Computer Science, Vol. B, Chapter 6: Formal Methods and  Semantics, J. van Leeuwen (ed.), North-Holland, pp. 243-320, 1990. </li>\r\n<li>Terese. Term Rewriting Systems. Cambridge University Press, 2003. </li>\r\n<li> E. Ohlebusch. Advanced Topic in Term Rewriting. Springer-Verlag, 2002. </li>\r\n</ul>\r\n<p>&#160;</p>",
+                "info": [
+                    {
+                        "attributes": {
+                            "lang": "gb"
+                        },
+                        "title": "Term Rewriting Systems",
+                        "description": "Term rewriting systems are used for computations and mechanized proofs with       equations. All functional programming languages are based on term       rewriting systems, too. Therefore, term rewriting systems are used       in many areas like mechanized program verification, specification       of programs and declarative programming. The following questions       will be discussed in the course.      \r\n<ul>\r\n<li>Is the result of a computation always unique (confluence)?</li>\r\n<li>Does a computation always stop after a finite number of steps (termination)?</li>\r\n<li>Does a program fulfill its specification (correctness)?</li>\r\n<li>How can the completion of an incomplete program be handled automatically?</li>\r\n</ul>"
+                    },
+                    {
+                        "attributes": {
+                            "lang": "de"
+                        },
+                        "title": "Termersetzungssysteme",
+                        "description": "Termersetzungssysteme dienen zum Rechnen und automatischen Beweisen mit  Gleichungen. Au&#223;erdem sind Termersetzungssysteme die  Basis-Programmiersprache, die allen funktionalen Programmiersprachen  zugrunde liegt. Termersetzungssysteme werden daher in vielen Bereichen  wie der automatisierten Programmverifikation, der Spezifikation von  Programmen und der deklarativen Programmierung eingesetzt. In der  Vorlesung werden Verfahren vorgestellt, um folgende Fragestellungen  rechnergest&#252;tzt zu untersuchen:\r\n<ul>\r\n<li> Ist das Resultat eines Programms immer eindeutig (Konfluenz)?</li>\r\n<li> H&#228;lt ein Programm immer nach endlich vielen Schritten an  (Terminierung)?</li>\r\n<li> Erf&#252;llt ein Programm seine Spezifikation (Korrektheit)?</li>\r\n<li> Wie kann man ein unvollst&#228;ndiges Programm automatisch  vervollst&#228;ndigen?</li>\r\n</ul>"
+                    }
+                ],
+                "link": [
+                    {
+                        "attributes": {
+                            "type": "Homepage",
+                            "href": "http://verify.rwth-aachen.de/tes15/"
+                        }
+                    }
+                ],
+                "l2p": {
+                    "attributes": {
+                        "use": "false",
+                        "reset": "false",
+                        "lang": "0"
+                    }
+                }
+            },
+            {
+                "attributes": {
+                    "gguid": "0x0251387029BED343932B2092EBD3FBDA",
+                    "nr": "15ws-47551",
+                    "termname": "WS 2015/2016",
+                    "type": "Klausur (Kl)",
+                    "copy": "false",
+                    "vvz": "true",
+                    "kvvz": "true",
+                    "confirmed": "true",
+                    "notpublished": "false"
+                },
+                "otherevents": "<span><span>Vorlesung und &#220;bung Algorithmen zur String-Verarbeitung und Techniken zur Datenkompression<br /></span></span>",
+                "info": [
+                    {
+                        "attributes": {
+                            "lang": "gb"
+                        },
+                        "title": "2nd Exam String Processing Algorithms and Data Compression Techniques"
+                    },
+                    {
+                        "attributes": {
+                            "lang": "de"
+                        },
+                        "title": "2. Klausur Algorithmen zur String-Verarbeitung und Techniken zur Datenkompression"
+                    }
+                ],
+                "link": [
+                    {
+                        "attributes": {
+                            "type": "Homepage",
+                            "href": ""
+                        }
+                    }
+                ],
+                "l2p": {
+                    "attributes": {
+                        "use": "false",
+                        "reset": "false",
+                        "lang": "0"
+                    }
+                }
+            }
+        ]
+    }
+};
+
 
 describe('parse.js', function () {
         describe('#parseSemesters()', function () {
@@ -274,8 +425,8 @@ describe('parse.js', function () {
             });
         });
 
-        describe('#parseSubFields()', function() {
-            it('should return an array of subfields of specific field of study', function(){
+        describe('#parseSubFields()', function () {
+            it('should return an array of subfields of specific field of study', function () {
                 var subfields = parser.parseSubFields(SUB_FIELD_RESPONSE);
                 const SUB_FIELD = {
                     gguid: '0x614EBE7FF82A6A4E9961C73D0E8FD225',
@@ -285,7 +436,20 @@ describe('parse.js', function () {
                 assert.deepEqual(subfields[0], SUB_FIELD);
                 assert.equal(subfields.length, 6);
             })
-        })
+        });
+
+        describe('#parseCoursesList()', function () {
+            it('should return an array of GGUIDs of courses for a specific subfield of study', function () {
+                var courses = parser.parseCoursesList(COURSES_LIST_RESPONSE);
+                const GGUIDS = [
+                    '0x008FFF190AD4614A8BBF5592EABB52AF',
+                    '0x0144A6E4B414274EAD37B7631F2B088F',
+                    '0x0251387029BED343932B2092EBD3FBDA'
+                ];
+
+                assert.deepEqual(courses, GGUIDS);
+            })
+        });
     }
 )
 ;
