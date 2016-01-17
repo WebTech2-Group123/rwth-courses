@@ -52,8 +52,8 @@ function parseCourseDetails(result) {
     var event = result['event'];
 
     return {
+        gguid: event['attributes']['gguid'],
         general: {
-            gguid: event['attributes']['gguid'],
             ects: event['attributes']['ects'],
             language: event['attributes']['language'],
             semester: event['attributes']['termname'],

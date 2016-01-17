@@ -701,8 +701,8 @@ describe('parse.js', function () {
             it('should return all the details for a specific course', function () {
                 var details = parser.parseCourseDetails(COURSE_DETAILS);
                 const DETAILS = {
+                    "gguid": "0x3D4824C6F312EA4DB691342B824CF9E7",
                     "general": {
-                        "gguid": "0x3D4824C6F312EA4DB691342B824CF9E7",
                         "ects": "6",
                         "language": "English",
                         "semester": "WS 2015/2016",
