@@ -24,12 +24,18 @@ var Mongo = function (url) {
 Mongo.prototype.connect = function () {
 
     // use connect method to connect to the Server
-    MongoClient.connect(this.url, (err, db) => {
-        assert.equal(null, err);
+    return MongoClient.connectAsync(this.url).then(db => {
         log('Connected to MongoDB');
 
         // save db instance
         this.db = db;
+
+        // register handler to clean up connections
+        // disconnect on programm exit
+        process.on('SIGINT', () => {
+            this.db.close();
+            log('Disconnected from MongoDB');
+        });
 
         // create courses collection
         db.createCollectionAsync(COURSES).then(collection => {
@@ -40,12 +46,15 @@ Mongo.prototype.connect = function () {
         db.createCollectionAsync(COURSES_TEMP).then(collection => {
             this.coursesTemp = collection;
         });
-    });
 
-    // disconnect on programm exit
-    process.on('SIGINT', () => {
-        this.db.close();
-        log('Disconnected from MongoDB');
+        return this;
+    });
+};
+
+// drop db (for tests only)
+Mongo.prototype._drop = function () {
+    return this.db.dropDatabaseAsync().then(() => {
+        log('WARNING: drop database!');
     });
 };
 
@@ -56,10 +65,21 @@ Mongo.prototype.renameTempCourses = function () {
     });
 };
 
+// insert a course
+Mongo.prototype.insertCourse = function (course) {
+    return this.coursesTemp.insertOne(course).then(count => {
+        if (count == 0) {
+            log('Skip course with id: ' + course.general.gguid);
+        } else {
+            log('Insert course id: ' + course.general.gguid);
+        }
+        return count;
+    });
+};
+
 // export
 exports.Mongo = Mongo;
 exports.createClient = function (url) {
     var db = new Mongo(url);
-    db.connect();
-    return db;
+    return db.connect();
 };
