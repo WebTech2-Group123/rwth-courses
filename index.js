@@ -80,8 +80,6 @@ soap.createClient(WSDL_EVENT, function (err, client) {
         'bIncludeAppointments': true,
         'bIncludeUnits': true
     }, function (err, result) {
-        console.log(
-
-        );
+        console.log(result);
     });
 });

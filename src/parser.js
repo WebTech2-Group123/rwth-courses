@@ -1,5 +1,7 @@
 // functions to parse CampusOffice APIs reponses
 
+var utils = require('./utils');
+
 function parseSemesters(result) {
 
     // .filter -> take only 2 elements of the array
@@ -46,8 +48,61 @@ function parseCoursesList(result) {
         .map(course => course['attributes']['gguid']);
 }
 
+function parseCourseDetails(result) {
+    var event = result['event'];
+
+    return {
+        general: {
+            gguid: event['attributes']['gguid'],
+            ects: event['attributes']['ects'],
+            language: event['attributes']['language'],
+            semester: event['attributes']['termname'],
+            type: event['attributes']['type']
+        },
+        contact: event['address']
+            .map(contact => {
+                return {
+                    title: contact['titlefront'],
+                    surname: contact['christianname'],
+                    name: contact['name'],
+                    mail: contact['mail']
+                        .map(mail => mail['attributes']['mail']),
+                    phone: contact['phone']
+                        .map(phone => phone['attributes']['number']),
+                    address: {
+                        department: utils.get(contact, 'work', 'company2'),
+                        street: utils.get(contact, 'work', 'street'),
+                        town: utils.get(contact),
+                        zip: utils.get(contact, 'work', 'zip'),
+                        building: utils.get(contact, 'work', 'attributes', 'building'),
+                        room: utils.get(contact, 'work', 'attributes', 'office')
+                    },
+                    consultationhour: utils.get(contact, 'consultationhour'),
+                    website: utils.map(contact, 'www', website => website['attributes']['href'])
+                }
+            }),
+        events: event['periodical']
+            .map(el => {
+                return {
+                    gguid: el['attributes']['gguid'],
+                    appointments: el['appointment']
+                        .map(el => {
+                            var appointment = el['attributes'];
+                            return {
+                                start: appointment['start'],
+                                end: appointment['end'],
+                                room: appointment['room']
+                            }
+                        })
+                }
+            })
+
+    }
+}
+
 
 exports.parseSemesters = parseSemesters;
 exports.parseFieldOfStudies = parseFieldOfStudies;
 exports.parseSubFields = parseSubFields;
 exports.parseCoursesList = parseCoursesList;
+exports.parseCourseDetails = parseCourseDetails;
