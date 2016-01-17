@@ -72,7 +72,7 @@ function parseCourseDetails(result) {
                     address: {
                         department: utils.get(contact, 'work', 'company2'),
                         street: utils.get(contact, 'work', 'street'),
-                        town: utils.get(contact),
+                        town: utils.get(contact, 'work', 'town'),
                         zip: utils.get(contact, 'work', 'zip'),
                         building: utils.get(contact, 'work', 'attributes', 'building'),
                         room: utils.get(contact, 'work', 'attributes', 'office')
@@ -83,17 +83,14 @@ function parseCourseDetails(result) {
             }),
         events: event['periodical']
             .map(el => {
+                var appointment = el['appointment'][0]['attributes'];
                 return {
-                    gguid: el['attributes']['gguid'],
-                    appointments: el['appointment']
-                        .map(el => {
-                            var appointment = el['attributes'];
-                            return {
-                                start: appointment['start'],
-                                end: appointment['end'],
-                                room: appointment['room']
-                            }
-                        })
+                    gguid: el['gguid'],
+                    weekday: new Date(appointment['start']).getDay(),
+                    start: new Date(appointment['start']).getTime(),
+                    end: new Date(appointment['end']).getTime(),
+                    room: appointment['room']
+
                 }
             })
 
