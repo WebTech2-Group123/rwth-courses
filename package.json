@@ -4,6 +4,7 @@
   "description": "RWTH Courses: a better CampusOffice for everybody!",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "chai": "^3.4.1",
     "debug": "^2.2.0",
     "debug-logger": "^0.4.1",
