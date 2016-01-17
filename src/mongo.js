@@ -45,25 +45,34 @@ Mongo.prototype.connect = function () {
             log('Disconnected from MongoDB');
         });
 
-        // create collections
-        var promise1 = createCollection(db, COURSES).then(collection => {
-            this.courses = collection;
-        });
-        var promise2 = createCollection(db, COURSES_TEMP).then(collection => {
-            this.coursesTemp = collection;
-        });
-
-        // return the db when everything is ready
-        return Promise.all([promise1, promise2]).then(() => {
+        // create indexes etc.
+        return this._init().then(() => {
             return this;
         });
     });
+};
+
+// create indexes and collections
+Mongo.prototype._init = function () {
+    log('INFO: initialize db');
+
+    // create collections
+    var promise1 = createCollection(this.db, COURSES).then(collection => {
+        this.courses = collection;
+    });
+    var promise2 = createCollection(this.db, COURSES_TEMP).then(collection => {
+        this.coursesTemp = collection;
+    });
+
+    // return when everything is ready
+    return Promise.all([promise1, promise2]);
 };
 
 // drop db (for tests only)
 Mongo.prototype._drop = function () {
     return this.db.dropDatabaseAsync().then(() => {
         log('WARNING: drop database!');
+        return this._init();
     });
 };
 
@@ -71,13 +80,13 @@ Mongo.prototype._drop = function () {
 Mongo.prototype.renameTempCourses = function () {
     return this.db.renameCollectionAsync(COURSES_TEMP, COURSES, {dropTarget: true}).then(() => {
         log('Rename ' + COURSES_TEMP + ' to ' + COURSES);
-        return createCollection(db, COURSES_TEMP).then(collection => {
+        return createCollection(this.db, COURSES_TEMP).then(collection => {
             this.coursesTemp = collection;
         });
     });
 };
 
-// insert a course
+// insert a course (temp)
 Mongo.prototype.insertCourse = function (course) {
     return this.coursesTemp.updateOne({gguid: course.gguid}, course, {upsert: true})
         .then(result => {
@@ -88,6 +97,12 @@ Mongo.prototype.insertCourse = function (course) {
             }
             return result;
         });
+};
+
+// get courses (not temp)
+// TODO: add search object
+Mongo.prototype.getCourses = function () {
+    return this.courses.find().toArrayAsync();
 };
 
 // export
