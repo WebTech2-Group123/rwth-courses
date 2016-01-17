@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO: events / promises???
+
 // mongo
 var MongoClient = require('mongodb').MongoClient;
 var Promise = require("bluebird");
@@ -53,8 +55,7 @@ Mongo.prototype.connect = function () {
 
 // drop temp_courses collection
 Mongo.prototype.renameTempCourses = function () {
-    tempCourses.rename(COURSES_TEMP, {dropTarget: true}, (err, _) => {
-        assert.equal(null, err);
+    return this.coursesTemp.renameAsync(COURSES, {dropTarget: true}).then(() => {
         log('Rename ' + COURSES_TEMP + ' to ' + COURSES);
     });
 };

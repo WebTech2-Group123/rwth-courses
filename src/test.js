@@ -2,6 +2,8 @@
 
 var db = require('./mongo').createClient();
 
-var a = 1;
+setTimeout(() => {
+    db.renameTempCourses();
+}, 1000);
 
 setTimeout(process.exit, 3000);
