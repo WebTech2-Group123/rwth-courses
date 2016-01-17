@@ -12,11 +12,13 @@
     "soap": "^0.11.4"
   },
   "devDependencies": {
+    "istanbul": "^0.4.2",
     "mocha": "^2.3.4"
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha",
+    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources"
   },
   "repository": {
     "type": "git",

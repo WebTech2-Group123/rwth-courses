@@ -13,5 +13,10 @@ addons:
       - mongodb-org-server
       - mongodb-org-shell
 
+script:
+  - npm run coverage
 before_script:
-  - sleep 8
+  - npm install -g coveralls
+  - sleep 3
+after_script:
+  - cat ./coverage/lcov.info | coveralls
