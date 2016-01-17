@@ -4,6 +4,7 @@
   "description": "RWTH Courses: a better CampusOffice for everybody!",
   "main": "index.js",
   "dependencies": {
+    "bluebird": "^3.1.1",
     "soap": "^0.11.4"
   },
   "devDependencies": {

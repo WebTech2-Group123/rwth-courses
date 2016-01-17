@@ -700,7 +700,6 @@ describe('parse.js', function () {
         describe('#parseCourseDetails()', function () {
             it('should return all the details for a specific course', function () {
                 var details = parser.parseCourseDetails(COURSE_DETAILS);
-                //console.log(details);
                 const DETAILS = {
                     "general": {
                         "gguid": "0x3D4824C6F312EA4DB691342B824CF9E7",
