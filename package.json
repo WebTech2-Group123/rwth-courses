@@ -4,6 +4,9 @@
   "description": "RWTH Courses: a better CampusOffice for everybody!",
   "main": "index.js",
   "dependencies": {
+    "debug": "^2.2.0",
+    "debug-logger": "^0.4.1",
+    "mongodb": "^2.1.4",
     "soap": "^0.11.4"
   },
   "devDependencies": {
