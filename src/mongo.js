@@ -42,15 +42,11 @@ Mongo.prototype.connect = function () {
         });
     });
 
-    // function to run on node.js programm exit
-    var close = () => {
+    // disconnect on programm exit
+    process.on('SIGINT', () => {
         this.db.close();
         log('Disconnected from MongoDB');
-    };
-
-    // disconnect on programm exit
-    process.on('exit', close);
-    process.on('SIGINT', close);
+    });
 };
 
 // drop temp_courses collection
