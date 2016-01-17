@@ -38,16 +38,21 @@ Mongo.prototype.connect = function () {
         });
 
         // create courses collection
-        db.createCollectionAsync(COURSES).then(collection => {
+        var promise1 = db.createCollectionAsync(COURSES).then(collection => {
             this.courses = collection;
+            return collection.createIndexAsync('gguid', {unique: true});
         });
 
         // create courses_temp collection
-        db.createCollectionAsync(COURSES_TEMP).then(collection => {
+        var promise2 = db.createCollectionAsync(COURSES_TEMP).then(collection => {
             this.coursesTemp = collection;
+            return collection.createIndexAsync('gguid', {unique: true});
         });
 
-        return this;
+        // return the db when everything is ready
+        return Promise.all([promise1, promise2]).then(() => {
+            return this;
+        });
     });
 };
 
@@ -67,14 +72,15 @@ Mongo.prototype.renameTempCourses = function () {
 
 // insert a course
 Mongo.prototype.insertCourse = function (course) {
-    return this.coursesTemp.insertOne(course).then(count => {
-        if (count == 0) {
-            log('Skip course with id: ' + course.general.gguid);
-        } else {
-            log('Insert course id: ' + course.general.gguid);
-        }
-        return count;
-    });
+    return this.coursesTemp.updateOne({gguid: course.gguid}, course, {upsert: true})
+        .then(result => {
+            if (result.upsertedCount == 1) {
+                log('Insert course with id: ' + course.gguid);
+            } else {
+                log('Update course with id: ' + course.gguid);
+            }
+            return result;
+        });
 };
 
 // export

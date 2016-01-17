@@ -2,17 +2,13 @@ var assert = require('chai').assert;
 var mongo = require('../src/mongo');
 
 const COURSE_A = {
-    general: {
-        gguid: '0x0001',
-        field: 'some value'
-    }
+    gguid: '0x0001',
+    field: 'some value'
 };
 
 const COURSE_B = {
-    general: {
-        gguid: '0x0002',
-        field: 'some other value'
-    }
+    gguid: '0x0002',
+    field: 'some other value'
 };
 
 describe('mongo.js', function () {
@@ -37,11 +33,27 @@ describe('mongo.js', function () {
 
     describe('.Mongo', function () {
         describe('#insertCourse', function () {
-            it('should insert a course if not existing', function () {
-
+            it('should insert a course if not existing', function (done) {
+                this.db.insertCourse(COURSE_A).then(result => {
+                    assert.equal(result.upsertedCount, 1);
+                    assert.equal(result.modifiedCount, 0);
+                    return this.db.insertCourse(COURSE_B);
+                }).then(result => {
+                    assert.equal(result.upsertedCount, 1);
+                    assert.equal(result.modifiedCount, 0);
+                    done();
+                }).catch(err => done(err));
             });
-            it('should skip the course if already existing', function () {
-
+            it('should skip the course if already existing', function (done) {
+                this.db.insertCourse(COURSE_A).then(result => {
+                    assert.equal(result.upsertedCount, 1);
+                    assert.equal(result.modifiedCount, 0);
+                    return this.db.insertCourse(COURSE_A);
+                }).then(result => {
+                    assert.equal(result.upsertedCount, 0);
+                    assert.equal(result.modifiedCount, 1);
+                    done();
+                }).catch(err => done(err));
             });
         });
     });
