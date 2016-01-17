@@ -1,7 +1,5 @@
 'use strict';
 
-// TODO: events / promises???
-
 // mongo
 var MongoClient = require('mongodb').MongoClient;
 var Promise = require("bluebird");
@@ -14,6 +12,16 @@ var assert = require('assert');
 // constants
 const COURSES = 'courses';
 const COURSES_TEMP = 'courses_temp';
+
+// help function
+// create a collection with unique index on gguid
+var createCollection = function (db, name) {
+    return db.createCollectionAsync(name).then(collection => {
+        return collection.createIndexAsync('gguid', {unique: true}).then(() => {
+            return collection;
+        });
+    });
+};
 
 // constructor
 var Mongo = function (url) {
@@ -37,16 +45,12 @@ Mongo.prototype.connect = function () {
             log('Disconnected from MongoDB');
         });
 
-        // create courses collection
-        var promise1 = db.createCollectionAsync(COURSES).then(collection => {
+        // create collections
+        var promise1 = createCollection(db, COURSES).then(collection => {
             this.courses = collection;
-            return collection.createIndexAsync('gguid', {unique: true});
         });
-
-        // create courses_temp collection
-        var promise2 = db.createCollectionAsync(COURSES_TEMP).then(collection => {
+        var promise2 = createCollection(db, COURSES_TEMP).then(collection => {
             this.coursesTemp = collection;
-            return collection.createIndexAsync('gguid', {unique: true});
         });
 
         // return the db when everything is ready
@@ -65,8 +69,11 @@ Mongo.prototype._drop = function () {
 
 // drop temp_courses collection
 Mongo.prototype.renameTempCourses = function () {
-    return this.coursesTemp.renameAsync(COURSES, {dropTarget: true}).then(() => {
+    return this.db.renameCollectionAsync(COURSES_TEMP, COURSES, {dropTarget: true}).then(() => {
         log('Rename ' + COURSES_TEMP + ' to ' + COURSES);
+        return createCollection(db, COURSES_TEMP).then(collection => {
+            this.coursesTemp = collection;
+        });
     });
 };
 
