@@ -92,7 +92,10 @@ describe('mongo.js', function () {
                 this.db.renameTempCourses().then(() => {
                     return this.db.courses.indexesAsync();
                 }).then(indexes => {
-                    var a = 1;
+                    var gguidIndex = indexes.reduce((acc, el) => {
+                        return acc || el.key.gguid == 1;
+                    }, false);
+                    assert.isTrue(gguidIndex);
                     done();
                 });
             });
