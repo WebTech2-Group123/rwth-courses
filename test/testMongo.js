@@ -1,5 +1,13 @@
+'use strict';
+
 var assert = require('chai').assert;
 var mongo = require('../src/mongo');
+
+// make sure not-handled rejected Promises throw an error
+var Promise = require("bluebird");
+Promise.onPossiblyUnhandledRejection(error => {
+    throw error;
+});
 
 const COURSE_A = {
     gguid: '0x0001',
@@ -43,7 +51,7 @@ describe('mongo.js', function () {
                     assert.equal(result.upsertedCount, 1);
                     assert.equal(result.modifiedCount, 0);
                     done();
-                }).catch(err => done(err));
+                });
             });
             it('should skip the course if already existing', function (done) {
                 this.db.insertCourse(COURSE_A).then(result => {
@@ -54,7 +62,7 @@ describe('mongo.js', function () {
                     assert.equal(result.upsertedCount, 0);
                     assert.equal(result.modifiedCount, 1);
                     done();
-                }).catch(err => done(err));
+                });
             });
         });
 
@@ -63,7 +71,7 @@ describe('mongo.js', function () {
                 this.db.getCourses().then(courses => {
                     assert.equal(courses.length, 0);
                     done();
-                }).catch(err => done(err));
+                });
             });
             it('should get all the courses if any present', function (done) {
                 this.db.insertCourse(COURSE_A).then(() => {
@@ -75,7 +83,7 @@ describe('mongo.js', function () {
                 }).then(courses => {
                     assert.equal(courses.length, 2);
                     done();
-                }).catch(err => done(err));
+                });
             });
         });
 
@@ -86,7 +94,7 @@ describe('mongo.js', function () {
                 }).then(indexes => {
                     var a = 1;
                     done();
-                }).catch(err => done(err));
+                });
             });
         });
     });

@@ -1,13 +1,20 @@
 'use strict';
 
+// logs
+var log = require('debug')('db');
+var assert = require('assert');
+
 // mongo
 var MongoClient = require('mongodb').MongoClient;
 var Promise = require("bluebird");
 Promise.promisifyAll(require("mongodb"));
 
-// logs
-var log = require('debug')('db');
-var assert = require('assert');
+// TODO: move to better place
+// make sure not-handled rejected Promises throw an error
+process.on("unhandledRejection", function (error) {
+    throw error;
+});
+
 
 // constants
 const COURSES = 'courses';
