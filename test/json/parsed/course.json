@@ -1,0 +1,70 @@
+{
+  "gguid": "0x3D4824C6F312EA4DB691342B824CF9E7",
+  "ects": "6",
+  "language": "English",
+  "semester": "WS 2015/2016",
+  "type": "Vorlesung/Praktikum/Seminar (VPS)",
+  "contact": [
+    {
+      "title": "Dr.-Ing.",
+      "surname": "Ulrik",
+      "name": "Schroeder",
+      "mail": [
+        "schroeder@informatik.rwth-aachen.de"
+      ],
+      "phone": [
+        "0151 14042553",
+        "+49 241 80 621931"
+      ],
+      "address": {
+        "department": "Lehr- und Forschungsgebiet Informatik 9 (Lerntechnologien)",
+        "street": "Ahornstraße 55",
+        "town": "Aachen",
+        "zip": "52074",
+        "building": "Informatikzentrum (E2) - 2356",
+        "room": "6310"
+      },
+      "consultationhour": "Do. 11:30-12:30 nach vorheriger Anmeldung per eMail",
+      "website": [
+        "learntech.rwth-aachen.de/"
+      ]
+    },
+    {
+      "title": null,
+      "surname": "Informatik",
+      "name": "Stundenplaner",
+      "mail": [
+        "rossmanith@informatik.rwth-aachen.de"
+      ],
+      "phone": [
+        "+49 241 80 21130"
+      ],
+      "address": {
+        "department": "Fachgruppe Informatik",
+        "street": "Ahornstr. 55",
+        "town": "Aachen",
+        "zip": "52074",
+        "building": null,
+        "room": null
+      },
+      "consultationhour": null,
+      "website": null
+    }
+  ],
+  "events": [
+    {
+      "gguid": "0x2861700E019CC3428502232F52390641",
+      "weekday": 2,
+      "start": "1450779300000",
+      "end": "1450784700000",
+      "room": "2356|051"
+    },
+    {
+      "gguid": "0xF7E472C2B0F7CB48A8932F7636D8D284",
+      "weekday": 3,
+      "start": "1452708900000",
+      "end": "1452714300000",
+      "room": "2350|009"
+    }
+  ]
+}

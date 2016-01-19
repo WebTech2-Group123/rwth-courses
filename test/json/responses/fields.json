@@ -1,0 +1,27 @@
+{
+  "GetFieldsResult": {
+    "Field": [
+      {
+        "attributes": {
+          "gguid": "0x5A266C5046CF0E46AFFEBA62F34B5F85",
+          "name": "Architektur (D)",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Diplomstudiengänge (D)",
+        "fieldname": "Architektur (D)",
+        "email": "klinkhammer@architektur.rwth-aachen.de"
+      },
+      {
+        "attributes": {
+          "gguid": "0xEFD420E5D2646C41BFC83FE2A1F152E9",
+          "name": "Bauingenieurwesen (D)",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Diplomstudiengänge (D)",
+        "fieldname": "Bauingenieurwesen (D)",
+        "notes": "Studierende der Studienrichtung &quot;Vertiefung nach freier Wahl&quot; k&ouml;nnen unter Ber&uuml;cksichtigung der in DPO 98 und DPO 2004 festgelegten Regeln den Pr&uuml;fungsplan aus den F&auml;chern der anderen Studienrichtungen frei zusammenstellen.",
+        "email": "lehrveranstaltungsmanagement@fb3.rwth-aachen.de"
+      }
+    ]
+  }
+}
