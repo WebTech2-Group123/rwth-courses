@@ -702,12 +702,10 @@ describe('parse.js', function () {
                 var details = parser.parseCourseDetails(COURSE_DETAILS);
                 const DETAILS = {
                     "gguid": "0x3D4824C6F312EA4DB691342B824CF9E7",
-                    "general": {
-                        "ects": "6",
-                        "language": "English",
-                        "semester": "WS 2015/2016",
-                        "type": "Vorlesung/Praktikum/Seminar (VPS)"
-                    },
+                    "ects": "6",
+                    "language": "English",
+                    "semester": "WS 2015/2016",
+                    "type": "Vorlesung/Praktikum/Seminar (VPS)",
                     "contact": [{
                         "title": "Dr.-Ing.",
                         "surname": "Ulrik",
@@ -754,9 +752,9 @@ describe('parse.js', function () {
                         "end": "1452714300000",
                         "room": "2350|009"
                     }]
-                }
+                };
                 assert.deepEqual(details, DETAILS);
             })
         })
     }
-)
+);
