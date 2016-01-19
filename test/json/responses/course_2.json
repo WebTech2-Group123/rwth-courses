@@ -1,0 +1,895 @@
+{
+  "event": {
+    "attributes": {
+      "gguid": "0x547500876381894385A2C13F2A563315",
+      "nr": "15ws-12023",
+      "termname": "WS 2015/2016",
+      "type": "Vorlesung/Übung (VÜ)",
+      "sws": "3+2",
+      "ects": "6",
+      "language": "English",
+      "copy": "true",
+      "vvz": "true",
+      "kvvz": "true",
+      "confirmed": "true",
+      "notpublished": "false"
+    },
+    "address": [
+      {
+        "attributes": {
+          "gguid": "0xE95C7531BF9BD511BDAF0002A5871170",
+          "type": "ADDRESS"
+        },
+        "name": "Raumvergabe",
+        "salutation": "Raumvergabe",
+        "work": {
+          "attributes": {
+            "building": "Technisches Dezernat"
+          },
+          "street": "Süsterfeldstraße 65",
+          "zip": "52072",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Abteilung 10.5 - Infrastrukturelles Gebäudemanagement"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 94380"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "raumvergabe@zhv.rwth-aachen.de"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0x86FC9428125E634FB2DC88110F9EDBA6",
+          "addressterm": "Herrn",
+          "addressletter": "Sehr geehrter Herr Dr.",
+          "type": "ADDRESS"
+        },
+        "christianname": "Christian",
+        "name": "Beecks",
+        "titlefront": "Dr. rer. nat.",
+        "salutation": "Dr. rer. nat. Christian Beecks",
+        "consultationhour": "nach Vereinbarung",
+        "charge": "Wissenschaftlicher Mitarbeiter",
+        "work": {
+          "attributes": {
+            "office": "6323",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstr. 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21908"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "beecks@informatik.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://dme.rwth-aachen.de"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0x323415FE59B8EE41BBD9ABAB318F69FE",
+          "addressterm": "Herrn",
+          "addressletter": "Sehr geehrter Herr",
+          "type": "ADDRESS"
+        },
+        "christianname": "Roland",
+        "name": "Assam",
+        "titlefront": "Dipl.-Ing.",
+        "salutation": "Dipl.-Ing. Roland Assam",
+        "consultationhour": "nach Vereinbarung",
+        "charge": "Wissenschaftlicher Mitarbeiter",
+        "work": {
+          "attributes": {
+            "office": "6327",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstr. 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21909"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "assam@cs.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://dme.rwth-aachen.de"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0xC360593568A0D611BDBD0002A5871170",
+          "addressterm": "Herrn",
+          "addressletter": "Sehr geehrter Herr Professor",
+          "type": "ADDRESS"
+        },
+        "christianname": "Thomas",
+        "name": "Seidl",
+        "titlefront": "Dr. rer. nat.",
+        "salutation": "Universitätsprofessor Dr. rer. nat. Thomas Seidl",
+        "consultationhour": "Mo 13 - 14 Uhr",
+        "charge": "Lehrstuhlinhaber",
+        "function": "Prof",
+        "work": {
+          "attributes": {
+            "office": "6321",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstraße 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21900"
+            }
+          },
+          {
+            "attributes": {
+              "type": "Work 2",
+              "number": "+49 241 80 21901"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "seidl@informatik.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://www-i9.informatik.rwth-aachen.de/Team/seidl"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0x1FB997B36C895E4886A0BAC27B23F9F2",
+          "addressterm": "Frau",
+          "addressletter": "Sehr geehrte Frau",
+          "type": "ADDRESS"
+        },
+        "christianname": "Ines",
+        "name": "Färber",
+        "titlefront": "Dipl.-Inform.",
+        "salutation": "Dipl.-Inform. Ines Färber",
+        "consultationhour": "nach Vereinbarung",
+        "charge": "Wissenschaftliche Mitarbeiterin",
+        "function": "Gleichstellung FAK",
+        "work": {
+          "attributes": {
+            "office": "6322",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstraße 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21917"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "faerber@informatik.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://dme.rwth-aachen.de"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0xC392C3E2C6459A4B8E5741E2D2214C0F",
+          "addressterm": "Herrn",
+          "addressletter": "Sehr geehrter Herr",
+          "type": "ADDRESS"
+        },
+        "christianname": "Yifeng",
+        "name": "Lu",
+        "titleback": "M. Sc.",
+        "salutation": "Yifeng Lu M. Sc.",
+        "consultationhour": "nach Vereinbarung",
+        "charge": "Wissenschaftlicher Mitarbeiter",
+        "work": {
+          "attributes": {
+            "office": "6326",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstraße 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21916"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "lu@informatik.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://dme.rwth-aachen.de/"
+            }
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "gguid": "0x72414FE40CE35C4C99355342549856B2",
+          "addressterm": "Herrn",
+          "addressletter": "Sehr geehrter Herr",
+          "type": "ADDRESS"
+        },
+        "christianname": "Marwan",
+        "name": "Hassani",
+        "titlefront": "Dipl.-Ing.",
+        "salutation": "Dipl.-Ing. Marwan Hassani",
+        "consultationhour": "nach Vereinbarung",
+        "charge": "Wissenschaftlicher Mitarbeiter",
+        "work": {
+          "attributes": {
+            "office": "6327",
+            "building": "Informatikzentrum E2"
+          },
+          "street": "Ahornstrasse 55",
+          "zip": "52074",
+          "town": "Aachen",
+          "company": "RWTH Aachen",
+          "company2": "Lehrstuhl für Informatik 3 (Software Engineering)"
+        },
+        "phone": [
+          {
+            "attributes": {
+              "type": "Work",
+              "number": "+49 241 80 21906"
+            }
+          },
+          {
+            "attributes": {
+              "type": "FAX Work",
+              "number": "+49 241 80 621901"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "type": "Email 1",
+              "mail": "hassani@informatik.rwth-aachen.de"
+            }
+          }
+        ],
+        "www": [
+          {
+            "attributes": {
+              "type": "Homepage",
+              "href": "http://dme.rwth-aachen.de"
+            }
+          }
+        ]
+      }
+    ],
+    "field": [
+      {
+        "attributes": {
+          "gguid": "0xC9F7405FCAA9844398B2C6DB52FBC6D4",
+          "name": "Daten- und Informationsmanagement",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Bachelor of Science (B.Sc.)",
+        "fieldname": "Informatik (B.Sc.)",
+        "path": "Wahlpflicht/Daten- und Informationsmanagement"
+      },
+      {
+        "attributes": {
+          "gguid": "0xFA94D14990C50D438719DBDC53F42A20",
+          "name": "Anwendungsfach Informatik",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Mathematik (M.Sc.)",
+        "path": "Anwendungsfach Informatik"
+      },
+      {
+        "attributes": {
+          "gguid": "0xF7A44C190774F14EAB0A7508E8C6DBE5",
+          "name": "Modulkatalog Wahlfächer (WAHL)",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Elektrotechnik, Informationstechnik u. Technische Informatik (M.Sc.)",
+        "path": "Modulkatalog Wahlfächer (WAHL)"
+      },
+      {
+        "attributes": {
+          "gguid": "0x9B5E5DD6B426534B93F5F222F23DF1AC",
+          "name": "[MPO2010] Data and Information Management",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Software Systems Engineering (M.Sc.)",
+        "path": "[MPO2010] Data and Information Management"
+      },
+      {
+        "attributes": {
+          "gguid": "0xA99EB883FCBBB4429A649B7E82EFABB6",
+          "name": "Mathematisch-Informatorischer Katalog",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Bachelor of Science (B.Sc.)",
+        "fieldname": "Computational Engineering Science (B.Sc.)",
+        "path": "Wahlpflichtbereich/Mathematisch-Informatorischer Katalog"
+      },
+      {
+        "attributes": {
+          "gguid": "0x4690BA085B8FD845AD21EA871212B7FC",
+          "name": "Datenmanagement",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Computational Engineering Science (M.Sc.)",
+        "path": "Wahlpflichtbereich Informatik/Datenmanagement"
+      },
+      {
+        "attributes": {
+          "gguid": "0xE2CC6D93D207274B856DD6FCC6426577",
+          "name": "Data Management and Exploration",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Software Systems Engineering (M.Sc.)",
+        "path": "[MPO2005] Areas of Specialization/Data Management and Exploration"
+      },
+      {
+        "attributes": {
+          "gguid": "0x86C51937D3ABCF4CB7D4AA8B7CD07A98",
+          "name": "Rechner- und Kommunikationstechnologie",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Media Informatics (M.Sc.)",
+        "path": "Rechner- und Kommunikationstechnologie"
+      },
+      {
+        "attributes": {
+          "gguid": "0xF78ABA6E7FBDDC4A8A2031B2D1C5073D",
+          "name": "Daten- und Informationsmanagement",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "TK 2. Fach-Grundlagen der Informatik (M.Sc.)",
+        "path": "Wahlpflicht Informatik/Daten- und Informationsmanagement"
+      },
+      {
+        "attributes": {
+          "gguid": "0x5FC3B3035F6CC14EA92DBE8F59FD53D4",
+          "name": "Information Systems and Database Technology",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Software Systems Engineering (M.Sc.)",
+        "path": "[MPO2005] Areas of Specialization/Information Systems and Database Technology"
+      },
+      {
+        "attributes": {
+          "gguid": "0x5469D4AB7E4D694BA1089E92B70C562E",
+          "name": "Wahlpflichtfächer aus dem Angebot der RWTH",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Verfahrenstechnik (M.Sc.)",
+        "path": "Übergreifender Pflichtbereich/Wahlpflichtfächer aus dem Angebot der RWTH"
+      },
+      {
+        "attributes": {
+          "gguid": "0x50EFF8C3BB25FD40AEF861C09AC91085",
+          "name": "Daten- und Informationsmanagement",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Informatik (M.Sc.)",
+        "path": "Daten- und Informationsmanagement"
+      },
+      {
+        "attributes": {
+          "gguid": "0x202EFF73F1A7F043B7F5A6B88836DADF",
+          "name": "Data and Information Management",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Software Systems Engineering (M.Sc.)",
+        "path": "Data and Information Management"
+      },
+      {
+        "attributes": {
+          "gguid": "0x514CA154CB21A64D9BF0D7D72AB0AEE1",
+          "name": "Modulgruppe C",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Elektrotechnik, Informationstechnik u. Technische Informatik (M.Sc.)",
+        "path": "Technische Informatik/Modulgruppe C"
+      },
+      {
+        "attributes": {
+          "gguid": "0xFCBED70E0D0CAA4091E2FDC038A63699",
+          "name": "in Aachen",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Media Informatics (M.Sc.)",
+        "path": "Rechner- und Kommunikationstechnologie/in Aachen"
+      },
+      {
+        "attributes": {
+          "gguid": "0xA378C6D3DEF2FA4FAF310DC8D1D408D2",
+          "name": "B. Praktische Informatik",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Staatsexamen Lehramtstudiengänge (GYM+GS,BK,SII)",
+        "fieldname": "Informatik (GYM+GS,SII)",
+        "path": "Hauptstudium/B. Praktische Informatik"
+      }
+    ],
+    "appointment": [
+      {
+        "attributes": {
+          "gguid": "0xA21AF331F23B8643A19DE17BA823B98D",
+          "start": "2015-10-23T10:15:00",
+          "end": "2015-10-23T11:30:00",
+          "room": "2356|051"
+        },
+        "notes": "lecture DMA1 starts later (reservation issues of lecture hall)",
+        "keyword": "Data Mining Algorithmen I"
+      }
+    ],
+    "periodical": [
+      {
+        "attributes": {
+          "scheme": "7",
+          "start": "2015-10-30T09:00:00",
+          "end": "2016-02-12T11:30:00"
+        },
+        "gguid": "0xF8C1CC0CB430A64CAF6F503577D7F040",
+        "appointment": [
+          {
+            "attributes": {
+              "gguid": "0x3D6CDA68514F504285766B81F962D815",
+              "start": "2015-11-06T09:00:00",
+              "end": "2015-11-06T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x63F64338DD9C8642A388CCA2C8935058",
+              "start": "2016-01-08T09:00:00",
+              "end": "2016-01-08T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xF8C1CC0CB430A64CAF6F503577D7F040",
+              "start": "2015-10-30T09:00:00",
+              "end": "2015-10-30T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x1E418915C38FB3489A90AA8EA289216A",
+              "start": "2015-11-20T09:00:00",
+              "end": "2015-11-20T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x303A77CAF0D97C41AB018D30D5CE16AC",
+              "start": "2016-01-29T09:00:00",
+              "end": "2016-01-29T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x0B80478CF2B749459001177F277B6559",
+              "start": "2015-11-27T09:00:00",
+              "end": "2015-11-27T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x7E0DDE056CDE5E4893247D894FC67F1E",
+              "start": "2015-12-04T09:00:00",
+              "end": "2015-12-04T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x57E5196335ED854D990D87BF3DDFBFEE",
+              "start": "2016-02-12T09:00:00",
+              "end": "2016-02-12T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x4F2083CC36DDE64FA508CF842F97849E",
+              "start": "2015-12-11T09:00:00",
+              "end": "2015-12-11T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xF05DAFFB3AD1564EA69F8546F6B1F865",
+              "start": "2015-11-13T09:00:00",
+              "end": "2015-11-13T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x6C0EA3279889124484DC8ABDF1DC2F8C",
+              "start": "2016-01-15T09:00:00",
+              "end": "2016-01-15T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x9320FCADFE7D6B4A8FB0D27D2F6C89D2",
+              "start": "2016-02-05T09:00:00",
+              "end": "2016-02-05T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x2D062A19A77EA044A73BFEFF8A2063B6",
+              "start": "2015-12-18T09:00:00",
+              "end": "2015-12-18T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x2093421FF43134468CE9A7E3592528F2",
+              "start": "2016-01-22T09:00:00",
+              "end": "2016-01-22T11:30:00",
+              "room": "2356|051"
+            },
+            "notes": "Lecture & Exercise DMA1",
+            "keyword": "Data Mining Algorithmen I"
+          }
+        ]
+      },
+      {
+        "attributes": {
+          "scheme": "7",
+          "start": "2015-10-19T16:15:00",
+          "end": "2016-02-01T17:45:00"
+        },
+        "gguid": "0xC68A71A5CB7B004D9A8CA6B8457EB1DF",
+        "appointment": [
+          {
+            "attributes": {
+              "gguid": "0x47CBE200002BA342A1279996D42C2C6E",
+              "start": "2016-01-25T16:15:00",
+              "end": "2016-01-25T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x6FA5D6538F3A4042B77EA6DCD8DC3264",
+              "start": "2016-02-01T16:15:00",
+              "end": "2016-02-01T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xB48A4CFC1F39F44E9C85927506D4913B",
+              "start": "2015-11-02T16:15:00",
+              "end": "2015-11-02T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x26D8A81E4458EC479F1EFB1D21914DF4",
+              "start": "2015-10-26T16:15:00",
+              "end": "2015-10-26T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x55A8211560F16F4F88CAFDBF4B2496DC",
+              "start": "2015-11-16T16:15:00",
+              "end": "2015-11-16T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xA58590F3FE3D334E8694A4F1072FAA06",
+              "start": "2015-11-23T16:15:00",
+              "end": "2015-11-23T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x03039A1AB65C2143A0E5D5393D5983D0",
+              "start": "2015-11-30T16:15:00",
+              "end": "2015-11-30T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xA0F77C1A6B001B46ADF3514BD72F3C41",
+              "start": "2015-10-19T16:15:00",
+              "end": "2015-10-19T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xE3E90080BF2C1D46B63B19C354B01D4A",
+              "start": "2016-01-11T16:15:00",
+              "end": "2016-01-11T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x25A9E980519BA0458441332FB68CC1B0",
+              "start": "2015-12-07T16:15:00",
+              "end": "2015-12-07T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xC0A2EF179461694381B48468561A4B4D",
+              "start": "2016-01-18T16:15:00",
+              "end": "2016-01-18T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0xCF180FB69FC948428DAD393412BE4CBC",
+              "start": "2015-11-09T16:15:00",
+              "end": "2015-11-09T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          },
+          {
+            "attributes": {
+              "gguid": "0x642BD428E18412419BB4AB64D33777FC",
+              "start": "2015-12-14T16:15:00",
+              "end": "2015-12-14T17:45:00",
+              "room": "2356|051"
+            },
+            "keyword": "Data Mining Algorithmen I"
+          }
+        ]
+      }
+    ],
+    "unit": [
+      {
+        "attributes": {
+          "gguid": "0xC25F593568A0D611BDBD0002A5871170",
+          "name": "Lehrstuhl für Informatik 9 (Datenmanagement und -exploration)",
+          "ikz": "122510",
+          "abbr": "i9"
+        },
+        "link": "http://dme.rwth-aachen.de/"
+      }
+    ],
+    "literature": "Will be announced in the lecture.<br />",
+    "info": [
+      {
+        "attributes": {
+          "lang": "gb"
+        },
+        "title": "Data Mining Algorithms I",
+        "description": "Algorithms and concepts for Data Mining in large databases.<br /><br /> \r\n<ul>\r\n<li>Introduction</li>\r\n<li>How to maintain data? - Data Warehousing</li>\r\n<li>How to find frequent patterns? - Mining Association Rules</li>\r\n<li>How to find groups in data? &#8211; Clustering</li>\r\n<li>How to predict class labels? - Classification</li>\r\n<li>How to predict continuous values? &#8211; Regression</li>\r\n<li>How to access data fast? - Indexing Structures for Databases</li>\r\n<li>What else is out there? - Advanced Data Mining Topics</li>\r\n</ul>"
+      },
+      {
+        "attributes": {
+          "lang": "de"
+        },
+        "title": "Data Mining Algorithmen I"
+      }
+    ],
+    "registration": {
+      "attributes": {
+        "mode": "einstufig",
+        "seats": "-1"
+      },
+      "start": "2015-10-20T00:00:00.000Z",
+      "end": "2016-04-05T00:00:00.000Z"
+    },
+    "link": [
+      {
+        "attributes": {
+          "type": "Homepage",
+          "href": "http://dme.rwth-aachen.de/teaching/"
+        }
+      }
+    ],
+    "l2p": {
+      "attributes": {
+        "use": "true",
+        "reset": "false",
+        "lang": "1033"
+      }
+    }
+  }
+}

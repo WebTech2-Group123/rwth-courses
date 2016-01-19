@@ -1,42 +1,87 @@
-// const WSDL = 'http://www.campus.rwth-aachen.de/anonapi/Campus.asmx?WSDL';
-const WSDL_TERM = 'http://www.campus.rwth-aachen.de/anonapi/TermSrv.asmx?WSDL'
+// this does the magic
+const soap = require('soap');
+const log = require('debug')('worker');
+const parser = require('./parser');
+
+// TODO: move to better place
+// make sure not-handled rejected Promises throw an error
+const Promise = require('bluebird');
+process.on("unhandledRejection", function (error) {
+    throw error;
+});
+
+// APIs' endpoints
+const WSDL_TERM = 'http://www.campus.rwth-aachen.de/anonapi/TermSrv.asmx?WSDL';
 const WSDL_FIELD = 'http://www.campus.rwth-aachen.de/anonapi/FieldSrv.asmx?WSDL';
 const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL';
 
-// this does the magic
-var soap = require('soap');
-var Promise = require('bluebird');
-var parser = require('./parser');
+// utils functions
+function getClients() {
 
-Promise.promisifyAll(soap);
+    // make 'soap' library Promise-friendly
+    Promise.promisifyAll(soap);
 
-// Create three different clients
-var clients = [WSDL_TERM, WSDL_FIELD, WSDL_EVENT].map(api => {
-    return soap.createClientAsync(api);
-});
+    // create three different clients
+    const clients = [WSDL_TERM, WSDL_FIELD, WSDL_EVENT]
+        .map(endpoint => soap.createClientAsync(endpoint));
 
-// Wait until all clients are created
-Promise.all(clients)
-    .then(function (arrayOfClients) {
-        // Promisify every single client
-        arrayOfClients.map(client => Promise.promisifyAll(client));
+    // wait until all clients are created
+    return Promise.all(clients)
 
-        const termClient = arrayOfClients[0];
-        const fieldClient = arrayOfClients[1];
-        const eventClient = arrayOfClients[2];
+        // promisify every single client
+        .each(client => Promise.promisifyAll(client));
+}
 
-        // Api-call to CampusOffice for all Semesters
-        termClient.GetAllAsync({})
-            // Select the first two semesters
-            .then(semesters => parser.parseSemesters(semesters))
+function getSemestersList(termClient) {
+    log('Getting semesters list');
+    return termClient.GetAllAsync({});
+}
 
-            // Api-call to CampusOffice to get all fields of a semester
-            .then(semesters => semesters.map(semester => termClient.GetFieldsAsync({'sGuid': semester['gguid']})))
-
-            // Parsing the fields of a semester
-            .map(fields => parser.parseFieldOfStudies(fields))
-
-            .then(function (fields) {
-                console.log(fields);
-            })
+function getStudyFieldsBySemster(termClient, semester) {
+    log('Getting list of study fields for semester: ' + semester.name);
+    return termClient.GetFieldsAsync({
+        'sGuid': semester.gguid
     });
+}
+
+function getSubFields(fieldClient, field) {
+    log('Getting subfields for field: [' + field.gguid + '] ' + field.name);
+    return fieldClient.GetLinkedAsync({
+        'sGuid': field.gguid,
+        'bTree': true,              // get subFields
+        'bIncludeEvents': false     // not useful
+    });
+}
+
+// unwrap clients
+getClients().then(arrayOfClients => {
+
+    // clients for the 3 SOAP endpoints
+    const termClient = arrayOfClients[0];
+    const fieldClient = arrayOfClients[1];
+    const eventClient = arrayOfClients[2];
+
+    // API-call to CampusOffice for all Semesters
+    getSemestersList(termClient)
+
+    // select the first two semesters
+        .then(semesters => parser.parseSemesters(semesters))
+
+        // Api-call to CampusOffice to get all fields of a semester
+        .then(semesters => semesters.map(semester => getStudyFieldsBySemster(termClient, semester)))
+
+        // Parsing the fields of a semester
+        // and request every subfield for it
+        .map(fieldsResponse => {
+            var fields = parser.parseFieldOfStudies(fieldsResponse);
+            return fields.map(field => getSubFields(fieldClient, field));
+        })
+
+        // TODO!
+        .map(subfields => {
+            subfields.forEach(s => {
+                s.then(x => log('Subfield: '));
+            });
+            //console.log(subfields);
+        });
+});

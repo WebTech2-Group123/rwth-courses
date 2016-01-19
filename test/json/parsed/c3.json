@@ -1,0 +1,57 @@
+{
+  "event": {
+    "attributes": {
+      "gguid": "0x547500876381894385A2C13F2A563315",
+      "nr": "15ws-12023",
+      "termname": "WS 2015/2016",
+      "type": "Vorlesung/Übung (VÜ)",
+      "sws": "3+2",
+      "ects": "6",
+      "language": "English",
+      "copy": "true",
+      "vvz": "true",
+      "kvvz": "true",
+      "confirmed": "true",
+      "notpublished": "false"
+    },
+    "literature": "Will be announced in the lecture.<br />",
+    "info": [
+      {
+        "attributes": {
+          "lang": "gb"
+        },
+        "title": "Data Mining Algorithms I",
+        "description": "Algorithms and concepts for Data Mining in large databases.<br /><br /> \r\n<ul>\r\n<li>Introduction</li>\r\n<li>How to maintain data? - Data Warehousing</li>\r\n<li>How to find frequent patterns? - Mining Association Rules</li>\r\n<li>How to find groups in data? &#8211; Clustering</li>\r\n<li>How to predict class labels? - Classification</li>\r\n<li>How to predict continuous values? &#8211; Regression</li>\r\n<li>How to access data fast? - Indexing Structures for Databases</li>\r\n<li>What else is out there? - Advanced Data Mining Topics</li>\r\n</ul>"
+      },
+      {
+        "attributes": {
+          "lang": "de"
+        },
+        "title": "Data Mining Algorithmen I"
+      }
+    ],
+    "registration": {
+      "attributes": {
+        "mode": "einstufig",
+        "seats": "-1"
+      },
+      "start": "2015-10-20T00:00:00.000Z",
+      "end": "2016-04-05T00:00:00.000Z"
+    },
+    "link": [
+      {
+        "attributes": {
+          "type": "Homepage",
+          "href": "http://dme.rwth-aachen.de/teaching/"
+        }
+      }
+    ],
+    "l2p": {
+      "attributes": {
+        "use": "true",
+        "reset": "false",
+        "lang": "1033"
+      }
+    }
+  }
+}

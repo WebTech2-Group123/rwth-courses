@@ -5,11 +5,14 @@
 
 'use strict';
 const utils = require('./utils');
+const log = require('debug')('parser');
 
 /**
  * Parse a Semesters response in an Array of semesters.
  */
 function parseSemesters(result) {
+    log('Parsing semesters list');
+
     return result['GetAllResult']['Term']
         .filter((value, index) => index <= 1)        // .filter -> take only 2 elements of the array
         .map(el => {

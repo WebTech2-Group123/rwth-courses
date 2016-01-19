@@ -2,7 +2,6 @@
 
 // logs
 var log = require('debug')('db');
-var assert = require('assert');
 
 // mongo
 var MongoClient = require('mongodb').MongoClient;
