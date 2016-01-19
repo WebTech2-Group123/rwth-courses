@@ -5,14 +5,20 @@
   "main": "index.js",
   "dependencies": {
     "bluebird": "^3.1.1",
+    "chai": "^3.4.1",
+    "debug": "^2.2.0",
+    "debug-logger": "^0.4.1",
+    "mongodb": "^2.1.4",
     "soap": "^0.11.4"
   },
   "devDependencies": {
+    "istanbul": "^0.4.2",
     "mocha": "^2.3.4"
   },
   "scripts": {
     "start": "node index.js",
-    "test": "mocha"
+    "test": "./node_modules/.bin/mocha",
+    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources"
   },
   "repository": {
     "type": "git",
