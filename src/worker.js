@@ -3,6 +3,8 @@ const soap = require('soap');
 const log = require('debug')('worker');
 const parser = require('./parser');
 
+var Rx = require('rx');
+
 // TODO: move to better place
 // make sure not-handled rejected Promises throw an error
 const Promise = require('bluebird');
@@ -49,7 +51,7 @@ function getSubFields(fieldClient, field) {
     return fieldClient.GetLinkedAsync({
         'sGuid': field.gguid,
         'bTree': true,              // get subFields
-        'bIncludeEvents': false     // not useful
+        'bIncludeEvents': true      // not useful ???
     });
 }
 
@@ -62,34 +64,54 @@ getClients().then(arrayOfClients => {
     const eventClient = arrayOfClients[2];
 
     // API-call to CampusOffice for all Semesters
-    getSemestersList(termClient)
 
-    // select the first two semesters
-        .then(semesters => parser.parseSemesters(semesters))
+    const coursesStream = Rx.Observable.fromPromise(getSemestersList(termClient))
+
+        // select the first two semesters
+        .flatMap(semesters => {
+            return parser.parseSemesters(semesters);
+        })
 
         // Api-call to CampusOffice to get all fields of a semester
-        .map(semester => getStudyFieldsBySemster(termClient, semester))
+        .flatMap(semester => {
+            return getStudyFieldsBySemster(termClient, semester);
+        })
 
         // Parsing the fields of a semester
+        .flatMap(fieldsResponse => {
+            return parser.parseFieldOfStudies(fieldsResponse);
+        })
+
         // and request every subfield for it
-        .map(fieldsResponse => {
-            var fields = parser.parseFieldOfStudies(fieldsResponse);
-            return fields.map(field => getSubFields(fieldClient, field));
-
-
-
+        .flatMap(field => {
+            return getSubFields(fieldClient, field);
         })
 
-        .then(x => {
-            console.log(x);
-        })
-
-
-        // TODO!
-        .map(subfields => {
-            subfields.forEach(s => {
-                s.then(x => log('Subfield: '));
-            });
-            //console.log(subfields);
+        // parse subfields
+        .flatMap(subfieldResponse => {
+            return parser.parseSubFields(subfieldResponse);
         });
+
+
+    //// get courses list
+    //.flatMap(subfield => {
+    //   return
+    //});
+    //
+    //.forEach(x => {
+    //    console.log(x);
+    //});
+
+
+    //// TODO!
+    //.map(subfields => {
+    //    subfields.forEach(s => {
+    //        s.then(x => log('Subfield: '));
+    //    });
+    //    //console.log(subfields);
+    //});
+
+    coursesStream.subscribe(obj => {
+        log('Course [' + obj.gguid + '] -> ' + obj.name);
+    });
 });

@@ -44,14 +44,13 @@ function parseFieldOfStudies(result) {
  * Parse a SubField of Studies response in an Array of SubField of Studies.
  */
 function parseSubFields(result) {
-    return result['field']['subfield']
-        .map(el => {
+    return utils.map(result, 'field', 'subfield', el => {
             var subfield = el['attributes'];
             return {
                 gguid: subfield['gguid'],
                 name: subfield['name']
             }
-        });
+        }) || [];
 }
 
 /**
