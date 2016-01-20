@@ -68,14 +68,22 @@ getClients().then(arrayOfClients => {
         .then(semesters => parser.parseSemesters(semesters))
 
         // Api-call to CampusOffice to get all fields of a semester
-        .then(semesters => semesters.map(semester => getStudyFieldsBySemster(termClient, semester)))
+        .map(semester => getStudyFieldsBySemster(termClient, semester))
 
         // Parsing the fields of a semester
         // and request every subfield for it
         .map(fieldsResponse => {
             var fields = parser.parseFieldOfStudies(fieldsResponse);
             return fields.map(field => getSubFields(fieldClient, field));
+
+
+
         })
+
+        .then(x => {
+            console.log(x);
+        })
+
 
         // TODO!
         .map(subfields => {
