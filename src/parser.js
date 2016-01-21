@@ -57,8 +57,7 @@ function parseSubFields(result) {
  * Parse a list of Courses response in an Array of GGUIDs.
  */
 function parseCoursesList(result) {
-    return result['field']['event']
-        .map(course => course['attributes']['gguid']);
+    return utils.map(result, 'field', 'event', course => course['attributes']['gguid']) || [];
 }
 
 /**
@@ -98,6 +97,8 @@ function parseCourseDetails(result) {
                 website: utils.map(contact, 'www', website => website['attributes']['href'])
             }
         }).filter(contact => contact.name !== 'Stundenplaner'),
+
+        // seminars do not have this field!
         events: event['periodical'].map(el => {
             var appointment = el['appointment'][0]['attributes'];
             return {

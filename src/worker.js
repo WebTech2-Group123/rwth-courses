@@ -55,6 +55,26 @@ function getSubFields(fieldClient, field) {
     });
 }
 
+function getCoursesBySubfiled(fieldClient, subfield) {
+    log('Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name);
+    return fieldClient.GetLinkedAsync({
+        'sGuid': subfield.gguid,
+        'bTree': true,
+        'bIncludeEvents': true
+    });
+}
+
+function getCourseDetails(eventClient, courseGGUID) {
+    log('Getting course details for course: [' + courseGGUID + '] ');
+    return eventClient.GetLinkedAsync({
+        'sEvtSpec': courseGGUID,
+        'bIncludeFields': true,
+        'bIncludeAdresses': true,
+        'bIncludeAppointments': true,
+        'bIncludeUnits': true
+    });
+}
+
 // unwrap clients
 getClients().then(arrayOfClients => {
 
@@ -64,36 +84,70 @@ getClients().then(arrayOfClients => {
     const eventClient = arrayOfClients[2];
 
     // API-call to CampusOffice for all Semesters
-
-    const coursesStream = Rx.Observable.fromPromise(getSemestersList(termClient))
+    Rx.Observable.fromPromise(getSemestersList(termClient))
 
         // select the first two semesters
         .flatMap(semesters => {
             return parser.parseSemesters(semesters);
         })
 
+        .first()
+
         // Api-call to CampusOffice to get all fields of a semester
         .flatMap(semester => {
             return getStudyFieldsBySemster(termClient, semester);
         })
+
+        .first()
 
         // Parsing the fields of a semester
         .flatMap(fieldsResponse => {
             return parser.parseFieldOfStudies(fieldsResponse);
         })
 
+        .first()
+
         // and request every subfield for it
         .flatMap(field => {
             return getSubFields(fieldClient, field);
         })
 
+        .first()
+
         // parse subfields
         .flatMap(subfieldResponse => {
             return parser.parseSubFields(subfieldResponse);
+        })
+
+        // request courses for each subfield
+        .flatMap(subfiled => {
+            return getCoursesBySubfiled(fieldClient, subfiled);
+        })
+
+        // parse courses
+        .flatMap(coursesResponse => {
+            return parser.parseCoursesList(coursesResponse);
+        })
+
+        // get details
+        .flatMap(courseGGUID => {
+            return getCourseDetails(eventClient, courseGGUID);
+        })
+
+        // parse details
+        .map(courseDetailsResponse => {
+            return parser.parseCourseDetails(courseDetailsResponse);
+        })
+
+        // get courses
+        .subscribe(obj => {
+            log('Course [' + obj.gguid + '] -> ' + obj.name);
         });
 
 
-    //// get courses list
+    //// get course
+    //
+    // s list
     //.flatMap(subfield => {
     //   return
     //});
@@ -111,7 +165,4 @@ getClients().then(arrayOfClients => {
     //    //console.log(subfields);
     //});
 
-    coursesStream.subscribe(obj => {
-        log('Course [' + obj.gguid + '] -> ' + obj.name);
-    });
 });
