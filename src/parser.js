@@ -99,7 +99,7 @@ function parseCourseDetails(result) {
         }).filter(contact => contact.name !== 'Stundenplaner'),
 
         // seminars do not have this field!
-        events: event['periodical'].map(el => {
+        events: utils.map(event, 'periodical', el => {
             var appointment = el['appointment'][0]['attributes'];
             return {
                 gguid: el['gguid'],

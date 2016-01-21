@@ -144,25 +144,4 @@ getClients().then(arrayOfClients => {
             log('Course [' + obj.gguid + '] -> ' + obj.name);
         });
 
-
-    //// get course
-    //
-    // s list
-    //.flatMap(subfield => {
-    //   return
-    //});
-    //
-    //.forEach(x => {
-    //    console.log(x);
-    //});
-
-
-    //// TODO!
-    //.map(subfields => {
-    //    subfields.forEach(s => {
-    //        s.then(x => log('Subfield: '));
-    //    });
-    //    //console.log(subfields);
-    //});
-
 });
