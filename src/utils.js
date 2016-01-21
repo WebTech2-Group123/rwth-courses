@@ -1,3 +1,9 @@
+'use strict';
+
+/*
+ * Some utilities to safely parse unknown objects.
+ */
+
 // NB: we do not use 'var args = Array.prototype.slice.call(arguments)'
 // see https://github.com/petkaantonov/bluebird/wiki/Optimization-killers#32-leaking-arguments
 exports.get = function (obj) {

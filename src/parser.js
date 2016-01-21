@@ -1,9 +1,10 @@
+'use strict';
+
 /*
  * Module that contains all function to parse
- * the CampusOffice APIs' reponses.
+ * the CampusOffice APIs' responses.
  */
 
-'use strict';
 const utils = require('./utils');
 const log = require('debug')('parser');
 
