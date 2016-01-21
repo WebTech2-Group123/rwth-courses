@@ -70,17 +70,23 @@ function parseCourseDetails(result) {
 
     return {
         gguid: event['attributes']['gguid'],
+        name: event['info'][0]['title'],
         ects: event['attributes']['ects'],
         language: event['attributes']['language'],
         semester: event['attributes']['termname'],
         type: event['attributes']['type'],
+        details: {
+            description: event['info'][0]['description'],
+            test: event['test'],
+            prereq: event['prereq'],
+            follow: event['follow'],
+            note: event['note']
+        },
         contact: event['address'].map(contact => {
             return {
-                title: contact['titlefront'],
                 surname: contact['christianname'],
                 name: contact['name'],
-                mail: contact['mail'].map(mail => mail['attributes']['mail']),
-                phone: contact['phone'].map(phone => phone['attributes']['number']),
+                mail: contact['mail'][0]['attributes']['mail'],
                 address: {
                     department: utils.get(contact, 'work', 'company2'),
                     street: utils.get(contact, 'work', 'street'),
@@ -92,7 +98,7 @@ function parseCourseDetails(result) {
                 consultationhour: utils.get(contact, 'consultationhour'),
                 website: utils.map(contact, 'www', website => website['attributes']['href'])
             }
-        }),
+        }).filter(contact => contact.name !== 'Stundenplaner'),
         events: event['periodical'].map(el => {
             var appointment = el['appointment'][0]['attributes'];
             return {
