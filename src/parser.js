@@ -8,6 +8,9 @@
 const utils = require('./utils');
 const log = require('debug')('parser');
 
+// TODO: remove
+const warnings = require('debug')('parser-warnings');
+
 /**
  * Parse a Semesters response in an Array of semesters.
  */
@@ -55,10 +58,22 @@ function parseSubFields(result) {
 }
 
 /**
- * Parse a list of Courses response in an Array of GGUIDs.
+ * Parse a list of Courses response in an Array of courses
+ * (with only gguid and a couple of other attributes).
  */
 function parseCoursesList(result) {
-    return utils.map(result, 'field', 'event', course => course['attributes']['gguid']) || [];
+
+    if (typeof result['field']['event'] == 'undefined') {
+        warnings('WARNING -> ' + JSON.stringify(result));
+    }
+
+    return utils.map(result, 'field', 'event', course => {
+            return {
+                gguid: course['attributes']['gguid'],
+                name: course['info'][0]['title'],
+                type: course['attributes']['type']
+            }
+        }) || [];
 }
 
 /**
@@ -66,6 +81,10 @@ function parseCoursesList(result) {
  */
 function parseCourseDetails(result) {
     var event = result['event'];
+
+    // TODO!
+    // NB: some courses miss contact
+    // NB: some courses miss contact.email
 
     return {
         gguid: event['attributes']['gguid'],
@@ -81,11 +100,11 @@ function parseCourseDetails(result) {
             follow: event['follow'],
             note: event['note']
         },
-        contact: event['address'].map(contact => {
+        contact: utils.map(event, 'address', contact => {
             return {
                 surname: contact['christianname'],
                 name: contact['name'],
-                mail: contact['mail'][0]['attributes']['mail'],
+                mail: utils.get(contact, 'mail') && contact['mail'][0]['attributes']['mail'],
                 address: {
                     department: utils.get(contact, 'work', 'company2'),
                     street: utils.get(contact, 'work', 'street'),

@@ -64,10 +64,10 @@ function getCoursesBySubfiled(fieldClient, subfield) {
     });
 }
 
-function getCourseDetails(eventClient, courseGGUID) {
-    log('Getting course details for course: [' + courseGGUID + '] ');
+function getCourseDetails(eventClient, course) {
+    log('Getting course details for course: [' + course.gguid + '] ' + course.name);
     return eventClient.GetLinkedAsync({
-        'sEvtSpec': courseGGUID,
+        'sEvtSpec': course.gguid,
         'bIncludeFields': true,
         'bIncludeAdresses': true,
         'bIncludeAppointments': true,
@@ -91,28 +91,27 @@ getClients().then(arrayOfClients => {
             return parser.parseSemesters(semesters);
         })
 
-        .first()
-
         // Api-call to CampusOffice to get all fields of a semester
         .flatMap(semester => {
             return getStudyFieldsBySemster(termClient, semester);
         })
-
-        .first()
 
         // Parsing the fields of a semester
         .flatMap(fieldsResponse => {
             return parser.parseFieldOfStudies(fieldsResponse);
         })
 
-        .first()
+        // TODO: remove
+        //.first()
+        .take(30)
 
         // and request every subfield for it
         .flatMap(field => {
             return getSubFields(fieldClient, field);
         })
 
-        .first()
+        // TODO: remove
+        .take(30)
 
         // parse subfields
         .flatMap(subfieldResponse => {
@@ -129,9 +128,14 @@ getClients().then(arrayOfClients => {
             return parser.parseCoursesList(coursesResponse);
         })
 
+        // remove exams
+        .filter(course => {
+            return course.type !== 'Klausur (Kl)';
+        })
+
         // get details
-        .flatMap(courseGGUID => {
-            return getCourseDetails(eventClient, courseGGUID);
+        .flatMap(course => {
+            return getCourseDetails(eventClient, course);
         })
 
         // parse details
@@ -140,8 +144,13 @@ getClients().then(arrayOfClients => {
         })
 
         // get courses
-        .subscribe(obj => {
-            log('Course [' + obj.gguid + '] -> ' + obj.name);
+        .subscribe(courseDetails => {
+            log('Course [' + courseDetails.gguid + '] -> ' + '(' + courseDetails.type + ') ' + courseDetails.name);
+
+            // TODO: abstracte exams -> https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=0xC614382FF182EA4FBFB2110F82F55400
+            if (typeof courseDetails.type == 'undefined') {
+                console.log('WARN -> ' + JSON.stringify(courseDetails));
+            }
         });
 
 });

@@ -31,11 +31,7 @@ const SUB_FIELD = {
 
 // courses list
 const COURSES_LIST_RESPONSE = require('./json/responses/courses');
-const COURSES_GGUIDS = [
-    '0x008FFF190AD4614A8BBF5592EABB52AF',
-    '0x0144A6E4B414274EAD37B7631F2B088F',
-    '0x0251387029BED343932B2092EBD3FBDA'
-];
+const COURSES_LIST = require('./json/parsed/courses');
 
 // course details
 const COURSE_DETAILS_RESPONSE = require('./json/responses/course');
@@ -71,7 +67,7 @@ describe('parser.js', function () {
         describe('#parseCoursesList()', function () {
             it('should return an array of GGUIDs of courses for a specific subfield of study', function () {
                 const courses = parser.parseCoursesList(COURSES_LIST_RESPONSE);
-                assert.deepEqual(courses, COURSES_GGUIDS);
+                assert.deepEqual(courses, COURSES_LIST);
             })
         });
 
