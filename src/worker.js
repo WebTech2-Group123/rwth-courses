@@ -51,8 +51,8 @@ function getSubFields(fieldClient, field) {
     log('Getting subfields for field: [' + field.gguid + '] ' + field.name);
     return fieldClient.GetLinkedAsync({
         'sGuid': field.gguid,
-        'bTree': true,              // get subFields
-        'bIncludeEvents': true      // not useful ???
+        'bTree': true,              // tree of subfields
+        'bIncludeEvents': true      // courses without subfield
     });
 }
 
@@ -60,8 +60,8 @@ function getCoursesBySubfiled(fieldClient, subfield) {
     log('Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name);
     return fieldClient.GetLinkedAsync({
         'sGuid': subfield.gguid,
-        'bTree': true,
-        'bIncludeEvents': true
+        'bTree': false,             // we do not need the tree of subfields (handled before)
+        'bIncludeEvents': true      // get courses
     });
 }
 
@@ -104,19 +104,38 @@ Promise.all([getClients(), getCleanDB()]).then(promises => {
 
         // for each semester -> get all fields
         .map(semester => {
-            return getStudyFieldsBySemster(termClient, semester).then(fieldsListResult => {
+            return getStudyFieldsBySemster(termClient, semester).then(fieldsListResponse => {
 
                 // parse raw response with list of fields
-                var fields = parser.parseFieldOfStudies(fieldsListResult);
+                var fields = parser.parseFieldOfStudies(fieldsListResponse);
 
-                // ask the fields
+                // for each field -> request the subfields
                 fields.forEach(field => {
 
-                    // get subfields
+                    // api call
+                    getSubFields(fieldClient, field).then(subfieldsResponse => {
 
+                        // parse response
+                        var temp = parser.parseSubFields(subfieldsResponse);
 
+                        // raw courses
+                        var coursesWithoutSubfield = temp.courses;
+
+                        // subfields
+                        var subfields = temp.subfields;
+
+                        // for each subfield -> request list of courses
+                        subfields.forEach(subfield => {
+
+                            // api call
+                            getCoursesBySubfiled(fieldClient, subfield).then(coursesListResponse => {
+
+                                var alex = 'Julian';
+
+                            });
+                        });
+                    });
                 });
-
             });
         })
 
