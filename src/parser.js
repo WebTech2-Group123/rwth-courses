@@ -67,13 +67,18 @@ function parseCoursesList(result) {
         warnings('WARNING -> ' + JSON.stringify(result));
     }
 
-    return utils.map(result, 'field', 'event', course => {
+    var courses = utils.map(result, 'field', 'event', course => {
             return {
                 gguid: course['attributes']['gguid'],
                 name: course['info'][0]['title'],
                 type: course['attributes']['type']
             }
         }) || [];
+
+    // remove exams
+    return courses.filter(course => {
+        return course.type !== 'Klausur (Kl)';
+    });
 }
 
 /**
@@ -100,7 +105,7 @@ function parseCourseDetails(result) {
             follow: event['follow'],
             note: event['note']
         },
-        contact: utils.map(event, 'address', contact => {
+        contact: (utils.map(event, 'address', contact => {
             return {
                 surname: contact['christianname'],
                 name: contact['name'],
@@ -116,7 +121,7 @@ function parseCourseDetails(result) {
                 consultationhour: utils.get(contact, 'consultationhour'),
                 website: utils.map(contact, 'www', website => website['attributes']['href'])
             }
-        }).filter(contact => contact.name !== 'Stundenplaner'),
+        }) || []).filter(contact => contact.name !== 'Stundenplaner'),
 
         // seminars do not have this field!
         events: utils.map(event, 'periodical', el => {

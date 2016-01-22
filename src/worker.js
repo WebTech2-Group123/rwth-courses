@@ -2,6 +2,7 @@
 const soap = require('soap');
 const log = require('debug')('worker');
 const parser = require('./parser');
+const mongo = require('./mongo');
 
 var Rx = require('rx');
 
@@ -75,16 +76,32 @@ function getCourseDetails(eventClient, course) {
     });
 }
 
+function getCleanDB() {
+    return mongo.createClient().then(db => {
+        return db.renameTempCourses().then(_ => db);
+    })
+}
+
+// TODO: remove
+const N = 30;
+
 // unwrap clients
-getClients().then(arrayOfClients => {
+Promise.all([
+    getClients()
+    , getCleanDB()
+]).then(promises => {
+
+    // unwrap mongo
+    const db = promises[1];
 
     // clients for the 3 SOAP endpoints
+    const arrayOfClients = promises[0];
     const termClient = arrayOfClients[0];
     const fieldClient = arrayOfClients[1];
     const eventClient = arrayOfClients[2];
 
     // API-call to CampusOffice for all Semesters
-    Rx.Observable.fromPromise(getSemestersList(termClient))
+    const coursesStream = Rx.Observable.fromPromise(getSemestersList(termClient))
 
         // select the first two semesters
         .flatMap(semesters => {
@@ -102,8 +119,9 @@ getClients().then(arrayOfClients => {
         })
 
         // TODO: remove
-        //.first()
-        .take(30)
+        .take(N)
+
+        .throttle(1)
 
         // and request every subfield for it
         .flatMap(field => {
@@ -111,7 +129,9 @@ getClients().then(arrayOfClients => {
         })
 
         // TODO: remove
-        .take(30)
+        .take(N)
+
+        //.throttle(10)
 
         // parse subfields
         .flatMap(subfieldResponse => {
@@ -128,11 +148,6 @@ getClients().then(arrayOfClients => {
             return parser.parseCoursesList(coursesResponse);
         })
 
-        // remove exams
-        .filter(course => {
-            return course.type !== 'Klausur (Kl)';
-        })
-
         // get details
         .flatMap(course => {
             return getCourseDetails(eventClient, course);
@@ -141,16 +156,28 @@ getClients().then(arrayOfClients => {
         // parse details
         .map(courseDetailsResponse => {
             return parser.parseCourseDetails(courseDetailsResponse);
-        })
-
-        // get courses
-        .subscribe(courseDetails => {
-            log('Course [' + courseDetails.gguid + '] -> ' + '(' + courseDetails.type + ') ' + courseDetails.name);
-
-            // TODO: abstracte exams -> https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=0xC614382FF182EA4FBFB2110F82F55400
-            if (typeof courseDetails.type == 'undefined') {
-                console.log('WARN -> ' + JSON.stringify(courseDetails));
-            }
         });
+
+    // get courses
+    coursesStream.subscribe(courseDetails => {
+        log('Course [' + courseDetails.gguid + '] -> ' + '(' + courseDetails.type + ') ' + courseDetails.name);
+
+        // TODO: abstracte exams -> https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=0xC614382FF182EA4FBFB2110F82F55400
+        if (typeof courseDetails.type == 'undefined') {
+            console.log('WARN -> ' + JSON.stringify(courseDetails));
+        }
+
+        // save in mongo
+        db.insertCourse(courseDetails);
+    });
+
+    coursesStream.subscribeOnCompleted(() => {
+        console.log('========> subscribeOnCompleted');
+
+        // TODO -> better
+        setTimeout(() => db.db.close(), 3000);
+
+    })
+
 
 });
