@@ -94,6 +94,8 @@ Mongo.prototype.renameTempCourses = function () {
 
 // insert a course (temp)
 Mongo.prototype.insertCourse = function (course) {
+    log('Inserting course: ' + course.gguid);
+
     return this.coursesTemp.updateOne({gguid: course.gguid}, course, {upsert: true})
         .then(result => {
             if (result.upsertedCount == 1) {
