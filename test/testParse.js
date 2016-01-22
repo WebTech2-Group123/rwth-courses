@@ -19,15 +19,13 @@ const FIELDS_RESPONSE = require('./json/responses/fields');
 const FIELD = {
     gguid: '0x5A266C5046CF0E46AFFEBA62F34B5F85',
     name: 'Architektur (D)',
-    semester: 'WS 2015/2016'
+    semester: 'WS 2015/2016',
+    group: "Diplomstudiengänge (D)"
 };
 
 // subfields
-const SUB_FIELD_RESPONSE = require('./json/responses/subfields');
-const SUB_FIELD = {
-    gguid: '0x614EBE7FF82A6A4E9961C73D0E8FD225',
-    name: 'Theoretische Informatik'
-};
+const SUB_FIELDS_RESPONSE = require('./json/responses/subfields');
+const SUB_FIELDS_PARSED = require('./json/parsed/subfields');
 
 // courses list
 const COURSES_LIST_RESPONSE = require('./json/responses/courses');
@@ -58,9 +56,8 @@ describe('parser.js', function () {
 
         describe('#parseSubFields()', function () {
             it('should return an array of subfields of specific field of study', function () {
-                const subfields = parser.parseSubFields(SUB_FIELD_RESPONSE);
-                assert.deepEqual(subfields[0], SUB_FIELD);
-                assert.equal(subfields.length, 6);
+                const subfields = parser.parseSubFields(SUB_FIELDS_RESPONSE);
+                assert.deepEqual(subfields, SUB_FIELDS_PARSED);
             })
         });
 

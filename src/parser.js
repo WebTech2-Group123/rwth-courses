@@ -39,22 +39,77 @@ function parseFieldOfStudies(result) {
             return {
                 gguid: field['gguid'],
                 name: field['name'],
-                semester: field['termname']
+                semester: field['termname'],
+                group: el['group']
             }
         });
 }
+
+function getSubfields(subfield) {
+    if (typeof subfield === 'undefined') {
+        return [];
+    } else {
+        var accumulator = [];
+
+        subfield.forEach(element => {
+
+            // add current subfield
+            var current = {
+                gguid: element['attributes']['gguid'],
+                name: element['attributes']['name'],
+                semester: element['attributes']['termname'],
+                path: element['path']
+            };
+            accumulator.push(current);
+
+            // get sub-sub-fields recursive
+            var subsubfields = getSubfields(element['subfield']);
+            accumulator = accumulator.concat(subsubfields);
+        });
+
+        return accumulator;
+    }
+}
+
+//function getSubfields(subfield, accumulator) {
+//    if (typeof subfield === 'undefined') {
+//        return [];
+//    } else {
+//        subfield.forEach(element => {
+//
+//            // add current subfield
+//            accumulator.push({
+//                gguid: element['attributes']['gguid'],
+//                name: element['attributes']['name'],
+//                semester: element['attributes']['termname'],
+//                path: element['path']
+//            });
+//
+//            // get sub-sub-fields recursive
+//            var subsubfields = getSubfields(element['subfield'], accumulator);
+//            accumulator.concat(subsubfields);
+//        });
+//
+//        return accumulator;
+//    }
+//}
 
 /**
  * Parse a SubField of Studies response in an Array of SubField of Studies.
  */
 function parseSubFields(result) {
-    return utils.map(result, 'field', 'subfield', el => {
-            var subfield = el['attributes'];
-            return {
-                gguid: subfield['gguid'],
-                name: subfield['name']
-            }
-        }) || [];
+    return {
+        courses: result['field']['event'],
+        subfields: getSubfields(result['field']['subfield'])
+    };
+
+    //var old = utils.map(result, 'field', 'subfield', el => {
+    //        var subfield = el['attributes'];
+    //        return {
+    //            gguid: subfield['gguid'],
+    //            name: subfield['name']
+    //        }
+    //    }) || [];
 }
 
 /**

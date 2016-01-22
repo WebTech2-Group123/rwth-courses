@@ -4,7 +4,7 @@ const log = require('debug')('worker');
 const parser = require('./parser');
 const mongo = require('./mongo');
 
-var Rx = require('rx');
+const info = require('debug')('info');
 
 // TODO: move to better place
 // make sure not-handled rejected Promises throw an error
@@ -82,14 +82,8 @@ function getCleanDB() {
     })
 }
 
-// TODO: remove
-const N = 30;
-
 // unwrap clients
-Promise.all([
-    getClients()
-    , getCleanDB()
-]).then(promises => {
+Promise.all([getClients(), getCleanDB()]).then(promises => {
 
     // unwrap mongo
     const db = promises[1];
@@ -101,83 +95,120 @@ Promise.all([
     const eventClient = arrayOfClients[2];
 
     // API-call to CampusOffice for all Semesters
-    const coursesStream = Rx.Observable.fromPromise(getSemestersList(termClient))
+    getSemestersList(termClient)
 
-        // select the first two semesters
-        .flatMap(semesters => {
+    // select the first two semesters
+        .then(semesters => {
             return parser.parseSemesters(semesters);
         })
 
-        // Api-call to CampusOffice to get all fields of a semester
-        .flatMap(semester => {
-            return getStudyFieldsBySemster(termClient, semester);
-        })
+        // for each semester -> get all fields
+        .map(semester => {
+            return getStudyFieldsBySemster(termClient, semester).then(fieldsListResult => {
 
-        // Parsing the fields of a semester
-        .flatMap(fieldsResponse => {
-            return parser.parseFieldOfStudies(fieldsResponse);
+                // parse raw response with list of fields
+                var fields = parser.parseFieldOfStudies(fieldsListResult);
+
+                // ask the fields
+                fields.forEach(field => {
+
+                    // get subfields
+
+
+                });
+
+            });
         })
 
         // TODO: remove
-        .take(N)
-
-        .throttle(1)
-
-        // and request every subfield for it
-        .flatMap(field => {
-            return getSubFields(fieldClient, field);
-        })
-
-        // TODO: remove
-        .take(N)
-
-        //.throttle(10)
-
-        // parse subfields
-        .flatMap(subfieldResponse => {
-            return parser.parseSubFields(subfieldResponse);
-        })
-
-        // request courses for each subfield
-        .flatMap(subfiled => {
-            return getCoursesBySubfiled(fieldClient, subfiled);
-        })
-
-        // parse courses
-        .flatMap(coursesResponse => {
-            return parser.parseCoursesList(coursesResponse);
-        })
-
-        // get details
-        .flatMap(course => {
-            return getCourseDetails(eventClient, course);
-        })
-
-        // parse details
-        .map(courseDetailsResponse => {
-            return parser.parseCourseDetails(courseDetailsResponse);
+        .then(() => {
+            db.db.close();
         });
 
-    // get courses
-    coursesStream.subscribe(courseDetails => {
-        log('Course [' + courseDetails.gguid + '] -> ' + '(' + courseDetails.type + ') ' + courseDetails.name);
+    //    // parser.parseFieldOfStudies(fieldsResponse).filter(f=> f.name.indexOf('M.Sc') >= 0 || f.name.indexOf('B.Sc') >= 0).filter(f => f.name.indexOf('Infor') >= 0).map(f=> f.name)
+    //
 
-        // TODO: abstracte exams -> https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=0xC614382FF182EA4FBFB2110F82F55400
-        if (typeof courseDetails.type == 'undefined') {
-            console.log('WARN -> ' + JSON.stringify(courseDetails));
-        }
 
-        // save in mongo
-        db.insertCourse(courseDetails);
-    });
-
-    coursesStream.subscribeOnCompleted(() => {
-        console.log('========> subscribeOnCompleted');
-
-        // TODO -> better
-        setTimeout(() => db.db.close(), 3000);
-
-    })
+    //    // Parsing the fields of a semester
+    //    .flatMap(fieldsResponse => {
+    //        return parser.parseFieldOfStudies(fieldsResponse);
+    //    })
+    //
+    //    // take only B.Sc and M.Sc
+    //    // .filter(f=> f.name.indexOf('M.Sc') >= 0 || f.name.indexOf('B.Sc') >= 0)
+    //
+    //    // TODO: remove
+    //    .filter(f => {
+    //        return f.name.indexOf('Informatik') == 0;
+    //    });
+    //
+    //// and request every subfield for it
+    //const subfieldsStream = fieldsStream.flatMap(field => {
+    //        return getSubFields(fieldClient, field);
+    //    })
+    //
+    //    // parse subfields
+    //    .flatMap(subfieldResponse => {
+    //        return parser.parseSubFields(subfieldResponse);
+    //    });
+    //
+    //
+    //// request courses for each subfield
+    //const coursesListStream = subfieldsStream.flatMap(subfiled => {
+    //        return getCoursesBySubfiled(fieldClient, subfiled);
+    //    })
+    //
+    //    // parse courses
+    //    .flatMap(coursesResponse => {
+    //        return parser.parseCoursesList(coursesResponse);
+    //    });
+    //
+    //
+    //// get details
+    //const coursesDetailsStream = coursesListStream.flatMap(course => {
+    //        return getCourseDetails(eventClient, course);
+    //    })
+    //
+    //    // parse details
+    //    .map(courseDetailsResponse => {
+    //        return parser.parseCourseDetails(courseDetailsResponse);
+    //    });
+    //
+    //// get courses
+    //coursesDetailsStream.subscribe(courseDetails => {
+    //    log('Course [' + courseDetails.gguid + '] -> ' + '(' + courseDetails.type + ') ' + courseDetails.name);
+    //
+    //    // TODO: abstracte exams -> https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=0xC614382FF182EA4FBFB2110F82F55400
+    //    if (typeof courseDetails.type == 'undefined') {
+    //        console.log('WARN -> ' + JSON.stringify(courseDetails));
+    //    }
+    //
+    //    // save in mongo
+    //    db.insertCourse(courseDetails);
+    //});
+    //
+    ////semestersStream.subscribeOnCompleted(() => {
+    ////    info('SEMESTERS -> complete');
+    ////});
+    ////
+    ////fieldsStream.subscribeOnCompleted(() => {
+    ////    info('FIELDS -> complete');
+    ////});
+    ////
+    ////subfieldsStream.subscribeOnCompleted(() => {
+    ////    info('SUBFIELDS -> complete');
+    ////});
+    ////
+    ////coursesListStream.subscribeOnCompleted(() => {
+    ////    info('COURSES LIST -> complete');
+    ////});
+    //
+    ////coursesDetailsStream.subscribeOnCompleted(() => {
+    ////    info('COURSES DETAILS -> complete');
+    ////
+    ////    // TODO -> better
+    ////    setTimeout(() => db.db.close(), 3000);
+    ////});
 
 
 });

@@ -60,39 +60,6 @@
       },
       {
         "attributes": {
-          "gguid": "0x3CCB5D7BDC7AB6498ED7EF758ABFF60E",
-          "parent": "0x04FA11478F05804CA71DBF7573B80160",
-          "name": "Software und Kommunikation",
-          "termname": "WS 2015/2016"
-        },
-        "group": "Master of Science (M.Sc.)",
-        "fieldname": "Informatik (M.Sc.)",
-        "path": "Software und Kommunikation"
-      },
-      {
-        "attributes": {
-          "gguid": "0x50EFF8C3BB25FD40AEF861C09AC91085",
-          "parent": "0x04FA11478F05804CA71DBF7573B80160",
-          "name": "Daten- und Informationsmanagement",
-          "termname": "WS 2015/2016"
-        },
-        "group": "Master of Science (M.Sc.)",
-        "fieldname": "Informatik (M.Sc.)",
-        "path": "Daten- und Informationsmanagement"
-      },
-      {
-        "attributes": {
-          "gguid": "0xE58DDCB978840545804E19AD80F4C49F",
-          "parent": "0x04FA11478F05804CA71DBF7573B80160",
-          "name": "Angewandte Informatik",
-          "termname": "WS 2015/2016"
-        },
-        "group": "Master of Science (M.Sc.)",
-        "fieldname": "Informatik (M.Sc.)",
-        "path": "Angewandte Informatik"
-      },
-      {
-        "attributes": {
           "gguid": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
           "parent": "0x04FA11478F05804CA71DBF7573B80160",
           "name": "Anwendungsfächer",
@@ -111,83 +78,6 @@
             "group": "Master of Science (M.Sc.)",
             "fieldname": "Informatik (M.Sc.)",
             "path": "Anwendungsfächer/Biologie"
-          },
-          {
-            "attributes": {
-              "gguid": "0x4AA276222301AF4FB0CF35175F81A0F3",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Betriebswirtschaftslehre",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Betriebswirtschaftslehre"
-          },
-          {
-            "attributes": {
-              "gguid": "0x1780693D038BAF47A6C931E8909AA72F",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Elektrotechnik",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Elektrotechnik"
-          },
-          {
-            "attributes": {
-              "gguid": "0x499FB7BF1F6F07499892DC32E6509747",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Mathematik",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Mathematik"
-          },
-          {
-            "attributes": {
-              "gguid": "0x5214C3C4C80C5C4FA470F83DAB19FEB3",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Maschinenbau",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Maschinenbau"
-          },
-          {
-            "attributes": {
-              "gguid": "0x12832CC7CE71C940B949826F9BBA8616",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Medizin",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Medizin"
-          },
-          {
-            "attributes": {
-              "gguid": "0x8A61CD534921F148A7FF5F897A623737",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Physik",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Physik"
-          },
-          {
-            "attributes": {
-              "gguid": "0xDDE6604347C76046BBA3F5826095CA31",
-              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-              "name": "Philosophie",
-              "termname": "WS 2015/2016"
-            },
-            "group": "Master of Science (M.Sc.)",
-            "fieldname": "Informatik (M.Sc.)",
-            "path": "Anwendungsfächer/Philosophie"
           }
         ],
         "path": "Anwendungsfächer"
