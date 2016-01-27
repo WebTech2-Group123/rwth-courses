@@ -1,0 +1,12 @@
+[
+  {
+    "gguid": "0x008FFF190AD4614A8BBF5592EABB52AF",
+    "name": "Seminar Computational Complexity Theory",
+    "type": "Seminar (S)"
+  },
+  {
+    "gguid": "0x0144A6E4B414274EAD37B7631F2B088F",
+    "name": "Term Rewriting Systems",
+    "type": "Vorlesung (V)"
+  }
+]

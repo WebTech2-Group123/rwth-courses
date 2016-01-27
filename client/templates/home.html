@@ -1,0 +1,20 @@
+<md-radio-group ng-model="selected">
+    <md-radio-button ng-repeat="semester in semesters" ng-value="semester" aria-label="{{ semester }}">
+        {{ semester }}
+    </md-radio-button>
+</md-radio-group>
+
+<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                 md-item-text="field" placeholder="Enter your field of study..." md-min-length="0"
+                 md-items="field in querySearch(searchText)">
+
+    <md-item-template>
+        <span md-highlight-text="searchText">{{field}}</span>
+    </md-item-template>
+
+    <md-not-found>
+        No matches found.
+    </md-not-found>
+</md-autocomplete>
+
+<md-button class="md-raised" ng-click="getCourseList(selected, searchText)">Search</md-button>

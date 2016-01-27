@@ -1,0 +1,60 @@
+{
+  "field": {
+    "attributes": {
+      "gguid": "0x04FA11478F05804CA71DBF7573B80160",
+      "name": "Informatik (M.Sc.)",
+      "termname": "WS 2015/2016"
+    },
+    "group": "Master of Science (M.Sc.)",
+    "fieldname": "Informatik (M.Sc.)",
+    "email": "master@informatik.rwth-aachen.de",
+    "subfield": [
+      {
+        "attributes": {
+          "gguid": "0x614EBE7FF82A6A4E9961C73D0E8FD225",
+          "parent": "0x04FA11478F05804CA71DBF7573B80160",
+          "name": "Theoretische Informatik",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Informatik (M.Sc.)",
+        "path": "Theoretische Informatik"
+      },
+      {
+        "attributes": {
+          "gguid": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
+          "parent": "0x04FA11478F05804CA71DBF7573B80160",
+          "name": "Anwendungsfächer",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Informatik (M.Sc.)",
+        "subfield": [
+          {
+            "attributes": {
+              "gguid": "0x3174786BC014774C9EB96D42EC160704",
+              "parent": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
+              "name": "Biologie",
+              "termname": "WS 2015/2016"
+            },
+            "group": "Master of Science (M.Sc.)",
+            "fieldname": "Informatik (M.Sc.)",
+            "path": "Anwendungsfächer/Biologie"
+          }
+        ],
+        "path": "Anwendungsfächer"
+      },
+      {
+        "attributes": {
+          "gguid": "0x95C39BAE6C0BEA4982AC283EB2FE0051",
+          "parent": "0x04FA11478F05804CA71DBF7573B80160",
+          "name": "Zusatzveranstaltungen",
+          "termname": "WS 2015/2016"
+        },
+        "group": "Master of Science (M.Sc.)",
+        "fieldname": "Informatik (M.Sc.)",
+        "path": "Zusatzveranstaltungen"
+      }
+    ]
+  }
+}

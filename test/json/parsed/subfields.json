@@ -1,0 +1,32 @@
+[
+  {
+    "gguid": "0x04FA11478F05804CA71DBF7573B80160",
+    "name": "Informatik (M.Sc.)",
+    "semester": "WS 2015/2016",
+    "path": ""
+  },
+  {
+    "gguid": "0x614EBE7FF82A6A4E9961C73D0E8FD225",
+    "name": "Theoretische Informatik",
+    "semester": "WS 2015/2016",
+    "path": "Theoretische Informatik"
+  },
+  {
+    "gguid": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
+    "name": "Anwendungsfächer",
+    "semester": "WS 2015/2016",
+    "path": "Anwendungsfächer"
+  },
+  {
+    "gguid": "0x3174786BC014774C9EB96D42EC160704",
+    "name": "Biologie",
+    "semester": "WS 2015/2016",
+    "path": "Anwendungsfächer/Biologie"
+  },
+  {
+    "gguid": "0x95C39BAE6C0BEA4982AC283EB2FE0051",
+    "name": "Zusatzveranstaltungen",
+    "semester": "WS 2015/2016",
+    "path": "Zusatzveranstaltungen"
+  }
+]
