@@ -1,10 +1,18 @@
-<!-- top section -->
-<md-toolbar layout="row">
-    <h1>RWTH Courses</h1>
-</md-toolbar>
+<div class="app-container">
+    <!-- top section -->
+    <md-toolbar layout="row">
+        <h1>RWTH Courses</h1>
+    </md-toolbar>
 
-<!-- main content -->
-<md-content ng-view ng-cloak></md-content>
+    <!-- main content -->
+    <md-content ng-view ng-cloak></md-content>
 
-<!-- footer -->
-<!-- TODO -->
+    <!-- navigation -->
+    <div class="bottom-navigation">
+        <md-tabs md-stretch-tabs="always">
+            <md-tab label="Tab #1"></md-tab>
+            <md-tab label="Tab #2"></md-tab>
+            <md-tab label="Tab #3"></md-tab>
+        </md-tabs>
+    </div>
+</div>
