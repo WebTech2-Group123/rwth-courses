@@ -11,13 +11,17 @@ Promise.onPossiblyUnhandledRejection(error => {
 
 const COURSE_A = {
     gguid: '0x0001',
-    field: 'some value'
+    field: 'some value',
+    semester: 'SS 2015'
 };
 
 const COURSE_B = {
     gguid: '0x0002',
-    field: 'some other value'
+    field: 'some other value',
+    semester: 'WS 2015/2016'
 };
+
+const ids = ['0x0001', '0x0002'];
 
 const filter = {
    field : 'some value'
@@ -100,6 +104,51 @@ describe('mongo.js', function () {
                 }).then(courses => {
                     assert.equal(courses.length, 1);
                     assert.deepEqual(courses[0], COURSE_A);
+                    done();
+                });
+            });
+        });
+
+        describe('#getSemesters()', function(){
+            it('should return list of distinct semesters (in this case [WS 2015/2016, SS 2015])', function(done){
+                this.db.insertCourse(COURSE_A).then(() => {
+                    return this.db.insertCourse(COURSE_B);
+                }).then(() => {
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getSemesters();
+                }).then(semesters => {
+                    assert.equal(semesters.length, 2);
+                    done();
+                });
+            });
+        });
+
+        describe('#getStudyFields()', function(){
+            it('should return list of distinct fields', function(done){
+                this.db.insertCourse(COURSE_A).then(() => {
+                    return this.db.insertCourse(COURSE_B);
+                }).then(() => {
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getStudyFields();
+                }).then(fields => {
+                    assert.equal(fields.length, 2);
+                    done();
+                });
+            });
+        });
+
+        describe('#getCoursesByIds()', function(){
+            it('should return list of courses by the array of ids', function(done){
+                this.db.insertCourse(COURSE_A).then(() => {
+                    return this.db.insertCourse(COURSE_B);
+                }).then(() => {
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getCoursesByIds(ids);
+                }).then(courses => {
+                    assert.equal(courses.length, 2);
                     done();
                 });
             });

@@ -23,10 +23,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
     console.log('Listening on port ' + PORT);
 });
-
-/*
- TODO:
- - list of semesters (getSemesters)
- - list of studyfields (getStudyFields)
- - getCoursesById
- */
