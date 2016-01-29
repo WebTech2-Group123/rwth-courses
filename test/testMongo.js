@@ -27,7 +27,7 @@ describe('mongo.js', function () {
 
     // open connection to db & clean it
     beforeEach(function (done) {
-        mongo.createClient().then(db => {
+        mongo.createClient('mongodb://localhost:27017/rwth-courses-test').then(db => {
 
             // save db instanc
             this.db = db;
