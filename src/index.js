@@ -1,25 +1,32 @@
+'use strict';
+
 var express = require('express');
-var mongo = require('./mongo');
+var api = require('./api');
 
+// create express app
 var app = express();
-mongo.createClient().then(
-    function(db){
-        app.get('/api/v1/courses/', function(req, res){
 
-            // get parameters
-            var parameters = req.query;
+// serve the public directory
+app.use('/', express.static(__dirname + '/../client'));
 
-            //get courses from db that match client's parameters
-            db.getCourses(parameters).then(function(courses){
-                res.send(courses);
-            })
-        });
-        app.listen(8000);
+// serve client side JS
+// TODO: make it better
+app.use('/lib', express.static(__dirname + '/../node_modules'));
+
+// serve the APIs
+api.getRouter().then(router => {
+    app.use('/api', router);
+});
+
+// run the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function () {
+    console.log('Listening on port ' + PORT);
 });
 
 /*
  TODO:
-    - list of semesters (getSemesters)
-    - list of studyfields (getStudyFields)
-    - getCoursesById
+ - list of semesters (getSemesters)
+ - list of studyfields (getStudyFields)
+ - getCoursesById
  */
