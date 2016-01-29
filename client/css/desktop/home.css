@@ -1,0 +1,6 @@
+.semester-span{
+    border-bottom: 2px solid #FF4081;
+    cursor: pointer;
+    /* remove dotted border onclick event */
+    outline: 0;
+}

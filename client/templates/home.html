@@ -1,8 +1,4 @@
-<md-radio-group ng-model="selected">
-    <md-radio-button ng-repeat="semester in semesters" ng-value="semester" aria-label="{{ semester }}">
-        {{ semester }}
-    </md-radio-button>
-</md-radio-group>
+<p>Searching for courses in <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span></p>
 
 <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
                  md-item-text="field" placeholder="Enter your field of study..." md-min-length="0"
