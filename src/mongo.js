@@ -121,6 +121,23 @@ Mongo.prototype.getCourses = function (param) {
     return this.courses.find(query).project({_id: false}).toArrayAsync();
 };
 
+Mongo.prototype.getSemesters = function(){
+  return this.courses.distinct('semester');
+};
+
+Mongo.prototype.getStudyFields = function(){
+    return this.courses.distinct('field');
+};
+
+// returns the array of courses that match gguids included in parameter array
+Mongo.prototype.getCoursesByIds = function(gguids){
+    return this.courses.find(
+        {
+            gguid: { $in: gguids }
+        }
+    ).project({_id: false}).toArrayAsync();
+}
+
 // export
 exports.Mongo = Mongo;
 exports.createClient = function (url) {

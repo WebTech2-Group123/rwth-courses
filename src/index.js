@@ -16,10 +16,3 @@ mongo.createClient().then(
         });
         app.listen(8000);
 });
-
-/*
- TODO:
-    - list of semesters (getSemesters)
-    - list of studyfields (getStudyFields)
-    - getCoursesById
- */
