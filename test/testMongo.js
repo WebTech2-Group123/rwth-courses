@@ -19,11 +19,15 @@ const COURSE_B = {
     field: 'some other value'
 };
 
+const filter = {
+   field : 'some value'
+};
+
 describe('mongo.js', function () {
 
     // open connection to db & clean it
     beforeEach(function (done) {
-        mongo.createClient().then(db => {
+        mongo.createClient('mongodb://localhost:27017/rwth-courses-test').then(db => {
 
             // save db instanc
             this.db = db;
@@ -82,6 +86,20 @@ describe('mongo.js', function () {
                     return this.db.getCourses();
                 }).then(courses => {
                     assert.equal(courses.length, 2);
+                    done();
+                });
+            });
+
+            it('should get course A', function (done) {
+                this.db.insertCourse(COURSE_A).then(() => {
+                    return this.db.insertCourse(COURSE_B);
+                }).then(() => {
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getCourses(filter);
+                }).then(courses => {
+                    assert.equal(courses.length, 1);
+                    assert.deepEqual(courses[0], COURSE_A);
                     done();
                 });
             });

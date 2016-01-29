@@ -94,8 +94,8 @@ Mongo.prototype.renameTempCourses = function () {
 };
 
 // insert a course (temp)
-Mongo.prototype.insertCourse = function (course) {
-    log('Inserting course: ' + course.gguid);
+    Mongo.prototype.insertCourse = function (course) {
+        log('Inserting course: ' + course.gguid);
 
     return this.coursesTemp.updateOne({gguid: course.gguid}, course, {upsert: true})
         .then(result => {
@@ -110,8 +110,15 @@ Mongo.prototype.insertCourse = function (course) {
 
 // get courses (not temp)
 // TODO: add search object
-Mongo.prototype.getCourses = function () {
-    return this.courses.find().toArrayAsync();
+Mongo.prototype.getCourses = function (param) {
+    var parameters = param || {};
+    var query =  {};
+    var allowed = ['semester', 'language', 'field', 'id'];
+    allowed.forEach(function(arg){
+       if(typeof parameters[arg] !== 'undefined')
+            query[arg] = parameters[arg];
+    });
+    return this.courses.find(query).project({_id: false}).toArrayAsync();
 };
 
 // export
