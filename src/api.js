@@ -25,6 +25,13 @@ function getRouter() {
 
         // fields APIs
 
+        router.route('/fields').get(function (req, res) {
+
+            db.getStudyFields().then(function (fields) {
+                res.send(fields);
+            })
+        });
+
         // courses API
         router.route('/courses').get(function (req, res) {
 
