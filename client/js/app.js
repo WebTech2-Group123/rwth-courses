@@ -12,7 +12,8 @@ var app = angular.module('Campus', [
 app.directive('app', function () {
     return {
         restrict: 'E',
-        templateUrl: 'templates/app.html'
+        templateUrl: 'templates/app.html',
+        css: 'css/desktop/app.css'
     };
 });
 
@@ -31,7 +32,8 @@ app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider) 
     $routeProvider
         .when('/', {
             templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl'
+            controller: 'HomeCtrl',
+            css: 'css/desktop/home.css'
         })
         .when('/courses', {
             templateUrl: 'templates/courses.html',

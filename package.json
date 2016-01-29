@@ -29,8 +29,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "./node_modules/.bin/mocha",
-    "coverage": "./node_modules/.bin/istanbul cover _mocha test --include-all-sources",
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha test --include-all-sources",
     "worker": "DEBUG=*,-node.soap node src/worker.js"
   },
   "engines": {
@@ -60,5 +60,8 @@
     "url": "https://github.com/WebTech2-Group123/rwth-courses/issues"
   },
   "homepage": "https://github.com/WebTech2-Group123/rwth-courses#readme",
-  "private": true
+  "private": true,
+  "directories": {
+    "test": "test"
+  }
 }
