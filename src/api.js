@@ -9,14 +9,19 @@ function getRouter() {
     var router = express.Router();
 
     // welcome page
-    router.route('/v1').get(function (req, res) {
+    router.route('/').get(function (req, res) {
         res.send('Welcome in our amazing APIs!');
     });
 
     // connect to DB
     return mongo.createClient().then(function (db) {
+        // semester API
+        router.route('/semesters').get(function (req, res) {
 
-        // semesters APIs
+            db.getSemesters().then(function (semesters) {
+                res.send(semesters);
+            })
+        });
 
         // fields APIs
 
