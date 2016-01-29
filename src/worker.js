@@ -168,8 +168,11 @@ Promise.all([Campus.getClients(), getCleanDB()]).then(promises => {
         const endTime = +Date.now();
         info('Finish getting data from CampusOffice. Total time: ' + (startTime - endTime));
 
-        // close connection to DB
-        db.db.close();
+        db.renameTempCourses().then(function(){
+            // close connection to DB
+            db.db.close();
+        });
+
     });
 
 });

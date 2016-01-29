@@ -113,7 +113,7 @@ Mongo.prototype.renameTempCourses = function () {
 Mongo.prototype.getCourses = function (param) {
     var parameters = param || {};
     var query =  {};
-    var allowed = ['semester', 'field', 'id'];
+    var allowed = ['semester', 'language', 'field', 'id'];
     allowed.forEach(function(arg){
        if(typeof parameters[arg] !== 'undefined')
             query[arg] = parameters[arg];
