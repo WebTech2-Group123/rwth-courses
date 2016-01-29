@@ -1,4 +1,5 @@
-app.factory('Courses', function ($q) {
+app.factory('Courses', function ($q, $http) {
+
 
     // TODO: remove, developent only
     var coursesList = [
@@ -122,6 +123,32 @@ app.factory('Courses', function ($q) {
     }
 
     return {
+        getCoursesFromServer: function(semester, field){
+
+            //here we will get data from server
+            var requestData = {"semester" : semester, "field": field};
+
+            console.log(requestData);
+
+            var req = {
+                method: 'POST',
+                url: 'http://example.com',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: requestData
+            }
+
+            $http(req).then(function(response, error){
+                console.log(response);
+                $location.path('/courses');
+            }, function(error){
+                console.log('error! unsuccessful');
+                //return;
+            });
+            return;
+        },
+
 
         // TODO: create cache
 

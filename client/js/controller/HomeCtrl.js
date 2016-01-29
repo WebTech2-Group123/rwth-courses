@@ -1,6 +1,6 @@
 app.controller('HomeCtrl', HomeCtrl);
 
-function HomeCtrl($scope, $filter, $location, $http) {
+function HomeCtrl($scope, $filter, $location, $http, Courses) {
 
     // TODO: get semesters from the backend
     var semesters = ["WS 2015/2016", "SS 2015"];
@@ -29,28 +29,9 @@ function HomeCtrl($scope, $filter, $location, $http) {
             return;
         }
 
-        //here we will get data from server
-        var requestData = {"semester" : semester, "field": field};
-
-        console.log(requestData);
-
-        var req = {
-            method: 'POST',
-            url: 'http://example.com',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: requestData
-        }
-
-        $http(req).then(function(response, error){
-            console.log(response);
-            $location.path('/courses');
-        }, function(error){
-            console.log('error! unsuccessful');
-            //return;
-        });
-
+        var result = Courses.getCoursesFromServer(semester, field);
+        //if (result)
+        
         $location.path('/courses');
     };
 
