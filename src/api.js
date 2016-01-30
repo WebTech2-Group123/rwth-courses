@@ -1,53 +1,43 @@
 'use strict';
 
-var mongo = require('./mongo');
+var db = require('./db').getInstance();
 var express = require('express');
 
-function getRouter() {
+// create router
+var router = express.Router();
 
-    // create router
-    var router = express.Router();
+// welcome page
+router.route('/').get(function (req, res) {
+    res.send('Welcome in our amazing APIs!');
+});
 
-    // welcome page
-    router.route('/').get(function (req, res) {
-        res.send('Welcome in our amazing APIs!');
-    });
+// semester API
+router.route('/semesters').get(function (req, res) {
 
-    // connect to DB
-    return mongo.createClient().then(function (db) {
-        // semester API
-        router.route('/semesters').get(function (req, res) {
+    db.getSemesters().then(function (semesters) {
+        res.send(semesters);
+    })
+});
 
-            db.getSemesters().then(function (semesters) {
-                res.send(semesters);
-            })
-        });
+// fields APIs
+router.route('/fields').get(function (req, res) {
 
-        // fields APIs
+    db.getStudyFields().then(function (fields) {
+        res.send(fields);
+    })
+});
 
-        router.route('/fields').get(function (req, res) {
+// courses API
+router.route('/courses').get(function (req, res) {
 
-            db.getStudyFields().then(function (fields) {
-                res.send(fields);
-            })
-        });
+    // get parameters
+    var parameters = req.query;
 
-        // courses API
-        router.route('/courses').get(function (req, res) {
-
-            // get parameters
-            var parameters = req.query;
-
-            //get courses from db that match client's parameters
-            db.getCourses(parameters).then(function (courses) {
-                res.send(courses);
-            })
-        });
-
-        // return the router
-        return router;
-    });
-}
+    //get courses from db that match client's parameters
+    db.getCourses(parameters).then(function (courses) {
+        res.send(courses);
+    })
+});
 
 // export the module
-exports.getRouter = getRouter;
+module.exports = router;

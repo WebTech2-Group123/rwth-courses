@@ -14,9 +14,7 @@ app.use('/', express.static(__dirname + '/../client'));
 app.use('/lib', express.static(__dirname + '/../node_modules'));
 
 // serve the APIs
-api.getRouter().then(router => {
-    app.use('/api', router);
-});
+app.use('/api', api);
 
 // run the server
 const PORT = process.env.PORT || 3000;

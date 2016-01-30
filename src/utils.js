@@ -16,7 +16,7 @@ exports.get = function (obj) {
 
     // custom get
     return args.filter((obj, index) => index >= 1)
-        .reduce((acc, obj) => typeof acc == "undefined" ? acc : acc [obj], obj);
+        .reduce((acc, obj) => typeof acc == 'undefined' ? acc : acc [obj], obj);
 };
 
 // NB: we do not use 'var args = Array.prototype.slice.call(arguments)'
@@ -32,6 +32,6 @@ exports.map = function (obj) {
     // custom map
     const func = args[args.length - 1];
     var array = args.filter((obj, index) => index >= 1 && index < args.length - 1)
-        .reduce((acc, obj) => typeof acc == "undefined" ? acc : acc [obj], obj);
+        .reduce((acc, obj) => typeof acc == 'undefined' ? acc : acc [obj], obj);
     return (typeof array == 'undefined' ? array : array.map(func));
 };

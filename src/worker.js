@@ -3,33 +3,27 @@
 const Rx = require('rx');
 const Campus = require('./campus');
 const Parser = require('./parser');
-const mongo = require('./mongo');
+const db = require('./db').getInstance();
 
 // log
 const info = require('debug')('worker:info');
 const error = require('debug')('worker:error');
 
+// make promises crash if rejected
+process.on('unhandledRejection', function (error) {
+    throw error;
+});
+
 // TODO: remove
 const N = 5;
 
-// TODO: move to other place
-function getCleanDB() {
-    return mongo.createClient().then(db => {
-        return db.renameTempCourses().then(_ => db);
-    });
-}
-
 // unwrap clients
-Promise.all([Campus.getClients(), getCleanDB()]).then(promises => {
-
-    // unwrap mongo
-    const db = promises[1];
+Campus.getClients().then(clients => {
 
     // clients for the 3 SOAP endpoints
-    const arrayOfClients = promises[0];
-    const termClient = arrayOfClients[0];
-    const fieldClient = arrayOfClients[1];
-    const eventClient = arrayOfClients[2];
+    const termClient = clients[0];
+    const fieldClient = clients[1];
+    const eventClient = clients[2];
 
     // log
     info('Starting getting data from CampusOffice');
@@ -149,7 +143,7 @@ Promise.all([Campus.getClients(), getCleanDB()]).then(promises => {
             course.path = subfield.aath;
 
             // store in mongo
-            return db.insertCourse(course);
+            return db.insertCourseInTemp(course);
         })
 
         // make sure to use hot observables
@@ -168,11 +162,12 @@ Promise.all([Campus.getClients(), getCleanDB()]).then(promises => {
         const endTime = +Date.now();
         info('Finish getting data from CampusOffice. Total time: ' + (startTime - endTime));
 
-        db.renameTempCourses().then(function(){
-            // close connection to DB
-            db.db.close();
-        });
+        // switch collections
+        db.renameTempCourses().then(function () {
 
+            // close connection to DB
+            db.close();
+        });
     });
 
 });
