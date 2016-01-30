@@ -58,6 +58,12 @@ DB.prototype.close = function () {
     this.connection.close();
 };
 
+// drop db (for tests only)
+DB.prototype._drop = function () {
+    log('WARN: Dropping ' + this.url);
+    this.connection.db.dropDatabase();
+};
+
 // Singleton
 var instance = null;
 function getInstance() {
@@ -76,6 +82,8 @@ exports.getInstance = getInstance;
 
 var db1 = new DB();
 var db2 = new DB('mongodb://localhost/rwth');
+
+db1._drop();
 
 db1.close();
 
