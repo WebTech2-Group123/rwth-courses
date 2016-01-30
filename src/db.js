@@ -2,6 +2,39 @@
 
 var log = require('debug')('db');
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
+mongoose.Promise = Promise;
+
+// TODO: remove
+mongoose.set('debug', true);
+
+// make promises crash if rejected
+process.on('unhandledRejection', function (error) {
+    throw error;
+});
+
+// Collections Names
+const COURSES = 'Courses';
+const COURSES_TEMP = 'CoursesTemps';
+
+// Courses Schema
+const CoursesSchema = new mongoose.Schema({
+    gguid: {
+        type: String,
+        required: true,
+        index: true
+    }
+}, {strict: false});
+
+// Cache Schema
+const CacheSchema = new mongoose.Schema({
+    gguid: {
+        type: String,
+        required: true,
+        index: true
+    }
+}, {strict: false});
+
 
 // constructor
 var DB = function (url) {
@@ -23,14 +56,9 @@ var DB = function (url) {
         this.connection.close();
     });
 
-    // Cache Schema
-    var CacheSchema = new mongoose.Schema({
-        gguid: {
-            type: String,
-            required: true,
-            index: true
-        }
-    }, {strict: false});
+    // Courses
+    this.Courses = this.connection.model(COURSES, CoursesSchema);
+    this.CoursesTemp = this.connection.model(COURSES_TEMP, CoursesSchema);
 
     // Caches
     this.SemestersCache = this.connection.model('SemestersCache', CacheSchema);
@@ -38,30 +66,45 @@ var DB = function (url) {
     this.SubFieldsCache = this.connection.model('SubFieldsCache', CacheSchema);
     this.CoursesListCache = this.connection.model('CoursesListCache', CacheSchema);
     this.CoursesDetailsCache = this.connection.model('CoursesDetailsCache', CacheSchema);
-
-    // Courses Schema
-    var CoursesSchema = new mongoose.Schema({
-        gguid: {
-            type: String,
-            required: true,
-            index: true
-        }
-    }, {strict: false});
-
-    // Courses
-    this.Courses = this.connection.model('Courses', CoursesSchema);
-    this.CoursesTemp = this.connection.model('CoursesTemp', CoursesSchema);
 };
 
 // manually close the connection to the DB
 DB.prototype.close = function () {
-    this.connection.close();
+    return this.connection.close();
 };
 
 // drop db (for tests only)
 DB.prototype._drop = function () {
-    log('WARN: Dropping ' + this.url);
-    this.connection.db.dropDatabase();
+    const collections = [
+        this.Courses,
+        this.CoursesTemp,
+        this.SemestersCache,
+        this.FieldsCache,
+        this.SubFieldsCache,
+        this.CoursesListCache,
+        this.CoursesDetailsCache
+    ];
+    return Promise.all(collections.map(c => c.remove({}))).then(() => {
+        log('Dropping ' + this.url);
+    });
+};
+
+// drop courses collection and substitute it with temp_courses
+DB.prototype.renameTempCourses = function () {
+
+    // figure out correct names
+    const temp = COURSES_TEMP.toLowerCase();
+    const courses = COURSES.toLowerCase();
+
+    // rename temp to courses
+    return this.connection.db.renameCollection(temp, courses, {dropTarget: true}).then(() => {
+        log('Rename ' + COURSES_TEMP + ' to ' + COURSES);
+
+        // recreate index on temp
+        return this.CoursesTemp.ensureIndexes().then(() => {
+            log('Restored index on ' + COURSES_TEMP);
+        });
+    });
 };
 
 // Singleton
@@ -80,11 +123,22 @@ exports.getInstance = getInstance;
 
 // TODO -> remove
 
-var db1 = new DB();
+//var db1 = new DB();
 var db2 = new DB('mongodb://localhost/rwth');
 
-db1._drop();
+//db1._drop();
 
-db1.close();
+var ids = [1, 2, 3, 4, 5, 6, 7, 8];
+var pp = ids.map(id => new db2.CoursesTemp({gguid: id + '', size: id * id})).map(o => o.save());
 
-setTimeout(() => db2.close(), 2000);
+Promise.all(pp).then(() => {
+    log('insert all -> rename');
+    db2.renameTempCourses()
+        .then(() => log('rename'))
+        .then(() => db2.close());
+});
+
+var c = new db2.SemestersCache({gguid: 'asad0', size: 234234});
+c.save().then(aaa => log('saved'));
+
+//setTimeout(() => db1.close(), 1000);
