@@ -6,7 +6,7 @@ var Promise = require('bluebird');
 mongoose.Promise = Promise;
 
 // TODO: remove
-mongoose.set('debug', true);
+// mongoose.set('debug', true);
 
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
@@ -133,14 +133,44 @@ DB.prototype.getCourses = function (params) {
     });
 
     // search courses
-    return this.Courses.find(query).select(PROJECT_FILTER).exec();
+    return this.Courses.find(query).select(PROJECT_FILTER).exec().then(transform);
 };
+
+function transform(arrayOfModels) {
+    return arrayOfModels.map(model => {
+        return model.toObject();
+    })
+}
 
 // returns the array of courses that match gguids included in parameter array
 DB.prototype.getCoursesByIds = function (gguids) {
-    return this.Courses.find({
-        gguid: {$in: gguids}
-    }).select(PROJECT_FILTER).exec();
+    return this.Courses.find({gguid: {$in: gguids}}).select(PROJECT_FILTER).exec().then(transform);
+};
+
+// insert a course (temp)
+//Mongo.prototype.insertCourse = function (course) {
+//    log('Inserting course: ' + course.gguid);
+//
+//    return this.coursesTemp.updateOne({gguid: course.gguid}, course, {upsert: true})
+//        .then(result => {
+//            if (result.upsertedCount == 1) {
+//                details('Insert course with id: ' + course.gguid);
+//            } else {
+//                details('Update course with id: ' + course.gguid);
+//            }
+//            return result;
+//        });
+//};
+
+// insert course -> TODO: find & update
+DB.prototype.insertCourseInTemp = function (course) {
+    var toSave = this.CoursesTemp(course);
+    return toSave.save();
+};
+
+// test only: insert courses directly in courses table
+DB.prototype._insertCourses = function (courses) {
+    return this.Courses.create(courses);
 };
 
 // Singleton
@@ -155,7 +185,8 @@ function getInstance() {
 // exports
 exports.DB = DB;
 exports.getInstance = getInstance;
-
+exports.COURSES = COURSES;
+exports.COURSES_TEMP = COURSES_TEMP;
 
 // TODO -> remove
 
@@ -165,29 +196,42 @@ var db2 = new DB('mongodb://localhost/rwth');
 //db1._drop();
 
 var ids = [1, 2, 3, 4, 5, 6, 7, 8];
-var pp = ids.map(id => new db2.CoursesTemp({
-    gguid: id + '',
-    size: id * id,
-    semester: (id % 3) + ' sem'
-})).map(o => o.save());
-
-Promise.all(pp).then(() => {
-    log('insert all -> rename');
-    db2.renameTempCourses()
-        .then(() => log('rename'))
-        .then(() => {
-
-            // check semesters
-            return db2.getSemesters().then(log);
-        })
-
-        .then(() => {
-
-            // check ids
-            return db2.getCoursesByIds(['2', '3', '5']).then(log);
-        })
-        .then(() => db2.close());
+var pp = ids.map(id => {
+    return {
+        gguid: id + '',
+        size: id * id,
+        semester: (id % 3) + ' sem'
+    }
 });
+
+db2._drop()
+    .then(() => {
+
+        return db2._insertCourses(pp);
+
+    }).then(() => {
+
+        // check    ids
+        return db2.getCoursesByIds(['2']).then(c => {
+            log(c);
+        });
+
+    })
+
+    .then(() => {
+
+        // check ids
+        return db2.getCourses({semester: '1 sem'}).then(log);
+    })
+
+    .then(() => {
+
+        // check ids
+        return db2.getCourses().then(log);
+    })
+
+    .then(() => db2.close());
+
 
 var c = new db2.SemestersCache({gguid: 'asad0', size: 234234});
 c.save().then(aaa => log('saved'));
