@@ -18,6 +18,11 @@ var DB = function (url) {
         log('Disconnected to ' + this.url);
     });
 
+    // register callback
+    process.on('SIGINT', () => {
+        this.connection.close();
+    });
+
     // Cache Schema
     var CacheSchema = new mongoose.Schema({
         gguid: {
@@ -48,6 +53,7 @@ var DB = function (url) {
     this.CoursesTemp = this.connection.model('CoursesTemp', CoursesSchema);
 };
 
+// manually close the connection to the DB
 DB.prototype.close = function () {
     this.connection.close();
 };
