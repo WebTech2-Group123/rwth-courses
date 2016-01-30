@@ -35,6 +35,8 @@ const CacheSchema = new mongoose.Schema({
     }
 }, {strict: false});
 
+// project filter
+const PROJECT_FILTER = {_id: false, __v: false};
 
 // constructor
 var DB = function (url) {
@@ -107,6 +109,40 @@ DB.prototype.renameTempCourses = function () {
     });
 };
 
+// get distinct semesters
+DB.prototype.getSemesters = function () {
+    return this.Courses.distinct('semester');
+};
+
+// get distinct study fields
+DB.prototype.getStudyFields = function () {
+    return this.Courses.distinct('field');
+};
+
+// get courses (not temp)
+DB.prototype.getCourses = function (params) {
+    var parameters = params || {};
+    var query = {};
+
+    // select only allowed parameters
+    const allowed = ['semester', 'language', 'field', 'id'];
+    allowed.forEach(function (arg) {
+        if (typeof parameters[arg] !== 'undefined') {
+            query[arg] = parameters[arg];
+        }
+    });
+
+    // search courses
+    return this.Courses.find(query).select(PROJECT_FILTER).exec();
+};
+
+// returns the array of courses that match gguids included in parameter array
+DB.prototype.getCoursesByIds = function (gguids) {
+    return this.Courses.find({
+        gguid: {$in: gguids}
+    }).select(PROJECT_FILTER).exec();
+};
+
 // Singleton
 var instance = null;
 function getInstance() {
@@ -129,12 +165,27 @@ var db2 = new DB('mongodb://localhost/rwth');
 //db1._drop();
 
 var ids = [1, 2, 3, 4, 5, 6, 7, 8];
-var pp = ids.map(id => new db2.CoursesTemp({gguid: id + '', size: id * id})).map(o => o.save());
+var pp = ids.map(id => new db2.CoursesTemp({
+    gguid: id + '',
+    size: id * id,
+    semester: (id % 3) + ' sem'
+})).map(o => o.save());
 
 Promise.all(pp).then(() => {
     log('insert all -> rename');
     db2.renameTempCourses()
         .then(() => log('rename'))
+        .then(() => {
+
+            // check semesters
+            return db2.getSemesters().then(log);
+        })
+
+        .then(() => {
+
+            // check ids
+            return db2.getCoursesByIds(['2', '3', '5']).then(log);
+        })
         .then(() => db2.close());
 });
 
