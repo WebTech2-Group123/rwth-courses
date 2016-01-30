@@ -1,8 +1,8 @@
 'use strict';
 
-var log = require('debug')('db');
-var mongoose = require('mongoose');
-var Promise = require('bluebird');
+const log = require('debug')('rwth-courses:db');
+const mongoose = require('mongoose');
+const Promise = require('bluebird');
 mongoose.Promise = Promise;
 
 // TODO: remove

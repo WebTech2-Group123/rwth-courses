@@ -8,7 +8,7 @@ const soap = require('soap');
 const Promise = require('bluebird');
 
 // log
-const log = require('debug')('campus');
+const log = require('debug')('rwth-courses:campus');
 
 // TODO: move to a different place
 // make promises crash if rejected

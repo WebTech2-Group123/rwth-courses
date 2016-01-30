@@ -6,10 +6,10 @@
  */
 
 const utils = require('./utils');
-const log = require('debug')('parser');
+const log = require('debug')('rwth-courses:parser');
 
 // TODO: remove
-const warnings = require('debug')('parser-warnings');
+const warnings = require('debug')('rwth-courses:parser-warnings');
 
 /**
  * Parse a Semesters response in an Array of semesters.

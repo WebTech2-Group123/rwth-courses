@@ -6,8 +6,8 @@ const Parser = require('./parser');
 const db = require('./db').getInstance();
 
 // log
-const info = require('debug')('worker:info');
-const error = require('debug')('worker:error');
+const info = require('debug')('rwth-courses:worker:info');
+const error = require('debug')('rwth-courses:worker:error');
 
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
