@@ -15,7 +15,7 @@ process.on('unhandledRejection', function (error) {
 });
 
 // TODO: remove
-const N = 5;
+const N = 1;
 
 // unwrap clients
 Campus.getClients().then(clients => {
@@ -156,6 +156,7 @@ Campus.getClients().then(clients => {
         // do nothing here
     }, function (e) {
         error(e);
+        throw e;
     }, function () {
 
         // we are done

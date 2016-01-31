@@ -2,6 +2,7 @@
 
 // get API URI from environment
 const API_BASE = process.env.API_BASE;
+const PROTOCOL = 'http://';
 
 // this does the magic
 const soap = require('soap');
@@ -10,16 +11,16 @@ const Promise = require('bluebird');
 // log
 const log = require('debug')('rwth-courses:campus');
 
-// TODO: move to a different place
 // make promises crash if rejected
-process.on("unhandledRejection", function (error) {
+process.on('unhandledRejection', function (error) {
     throw error;
 });
 
 // APIs' endpoints
-const WSDL_TERM = API_BASE + '/TermSrv.asmx?WSDL';
-const WSDL_FIELD = API_BASE + '/FieldSrv.asmx?WSDL';
-const WSDL_EVENT = API_BASE + '/EventSrv.asmx?WSDL';
+const WSDL_TERM = PROTOCOL + API_BASE + '/TermSrv.asmx?WSDL';
+const WSDL_FIELD = PROTOCOL + API_BASE + '/FieldSrv.asmx?WSDL';
+const WSDL_EVENT = PROTOCOL + API_BASE + '/EventSrv.asmx?WSDL';
+
 
 // create the clients for CampusOffice APIs
 function getClients() {
@@ -27,15 +28,23 @@ function getClients() {
     // make 'soap' library Promise-friendly
     Promise.promisifyAll(soap);
 
-    // create three different clients
-    const clients = [WSDL_TERM, WSDL_FIELD, WSDL_EVENT]
-        .map(endpoint => soap.createClientAsync(endpoint));
+    const termClient = soap.createClientAsync(WSDL_TERM, {
+        endpoint: PROTOCOL + API_BASE + '/TermSrv.asmx'
+    });
+
+    const fieldClient = soap.createClientAsync(WSDL_FIELD, {
+        endpoint: PROTOCOL + API_BASE + '/FieldSrv.asmx'
+    });
+
+    const eventClient = soap.createClientAsync(WSDL_EVENT, {
+        endpoint: PROTOCOL + API_BASE + '/EventSrv.asmx'
+    });
 
     // wait until all clients are created
-    return Promise.all(clients)
+    return Promise.all([termClient, fieldClient, eventClient])
 
         // promisify every single client
-        .each(client => Promise.promisifyAll(client));
+        .each(client =>Promise.promisifyAll(client));
 }
 
 // get list of semesters
