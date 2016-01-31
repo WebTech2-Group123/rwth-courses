@@ -52,7 +52,7 @@ const s = Rx.Observable.fromPromise(client.getSemestersList())
     // for each field -> request the subfields
     // NB: pass also the field (contains info about B.Sc. vs M.Sc. etc.)
     .flatMap(field => {
-        return Campus.getSubFields(fieldClient, field).then(subfieldsResponse => {
+        return client.getSubFields(field).then(subfieldsResponse => {
             return {
                 field: field,
                 subfieldsResponse: subfieldsResponse

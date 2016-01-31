@@ -161,7 +161,9 @@ Campus.prototype.getStudyFieldsBySemester = function (semester) {
 
         // api call
         else {
-            return this.termClient.GetAllAsync({});
+            return this.termClient.GetFieldsAsync({
+                'sGuid': semester.gguid
+            });
         }
     };
 
@@ -193,14 +195,65 @@ Campus.prototype.getStudyFieldsBySemester = function (semester) {
 };
 
 // get the list of subfields by field of study
-function getSubFields(fieldClient, field) {
+Campus.prototype.getSubFields = function (field) {
     log('Getting subfields for field: [' + field.gguid + '] ' + field.name);
-    return fieldClient.GetLinkedAsync({
-        'sGuid': field.gguid,
-        'bTree': true,              // tree of subfields
-        'bIncludeEvents': false     // courses without subfield will be catched later...
-    });
-}
+
+    // function to get the subfields from the Campus APIs
+    var getSubFieldsFromCampus = () => {
+        details('Getting subfields for field from Campus: [' + field.gguid + '] ' + field.name);
+
+        // create client if not present
+        if (typeof this.fieldClient === 'undefined') {
+            return this.getFieldClient().then(client => {
+
+                // cache the client
+                this.fieldClient = client;
+
+                // api call
+                return this.fieldClient.GetLinkedAsync({
+                    'sGuid': field.gguid,
+                    'bTree': true,              // tree of subfields
+                    'bIncludeEvents': false     // courses without subfield will be catched later...
+                });
+            });
+        }
+
+        // api call
+        else {
+            return this.fieldClient.GetLinkedAsync({
+                'sGuid': field.gguid,
+                'bTree': true,              // tree of subfields
+                'bIncludeEvents': false     // courses without subfield will be catched later...
+            });
+        }
+    };
+
+    // check cache!
+    if (this.cache) {
+
+        // check in database
+        return this.db.getCachedSubFields(field.gguid).then(subFieldsResponse => {
+
+            // if cached -> return it
+            if (subFieldsResponse !== null) {
+                details('Getting subfields for field from Cache: [' + field.gguid + '] ' + field.name);
+                return subFieldsResponse;
+            }
+
+            // cache miss -> request from Campus
+            else {
+                return getSubFieldsFromCampus().then(subFieldsResponse => {
+                    return this.db.cacheSubFields(field.gguid, subFieldsResponse).then(_ => subFieldsResponse);
+                });
+            }
+        });
+    }
+
+    // no cache -> request from Campus
+    else {
+        return getSubFieldsFromCampus();
+    }
+};
 
 // get the list of courses by subfield
 function getCoursesBySubfiled(fieldClient, subfield) {
