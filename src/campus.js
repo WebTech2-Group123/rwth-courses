@@ -90,11 +90,10 @@ Campus.prototype.getSemestersList = function () {
 
     // function to get the semesters list from the Campus APIs
     var getSemstersListFromCampus = () => {
+        details('Get semesters list from Campus');
 
         // create client if not present
         if (typeof this.termClient === 'undefined') {
-            details('Get semesters list from Campus');
-
             return this.getTermClient().then(client => {
 
                 // cache the client
@@ -120,7 +119,6 @@ Campus.prototype.getSemestersList = function () {
             // if cached -> return it
             if (semestersResponse !== null) {
                 details('Get semesters list from Cache');
-
                 return semestersResponse;
             }
 
@@ -140,12 +138,59 @@ Campus.prototype.getSemestersList = function () {
 };
 
 // get the list of study fields by semester
-function getStudyFieldsBySemster(termClient, semester) {
+Campus.prototype.getStudyFieldsBySemester = function (semester) {
     log('Getting list of study fields for semester: ' + semester.name);
-    return termClient.GetFieldsAsync({
-        'sGuid': semester.gguid
-    });
-}
+
+    // function to get the study fields from the Campus APIs
+    var getStudyFieldsBySemesterFromCampus = () => {
+        details('Get list of study fields for semester from Campus: ' + semester.name);
+
+        // create client if not present
+        if (typeof this.termClient === 'undefined') {
+            return this.getTermClient().then(client => {
+
+                // cache the client
+                this.termClient = client;
+
+                // api call
+                return this.termClient.GetFieldsAsync({
+                    'sGuid': semester.gguid
+                });
+            });
+        }
+
+        // api call
+        else {
+            return this.termClient.GetAllAsync({});
+        }
+    };
+
+    // check cache!
+    if (this.cache) {
+
+        // check in database
+        return this.db.getCachedFields(semester.gguid).then(fieldsResponse => {
+
+            // if cached -> return it
+            if (fieldsResponse !== null) {
+                details('Get list of study fields for semester from Cache: ' + semester.name);
+                return fieldsResponse;
+            }
+
+            // cache miss -> request from Campus
+            else {
+                return getStudyFieldsBySemesterFromCampus().then(fieldsResponse => {
+                    return this.db.cacheFields(semester.gguid, fieldsResponse).then(_ => fieldsResponse);
+                });
+            }
+        });
+    }
+
+    // no cache -> request from Campus
+    else {
+        return getStudyFieldsBySemesterFromCampus();
+    }
+};
 
 // get the list of subfields by field of study
 function getSubFields(fieldClient, field) {

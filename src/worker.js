@@ -38,7 +38,7 @@ const s = Rx.Observable.fromPromise(client.getSemestersList())
 
     // for each semester -> get all fields
     .flatMap(semester => {
-        return Campus.getStudyFieldsBySemster(termClient, semester);
+        return client.getStudyFieldsBySemester(semester);
     })
 
     // parse raw response with list of fields

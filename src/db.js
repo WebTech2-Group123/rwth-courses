@@ -39,11 +39,11 @@ const CacheSchema = new mongoose.Schema({
     response: {
         type: mongoose.Schema.Types.Mixed,
         required: true
+    },
+    inserted: {
+        type: Date,
+        default: Date.now
     }
-    //inserted: {
-    //    type: Date,
-    //    default: Date.now
-    //}
 }, {strict: false});
 
 CacheSchema.index({
@@ -190,10 +190,6 @@ DB.prototype._insertCourses = function (courses) {
 // CACHE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function transformOne(model) {
-    return model && model.toObject();
-}
-
 function getResponse(object) {
     return object && object.response;
 }
@@ -203,17 +199,30 @@ DB.prototype.getCachedSemesters = function () {
         .findOne({type: 'semesters'})
         .exec()
         .then(getResponse);
-        //.then(transformOne);
 };
 
 DB.prototype.cacheSemesters = function (semestersResponse) {
-    var o = {
+    var toSave = this.Cache({
         type: 'semesters',
         gguid: 'no-gguid',
         response: semestersResponse
-    };
-    console.log(o);
-    var toSave = this.Cache(o);
+    });
+    return toSave.save();
+};
+
+DB.prototype.getCachedFields = function (gguid) {
+    return this.Cache
+        .findOne({type: 'fields', gguid: gguid})
+        .exec()
+        .then(getResponse);
+};
+
+DB.prototype.cacheFields = function (gguid, fieldsResponse) {
+    var toSave = this.Cache({
+        type: 'fields',
+        gguid: gguid,
+        response: fieldsResponse
+    });
     return toSave.save();
 };
 
