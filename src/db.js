@@ -5,9 +5,6 @@ const mongoose = require('mongoose');
 const Promise = require('bluebird');
 mongoose.Promise = Promise;
 
-// TODO: remove
-mongoose.set('debug', true);
-
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
     throw error;
@@ -99,11 +96,7 @@ DB.prototype._drop = function () {
     const collections = [
         this.Courses,
         this.CoursesTemp,
-        this.SemestersCache,
-        this.FieldsCache,
-        this.SubFieldsCache,
-        this.CoursesListCache,
-        this.CoursesDetailsCache
+        this.Cache
     ];
     return Promise.all(collections.map(c => c.remove({}))).then(() => {
         log('Dropping ' + this.url);
@@ -222,6 +215,22 @@ DB.prototype.cacheFields = function (gguid, fieldsResponse) {
         type: 'fields',
         gguid: gguid,
         response: fieldsResponse
+    });
+    return toSave.save();
+};
+
+DB.prototype.getCachedSubFields = function (gguid) {
+    return this.Cache
+        .findOne({type: 'subfields', gguid: gguid})
+        .exec()
+        .then(getResponse);
+};
+
+DB.prototype.cacheSubFields = function (gguid, subFieldsResponse) {
+    var toSave = this.Cache({
+        type: 'subfields',
+        gguid: gguid,
+        response: subFieldsResponse
     });
     return toSave.save();
 };
