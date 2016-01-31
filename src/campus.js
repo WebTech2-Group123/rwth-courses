@@ -1,57 +1,143 @@
 'use strict';
 
-// get API URI from environment
-const API_BASE = process.env.API_BASE;
-const PROTOCOL = 'http://';
-
 // this does the magic
 const soap = require('soap');
 const Promise = require('bluebird');
-
-// log
 const log = require('debug')('rwth-courses:campus');
+const details = require('debug')('rwth-courses:campus:details');
 
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
     throw error;
 });
 
-// APIs' endpoints
-const WSDL_TERM = PROTOCOL + API_BASE + '/TermSrv.asmx?WSDL';
-const WSDL_FIELD = PROTOCOL + API_BASE + '/FieldSrv.asmx?WSDL';
-const WSDL_EVENT = PROTOCOL + API_BASE + '/EventSrv.asmx?WSDL';
+// make 'soap' library Promise-friendly
+Promise.promisifyAll(soap);
 
+// constructor
+var Campus = function (o) {
+    var options = o || {};
 
-// create the clients for CampusOffice APIs
-function getClients() {
+    // get API URI from environment if not specified
+    this.url = options.url || process.env.API_BASE;
 
-    // make 'soap' library Promise-friendly
-    Promise.promisifyAll(soap);
+    // check that link is given
+    if (typeof this.url === 'undefined') {
+        throw new Error('Campus API base URI not specified! Try to set the env variable API_BASE');
+    }
 
-    const termClient = soap.createClientAsync(WSDL_TERM, {
-        endpoint: PROTOCOL + API_BASE + '/TermSrv.asmx'
+    // APIs' endpoints
+    this.WSDL_TERM = this.url + '/TermSrv.asmx?WSDL';
+    this.WSDL_FIELD = this.url + '/FieldSrv.asmx?WSDL';
+    this.WSDL_EVENT = this.url + '/EventSrv.asmx?WSDL';
+
+    // cache enabled?
+    this.cache = options.cache;
+
+    // passed a db
+    if (this.cache) {
+        this.db = options.db;
+
+        // check that a db was passed here
+        if (typeof this.db === 'undefined') {
+            throw new Error('Please pass a db instance to use if you want to use the cache system');
+        }
+    }
+};
+
+// get Term client
+Campus.prototype.getTermClient = function () {
+    log('Creating Term client');
+
+    // create client
+    const termClient = soap.createClientAsync(this.WSDL_TERM, {
+        endpoint: this.url + '/TermSrv.asmx'
     });
 
-    const fieldClient = soap.createClientAsync(WSDL_FIELD, {
-        endpoint: PROTOCOL + API_BASE + '/FieldSrv.asmx'
+    // promisify the client
+    return termClient.then(client => Promise.promisifyAll(client));
+};
+
+// get Field client
+Campus.prototype.getFieldClient = function () {
+    log('Creating Field client');
+
+    // create client
+    const termClient = soap.createClientAsync(this.WSDL_FIELD, {
+        endpoint: this.url + '/FieldSrv.asmx'
     });
 
-    const eventClient = soap.createClientAsync(WSDL_EVENT, {
-        endpoint: PROTOCOL + API_BASE + '/EventSrv.asmx'
+    // promisify the client
+    return termClient.then(client => Promise.promisifyAll(client));
+};
+
+// get Event client
+Campus.prototype.getEventClient = function () {
+    log('Creating Event client');
+
+    // create client
+    const termClient = soap.createClientAsync(this.WSDL_EVENT, {
+        endpoint: this.url + '/EventSrv.asmx'
     });
 
-    // wait until all clients are created
-    return Promise.all([termClient, fieldClient, eventClient])
-
-        // promisify every single client
-        .each(client =>Promise.promisifyAll(client));
-}
+    // promisify the client
+    return termClient.then(client => Promise.promisifyAll(client));
+};
 
 // get list of semesters
-function getSemestersList(termClient) {
+Campus.prototype.getSemestersList = function () {
     log('Getting semesters list');
-    return termClient.GetAllAsync({});
-}
+
+    // function to get the semesters list from the Campus APIs
+    var getSemstersListFromCampus = () => {
+
+        // create client if not present
+        if (typeof this.termClient === 'undefined') {
+            details('Get semesters list from Campus');
+
+            return this.getTermClient().then(client => {
+
+                // cache the client
+                this.termClient = client;
+
+                // api call
+                return this.termClient.GetAllAsync({});
+            });
+        }
+
+        // api call
+        else {
+            return this.termClient.GetAllAsync({});
+        }
+    };
+
+    // check cache!
+    if (this.cache) {
+
+        // check in database
+        return this.db.getCachedSemesters().then(semestersResponse => {
+
+            // if cached -> return it
+            if (semestersResponse !== null) {
+                details('Get semesters list from Cache');
+
+                return semestersResponse;
+            }
+
+            // cache miss -> request from Campus
+            else {
+                return getSemstersListFromCampus().then(semestersResponse => {
+                    return this.db.cacheSemesters(semestersResponse).then(_ => semestersResponse);
+                });
+            }
+        });
+    }
+
+    // no cache -> request from Campus
+    else {
+        return getSemstersListFromCampus();
+    }
+};
 
 // get the list of study fields by semester
 function getStudyFieldsBySemster(termClient, semester) {
@@ -94,9 +180,4 @@ function getCourseDetails(eventClient, course) {
 }
 
 // expose functions
-exports.getClients = getClients;
-exports.getSemestersList = getSemestersList;
-exports.getStudyFieldsBySemster = getStudyFieldsBySemster;
-exports.getSubFields = getSubFields;
-exports.getCoursesBySubfiled = getCoursesBySubfiled;
-exports.getCourseDetails = getCourseDetails;
+module.exports = Campus;

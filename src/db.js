@@ -6,7 +6,7 @@ const Promise = require('bluebird');
 mongoose.Promise = Promise;
 
 // TODO: remove
-// mongoose.set('debug', true);
+mongoose.set('debug', true);
 
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
@@ -28,15 +28,38 @@ const CoursesSchema = new mongoose.Schema({
 
 // Cache Schema
 const CacheSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        required: true
+    },
     gguid: {
         type: String,
-        required: true,
-        index: true
+        required: true
+    },
+    response: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true
     }
+    //inserted: {
+    //    type: Date,
+    //    default: Date.now
+    //}
 }, {strict: false});
+
+CacheSchema.index({
+    type: 1,
+    gguid: 1
+});
 
 // project filter
 const PROJECT_FILTER = {_id: false, __v: false};
+
+// transform models in plain objects
+function transform(arrayOfModels) {
+    return arrayOfModels.map(model => {
+        return model.toObject();
+    });
+}
 
 // constructor
 var DB = function (url) {
@@ -62,12 +85,8 @@ var DB = function (url) {
     this.Courses = this.connection.model(COURSES, CoursesSchema);
     this.CoursesTemp = this.connection.model(COURSES_TEMP, CoursesSchema);
 
-    // Caches
-    this.SemestersCache = this.connection.model('SemestersCache', CacheSchema);
-    this.FieldsCache = this.connection.model('FieldsCache', CacheSchema);
-    this.SubFieldsCache = this.connection.model('SubFieldsCache', CacheSchema);
-    this.CoursesListCache = this.connection.model('CoursesListCache', CacheSchema);
-    this.CoursesDetailsCache = this.connection.model('CoursesDetailsCache', CacheSchema);
+    // Cache
+    this.Cache = this.connection.model('Cache', CacheSchema);
 };
 
 // manually close the connection to the DB
@@ -136,12 +155,6 @@ DB.prototype.getCourses = function (params) {
     return this.Courses.find(query).select(PROJECT_FILTER).exec().then(transform);
 };
 
-function transform(arrayOfModels) {
-    return arrayOfModels.map(model => {
-        return model.toObject();
-    })
-}
-
 // returns the array of courses that match gguids included in parameter array
 DB.prototype.getCoursesByIds = function (gguids) {
     return this.Courses.find({gguid: {$in: gguids}}).select(PROJECT_FILTER).exec().then(transform);
@@ -171,6 +184,37 @@ DB.prototype.insertCourseInTemp = function (course) {
 // test only: insert courses directly in courses table
 DB.prototype._insertCourses = function (courses) {
     return this.Courses.create(courses);
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CACHE
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function transformOne(model) {
+    return model && model.toObject();
+}
+
+function getResponse(object) {
+    return object && object.response;
+}
+
+DB.prototype.getCachedSemesters = function () {
+    return this.Cache
+        .findOne({type: 'semesters'})
+        .exec()
+        .then(getResponse);
+        //.then(transformOne);
+};
+
+DB.prototype.cacheSemesters = function (semestersResponse) {
+    var o = {
+        type: 'semesters',
+        gguid: 'no-gguid',
+        response: semestersResponse
+    };
+    console.log(o);
+    var toSave = this.Cache(o);
+    return toSave.save();
 };
 
 // Singleton
