@@ -15,7 +15,7 @@ process.on('unhandledRejection', function (error) {
 });
 
 // TODO: remove
-const N = 1;
+const N = 3;
 
 // create campus client
 var client = new Campus({
@@ -142,7 +142,7 @@ const s = Rx.Observable.fromPromise(client.init())
         course.group = field.group;
         course.field = field.name;
         course.subfield = subfield.name;
-        course.path = subfield.aath;
+        course.path = subfield.path;
 
         // store in mongo
         return db.insertCourseInTemp(course);

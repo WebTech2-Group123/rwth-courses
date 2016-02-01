@@ -309,7 +309,7 @@ Campus.prototype.getCourseDetails = function (course) {
             // cache miss -> request from Campus
             else {
                 return getCourseDetailsFromCampus().then(courseDetailsResponse => {
-                    return this.db.cacheCourses(course.gguid, courseDetailsResponse).then(_ => courseDetailsResponse);
+                    return this.db.cacheCourseDetails(course.gguid, courseDetailsResponse).then(_ => courseDetailsResponse);
                 });
             }
         });
