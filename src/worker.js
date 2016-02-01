@@ -29,7 +29,12 @@ info('Starting getting data from CampusOffice');
 const startTime = +Date.now();
 
 // API-call to CampusOffice for all Semesters
-const s = Rx.Observable.fromPromise(client.getSemestersList())
+const s = Rx.Observable.fromPromise(client.init())
+
+    // get semesters list
+    .flatMap(() => {
+        return client.getSemestersList();
+    })
 
     // select the first two semesters
     .flatMap(semestersResponse => {
@@ -81,7 +86,7 @@ const s = Rx.Observable.fromPromise(client.getSemestersList())
         let field = object.field;
         let subfield = object.subfield;
 
-        return Campus.getCoursesBySubfiled(fieldClient, subfield).then(coursesListResponse => {
+        return client.getCoursesBySubfiled(subfield).then(coursesListResponse => {
             return {
                 field: field,
                 subfield: subfield,
@@ -118,9 +123,7 @@ const s = Rx.Observable.fromPromise(client.getSemestersList())
         let subfield = object.subfield;
         let course = object.course;
 
-        // TODO: check if course was already in the database before doing this
-
-        return Campus.getCourseDetails(eventClient, course).then(courseDetailsResponse => {
+        return client.getCourseDetails(course).then(courseDetailsResponse => {
             return {
                 field: field,
                 subfield: subfield,

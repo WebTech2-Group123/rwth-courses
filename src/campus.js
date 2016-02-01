@@ -43,10 +43,28 @@ var Campus = function (o) {
             throw new Error('Please pass a db instance to use if you want to use the cache system');
         }
     }
+
+    // remember if clients ready
+    this.ready = false;
+};
+
+// create clients
+Campus.prototype.init = function () {
+    log('Init: create all clients');
+
+    // parallel create clients
+    return Promise.all([this._getTermClient(), this._getFieldClient(), this._getEventClient()]).then(clients => {
+        this.ready = true;
+
+        // save clients
+        this._termClient = clients[0];
+        this._fieldClient = clients[1];
+        this._eventClient = clients[2];
+    });
 };
 
 // get Term client
-Campus.prototype.getTermClient = function () {
+Campus.prototype._getTermClient = function () {
     log('Creating Term client');
 
     // create client
@@ -59,7 +77,7 @@ Campus.prototype.getTermClient = function () {
 };
 
 // get Field client
-Campus.prototype.getFieldClient = function () {
+Campus.prototype._getFieldClient = function () {
     log('Creating Field client');
 
     // create client
@@ -72,7 +90,7 @@ Campus.prototype.getFieldClient = function () {
 };
 
 // get Event client
-Campus.prototype.getEventClient = function () {
+Campus.prototype._getEventClient = function () {
     log('Creating Event client');
 
     // create client
@@ -88,26 +106,17 @@ Campus.prototype.getEventClient = function () {
 Campus.prototype.getSemestersList = function () {
     log('Getting semesters list');
 
+    // check that clients are ready
+    if (this.ready !== true) {
+        throw new Error('Please call #init() before using this method');
+    }
+
     // function to get the semesters list from the Campus APIs
     var getSemstersListFromCampus = () => {
         details('Get semesters list from Campus');
 
-        // create client if not present
-        if (typeof this.termClient === 'undefined') {
-            return this.getTermClient().then(client => {
-
-                // cache the client
-                this.termClient = client;
-
-                // api call
-                return this.termClient.GetAllAsync({});
-            });
-        }
-
         // api call
-        else {
-            return this.termClient.GetAllAsync({});
-        }
+        return this._termClient.GetAllAsync({});
     };
 
     // check cache!
@@ -141,30 +150,19 @@ Campus.prototype.getSemestersList = function () {
 Campus.prototype.getStudyFieldsBySemester = function (semester) {
     log('Getting list of study fields for semester: ' + semester.name);
 
+    // check that clients are ready
+    if (this.ready !== true) {
+        throw new Error('Please call #init() before using this method');
+    }
+
     // function to get the study fields from the Campus APIs
     var getStudyFieldsBySemesterFromCampus = () => {
         details('Get list of study fields for semester from Campus: ' + semester.name);
 
-        // create client if not present
-        if (typeof this.termClient === 'undefined') {
-            return this.getTermClient().then(client => {
-
-                // cache the client
-                this.termClient = client;
-
-                // api call
-                return this.termClient.GetFieldsAsync({
-                    'sGuid': semester.gguid
-                });
-            });
-        }
-
         // api call
-        else {
-            return this.termClient.GetFieldsAsync({
-                'sGuid': semester.gguid
-            });
-        }
+        return this._termClient.GetFieldsAsync({
+            'sGuid': semester.gguid
+        });
     };
 
     // check cache!
@@ -202,30 +200,12 @@ Campus.prototype.getSubFields = function (field) {
     var getSubFieldsFromCampus = () => {
         details('Getting subfields for field from Campus: [' + field.gguid + '] ' + field.name);
 
-        // create client if not present
-        if (typeof this.fieldClient === 'undefined') {
-            return this.getFieldClient().then(client => {
-
-                // cache the client
-                this.fieldClient = client;
-
-                // api call
-                return this.fieldClient.GetLinkedAsync({
-                    'sGuid': field.gguid,
-                    'bTree': true,              // tree of subfields
-                    'bIncludeEvents': false     // courses without subfield will be catched later...
-                });
-            });
-        }
-
         // api call
-        else {
-            return this.fieldClient.GetLinkedAsync({
-                'sGuid': field.gguid,
-                'bTree': true,              // tree of subfields
-                'bIncludeEvents': false     // courses without subfield will be catched later...
-            });
-        }
+        return this._fieldClient.GetLinkedAsync({
+            'sGuid': field.gguid,
+            'bTree': true,              // tree of subfields
+            'bIncludeEvents': false     // courses without subfield will be catched later...
+        });
     };
 
     // check cache!
@@ -256,26 +236,90 @@ Campus.prototype.getSubFields = function (field) {
 };
 
 // get the list of courses by subfield
-function getCoursesBySubfiled(fieldClient, subfield) {
+Campus.prototype.getCoursesBySubfiled = function (subfield) {
     log('Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name);
-    return fieldClient.GetLinkedAsync({
-        'sGuid': subfield.gguid,
-        'bTree': false,             // we do not need the tree of subfields (handled before)
-        'bIncludeEvents': true      // get courses
-    });
-}
+
+    // function to get the subfields from the Campus APIs
+    var getCoursesFromCampus = () => {
+        details('Getting courses for subfield from Campus: [' + subfield.gguid + '] ' + subfield.name);
+
+        return this._fieldClient.GetLinkedAsync({
+            'sGuid': subfield.gguid,
+            'bTree': false,             // we do not need the tree of subfields (handled before)
+            'bIncludeEvents': true      // get courses
+        });
+    };
+
+    // check cache!
+    if (this.cache) {
+
+        // check in database
+        return this.db.getCachedCourses(subfield.gguid).then(coursesListResponse => {
+
+            // if cached -> return it
+            if (coursesListResponse !== null) {
+                details('Getting courses for subfield from Cache: [' + subfield.gguid + '] ' + subfield.name);
+                return coursesListResponse;
+            }
+
+            // cache miss -> request from Campus
+            else {
+                return getCoursesFromCampus().then(coursesListResponse => {
+                    return this.db.cacheCourses(subfield.gguid, coursesListResponse).then(_ => coursesListResponse);
+                });
+            }
+        });
+    }
+
+    // no cache -> request from Campus
+    else {
+        return getCoursesFromCampus();
+    }
+};
 
 // get the details of a course
-function getCourseDetails(eventClient, course) {
+Campus.prototype.getCourseDetails = function (course) {
     log('Getting course details for course: [' + course.gguid + '] ' + course.name);
-    return eventClient.GetLinkedAsync({
-        'sEvtSpec': course.gguid,
-        'bIncludeFields': true,
-        'bIncludeAdresses': true,
-        'bIncludeAppointments': true,
-        'bIncludeUnits': true
-    });
-}
+
+    // function to get the subfields from the Campus APIs
+    var getCourseDetailsFromCampus = () => {
+        details('Getting course details for course from Campus: [' + course.gguid + '] ' + course.name);
+
+        return this._eventClient.GetLinkedAsync({
+            'sEvtSpec': course.gguid,
+            'bIncludeFields': true,
+            'bIncludeAdresses': true,
+            'bIncludeAppointments': true,
+            'bIncludeUnits': true
+        });
+    };
+
+    // check cache!
+    if (this.cache) {
+
+        // check in database
+        return this.db.getCachedCourseDetails(course.gguid).then(courseDetailsResponse => {
+
+            // if cached -> return it
+            if (courseDetailsResponse !== null) {
+                details('Getting course details for course from Cache: [' + course.gguid + '] ' + course.name);
+                return courseDetailsResponse;
+            }
+
+            // cache miss -> request from Campus
+            else {
+                return getCourseDetailsFromCampus().then(courseDetailsResponse => {
+                    return this.db.cacheCourses(course.gguid, courseDetailsResponse).then(_ => courseDetailsResponse);
+                });
+            }
+        });
+    }
+
+    // no cache -> request from Campus
+    else {
+        return getCourseDetailsFromCampus();
+    }
+};
 
 // expose functions
 module.exports = Campus;

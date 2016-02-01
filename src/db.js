@@ -235,6 +235,39 @@ DB.prototype.cacheSubFields = function (gguid, subFieldsResponse) {
     return toSave.save();
 };
 
+DB.prototype.getCachedCourses = function (gguid) {
+    return this.Cache
+        .findOne({type: 'courses', gguid: gguid})
+        .exec()
+        .then(getResponse);
+};
+
+DB.prototype.cacheCourses = function (gguid, coursesListResponse) {
+    var toSave = this.Cache({
+        type: 'courses',
+        gguid: gguid,
+        response: coursesListResponse
+    });
+    return toSave.save();
+};
+
+DB.prototype.getCachedCourseDetails = function (gguid) {
+    return this.Cache
+        .findOne({type: 'course-details', gguid: gguid})
+        .exec()
+        .then(getResponse);
+};
+
+DB.prototype.cacheCourseDetails = function (gguid, courseDetailsResponse) {
+    var toSave = this.Cache({
+        type: 'course-details',
+        gguid: gguid,
+        response: courseDetailsResponse
+    });
+    return toSave.save();
+};
+
+
 // Singleton
 var instance = null;
 function getInstance() {
