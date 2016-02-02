@@ -5,6 +5,7 @@
  * the CampusOffice APIs' responses.
  */
 
+const striptags = require('striptags');
 const utils = require('./utils');
 const log = require('debug')('rwth-courses:parser');
 
@@ -208,11 +209,11 @@ function parseCourseDetails(result) {
         semester: event['attributes']['termname'],
         type: parseType(event['attributes']['type']),
         details: {
-            description: event['info'][0]['description'],
-            test: event['test'],
-            prereq: event['prereq'],
-            follow: event['follow'],
-            note: event['note']
+            description: striptags(event['info'][0]['description']),
+            test: striptags(event['test']),
+            prereq: striptags(event['prereq']),
+            follow: striptags(event['follow']),
+            note: striptags(event['note'])
         },
         contact: (utils.map(event, 'address', contact => {
             return {
