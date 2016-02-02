@@ -103,7 +103,7 @@ function parseCoursesList(result) {
 
     // remove exams
     return courses.filter(course => {
-        return course.type !== 'Klausur (Kl)';
+        return course.type !== 'Klausur (Kl)' && course.type !== 'Mündliche Prüfung (MP)';
     });
 }
 
@@ -164,12 +164,38 @@ function parseECTS(ects) {
     return matches ? matches.map(s => parseInt(s, 10)) : [];
 }
 
+function parseType(type) {
+
+    // mapping
+    const MAPPING = Object.freeze({
+        "Vorlesung": "Vorlesung",
+        "Proseminar": "Seminar",
+        "Übung": "Übung",
+        "Praktikum": "Praktikum",
+        "Tutorium": "Tutorium",
+        "Seminar": "Seminar",
+        "Arbeitsgemeinschaft": "Arbeitsgemeinschaft",
+        "Hauptseminar": "Seminar"
+    });
+
+    // remove abbreviations
+    var typeWithoutAbbreviations = type.split(' ')[0];
+
+    // split types
+    var types = typeWithoutAbbreviations.split('/');
+
+    // return new types
+    return types.map(type => {
+        return MAPPING[type];
+    });
+}
+
 /**
  * Parse a Course response in a clean Course object.
  */
 function parseCourseDetails(result) {
     var event = result['event'];
-    
+
     // TODO!
     // NB: some courses miss contact
     // NB: some courses miss contact.email
@@ -230,3 +256,4 @@ exports.parseCourseDetails = parseCourseDetails;
 // utils
 exports.parseLanguage = parseLanguage;
 exports.parseECTS = parseECTS;
+exports.parseType = parseType;

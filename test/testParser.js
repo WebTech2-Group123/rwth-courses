@@ -31,6 +31,10 @@ const LANGUAGES = require('./json/parsed/languages');
 const ECTS_RAW = require('./json/raw/ects');
 const ECTS = require('./json/parsed/ects');
 
+// types
+const TYPES_RAW = require('./json/raw/types');
+const TYPES = require('./json/parsed/types');
+
 // test
 describe('parser.js', function () {
 
@@ -99,6 +103,15 @@ describe('parser.js', function () {
                 ECTS_RAW.forEach(function (ects, index) {
                     const parsed = parser.parseECTS(ects);
                     assert.deepEqual(parsed, ECTS[index]);
+                });
+            });
+        });
+
+        describe('#parseType()', function () {
+            it('should correctly parse the types string', function () {
+                TYPES_RAW.forEach(function (type, index) {
+                    const parsed = parser.parseType(type);
+                    assert.deepEqual(parsed, TYPES[index]);
                 });
             });
         });
