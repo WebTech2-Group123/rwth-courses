@@ -15,7 +15,7 @@ router.route('/').get(function (req, res) {
 router.route('/semesters').get(function (req, res) {
 
     db.getSemesters().then(function (semesters) {
-        res.send(semesters);
+        res.json(semesters);
     })
 });
 
@@ -23,7 +23,7 @@ router.route('/semesters').get(function (req, res) {
 router.route('/fields').get(function (req, res) {
 
     db.getStudyFields().then(function (fields) {
-        res.send(fields);
+        res.json(fields);
     })
 });
 
@@ -31,11 +31,37 @@ router.route('/fields').get(function (req, res) {
 router.route('/courses').get(function (req, res) {
 
     // get parameters
-    var parameters = req.query;
+    var query = req.query;
 
-    //get courses from db that match client's parameters
-    db.getCourses(parameters).then(function (courses) {
-        res.send(courses);
+    // object to resolve
+    var promise;
+
+    // check if ids passed
+    if (typeof query.ids !== 'undefined') {
+        let ids = query.ids.split(',');
+        promise = db.getCoursesByIds(ids);
+    }
+
+    // ids not specified... use other parameters
+    else {
+
+        // filter object to pass to the db
+        let filter = {};
+
+        // select only allowed parameters
+        const allowed = ['semester', 'field', 'language'];
+        allowed.forEach(function (parameter) {
+            if (typeof query[parameter] !== 'undefined') {
+                filter[parameter] = query[parameter];
+            }
+        });
+
+        promise = db.getCourses(filter);
+    }
+
+    // send the courses
+    promise.then(function (courses) {
+        res.json(courses);
     })
 });
 
