@@ -19,16 +19,19 @@
             <td md-cell ng-repeat="events in items track by $index">
                 <div layout="row">
                     <div class="event-ctn" flex ng-repeat="event in events track by $index">
-                        <div>
-                            <a ng-click="goToDetails(event.gguid)">
-                                <md-tooltip md-direction="left">Show details</md-tooltip>
-                                {{ event.name }}
-                            </a>
+                        <div class="event"
+                             ng-class="{'event-offset-15': event.offset.quarterpast,'event-offset-30': event.offset.halfpast,'event-offset-45': event.offset.quarterto}">
+                            <div>
+                                <a ng-click="goToDetails(event.gguid)">
+                                    <md-tooltip md-direction="left">Show details</md-tooltip>
+                                    {{ event.name | course }}
+                                </a>
+                            </div>
+                            <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)" ng-class="{'delete-btn-offset-15': event.offset.quarterpast}">
+                                <md-tooltip md-direction="bottom">Delete course</md-tooltip>
+                                <md-icon md-svg-src='img/icons/ic_delete_black_18px.svg'></md-icon>
+                            </md-button>
                         </div>
-                        <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)">
-                            <md-tooltip md-direction="bottom">Delete course</md-tooltip>
-                            <md-icon md-svg-src='img/icons/ic_delete_black_18px.svg'></md-icon>
-                        </md-button>
                     </div>
                 </div>
             </td>

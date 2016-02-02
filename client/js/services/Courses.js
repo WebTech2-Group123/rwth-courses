@@ -17,7 +17,7 @@ app.factory('Courses', function ($q, $http, localStorageService) {
     //}
 
     // convert the time into a string
-    function convertTime(time){
+    function convertTime(time) {
         time = new Date(time);
 
         var hours = time.getHours();
@@ -29,20 +29,20 @@ app.factory('Courses', function ($q, $http, localStorageService) {
     }
 
     return {
-        get: function(semester, field){
+        get: function (semester, field) {
 
             var defered = $q.defer();
 
             // define query for the request to get the right courses
-            var query = {"semester" : semester, "field": field};
+            var query = {"semester": semester, "field": field};
 
             // get courses from server
             $http({
                 method: 'get',
                 url: '/api/courses?query=' + query
-            }).success(function(res){
+            }).success(function (res) {
                 defered.resolve(res);
-            }).error(function(res){
+            }).error(function (res) {
                 console.log(res);
             });
 
@@ -66,7 +66,7 @@ app.factory('Courses', function ($q, $http, localStorageService) {
             $http({
                 method: 'get',
                 url: '/api/courses?ids=' + ids
-            }).success(function(res){
+            }).success(function (res) {
                 console.log(res);
 
                 defered.resolve(res);
@@ -99,34 +99,77 @@ app.factory('Courses', function ($q, $http, localStorageService) {
                 [null, null, null, null, null, null],
                 [null, null, null, null, null, null],
                 [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
                 [null, null, null, null, null, null]
             ];
 
             for (var i = 0; i < courses.length; i++) {
                 switch (convertTime(courses[i].events[0].start)) {
                     case '8:30h':
-                        schedule[0][courses[i].events[0].weekday - 1] == null ? schedule[0][courses[i].events[0].weekday - 1] = [{
-                            name: courses[i].name,
-                            gguid: courses[i].gguid
-                        }] : schedule[0][courses[i].events[0].weekday - 1].push({name: courses[i].name, gguid: courses[i].gguid});
+                        if (schedule[0][courses[i].events[0].weekday - 1] == null) {
+                            schedule[0][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            }]
+                        } else {
+                            schedule[0][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            });
+                        }
                         break;
                     case '10:30h':
-                        schedule[1][courses[i].events[0].weekday - 1] == null ? schedule[1][courses[i].events[0].weekday - 1] = [{
-                            name: courses[i].name,
-                            gguid: courses[i].gguid
-                        }] : schedule[1][courses[i].events[0].weekday - 1].push({name: courses[i].name, gguid: courses[i].gguid});
+                        if (schedule[2][courses[i].events[0].weekday - 1] == null) {
+                            schedule[2][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            }]
+                        } else {
+                            schedule[2][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            });
+                        }
                         break;
                     case '12:15h':
-                        schedule[2][courses[i].events[0].weekday - 1] == null ? schedule[2][courses[i].events[0].weekday - 1] = [{
-                            name: courses[i].name,
-                            gguid: courses[i].gguid
-                        }] : schedule[2][courses[i].events[0].weekday - 1].push({name: courses[i].name, gguid: courses[i].gguid});
+                        if (schedule[4][courses[i].events[0].weekday - 1] == null) {
+                            schedule[4][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            }]
+                        } else {
+                            schedule[4][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            });
+                        }
                         break;
-                    case '18:15h':
-                        schedule[3][courses[i].events[0].weekday - 1] == null ? schedule[3][courses[i].events[0].weekday - 1] = [{
-                            name: courses[i].name,
-                            gguid: courses[i].gguid
-                        }] : schedule[3][courses[i].events[0].weekday - 1].push({name: courses[i].name, gguid: courses[i].gguid});
+                    case '13:15h':
+                        if (schedule[5][courses[i].events[0].weekday - 1] == null) {
+                            schedule[5][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else {
+                            schedule[5][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                        }
                         break;
                 }
             }
@@ -135,7 +178,7 @@ app.factory('Courses', function ($q, $http, localStorageService) {
         },
 
         getTimes: function () {
-            return ['8:30h', '10:30h', '12:15h', '18:15h'];
+            return ['8:00h', '9:00h', '10:00h', '11:00h', '12:00h', '13:00h'];
         }
     }
 });
