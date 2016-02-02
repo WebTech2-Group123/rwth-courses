@@ -108,6 +108,46 @@ function parseCoursesList(result) {
 }
 
 /**
+ * Utility function to match at least one element of an array of strings against one string.
+ */
+function contains(string, array) {
+    return array.reduce((accumulator, current) => {
+        return accumulator || string.indexOf(current) >= 0;
+    }, false);
+}
+
+/**
+ * Parse the language field.
+ */
+function parseLanguage(language) {
+
+    // if language not existing -> return 'UNKNOWN'
+    if (typeof language === 'undefined') {
+        return ['UNKNOWN'];
+    }
+
+    // init a empty array for the found languages
+    var parsed = [];
+
+    // check german
+    if (contains(language.toLowerCase(), ['deutsch', 'german'])) {
+        parsed.push('DE');
+    }
+
+    // check english
+    if (contains(language.toLowerCase(), ['english', 'englisch'])) {
+        parsed.push('EN');
+    }
+
+    // if nothing, return "OTHER"
+    if (parsed.length === 0) {
+        parsed.push('OTHER');
+    }
+
+    return parsed;
+}
+
+/**
  * Parse a Course response in a clean Course object.
  */
 function parseCourseDetails(result) {
@@ -169,3 +209,6 @@ exports.parseFieldOfStudies = parseFieldOfStudies;
 exports.parseSubFields = parseSubFields;
 exports.parseCoursesList = parseCoursesList;
 exports.parseCourseDetails = parseCourseDetails;
+
+// utils
+exports.parseLanguage = parseLanguage;
