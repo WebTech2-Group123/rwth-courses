@@ -206,7 +206,7 @@ function parseCourseDetails(result) {
         ects: parseECTS(event['attributes']['ects']),
         language: parseLanguage(event['attributes']['language']),
         semester: event['attributes']['termname'],
-        type: event['attributes']['type'],
+        type: parseType(event['attributes']['type']),
         details: {
             description: event['info'][0]['description'],
             test: event['test'],
