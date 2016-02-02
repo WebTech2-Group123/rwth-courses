@@ -149,6 +149,11 @@ function parseLanguage(language) {
 
 function parseECTS(ects) {
 
+    // some courses simply do not have a credit points numbers... return 0
+    if (typeof ects === 'undefined') {
+        return [0];
+    }
+
     // replace , with . (to identify numbers with comma, yes also this is present in Campus)
     var ectsPoint = ects.replace(/,/g, '.');
 
@@ -164,7 +169,7 @@ function parseECTS(ects) {
  */
 function parseCourseDetails(result) {
     var event = result['event'];
-
+    
     // TODO!
     // NB: some courses miss contact
     // NB: some courses miss contact.email

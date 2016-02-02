@@ -91,6 +91,10 @@ describe('parser.js', function () {
         });
 
         describe('#parseECTS()', function () {
+            it('should return [0] if no ects field is available', function () {
+                const parsed = parser.parseECTS();
+                assert.deepEqual(parsed, [0]);
+            });
             it('should correctly parse the crazy ECTS in Campus', function () {
                 ECTS_RAW.forEach(function (ects, index) {
                     const parsed = parser.parseECTS(ects);
