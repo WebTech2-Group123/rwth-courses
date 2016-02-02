@@ -19,9 +19,9 @@
             ng-repeat="course in courses | orderBy: query.order | filterBy: ['name', 'lecturer', 'institute', 'subsection', 'creditpoints']: query.search | limitTo: query.limit: (query.page - 1) * query.limit">
             <td md-cell>{{course.name}}</td>
             <td md-cell>{{course.lecturer}}</td>
-            <td md-cell>{{course.institute}}</td>
-            <td md-cell>{{course.subsection}}</td>
-            <td md-cell>{{course.creditpoints}}</td>
+            <td md-cell>{{course.contact[0].address.department}}</td>
+            <td md-cell>{{course.subfield}}</td>
+            <td md-cell>{{course.ects}}</td>
         </tr>
         </tbody>
     </table>

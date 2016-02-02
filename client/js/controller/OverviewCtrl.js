@@ -9,11 +9,11 @@ app.controller('OverviewCtrl', function ($scope, localStorageService, $location,
     // load courses from local storage
     var ids = localStorageService.get('selected') || [];
 
-    console.log('IDs: ' + ids);
-
     // retrieve courses
     Courses.getByIDs(ids).then(function (courses) {
         $scope.courses = courses;
+        console.log('------------------------------');
+        console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
         $scope.loading = false;
     });
@@ -43,7 +43,8 @@ app.controller('OverviewCtrl', function ($scope, localStorageService, $location,
     }
 
     // go back button
+    // TODO: got back to the rigth course list
     $scope.goBack = function () {
-        $location.url('courses');
+        $location.url('/');
     }
 });

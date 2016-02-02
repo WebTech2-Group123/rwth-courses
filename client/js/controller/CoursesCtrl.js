@@ -8,7 +8,6 @@ function CoursesCtrl($scope, localStorageService, $location, $routeParams, Cours
 
     // get courses from local storage
     $scope.selected = localStorageService.get('selected') || [];
-    console.log($scope.selected);
 
     // store courses into local storage on changes
     $scope.$watchCollection('selected', function (selected) {
@@ -28,8 +27,14 @@ function CoursesCtrl($scope, localStorageService, $location, $routeParams, Cours
     Courses.get(semester, field).then(function (courses) {
         $scope.courses = courses;
 
+        for(var i=0; i<courses.length; i++){
+            if(courses[i].gguid == '0x5463984FF379974D896EB4BF748D013E'){
+                console.log(courses[i]);
+            }
+        }
+
         // save courses in browser storage
-        localStorageService.set('courses', courses);
+        //localStorageService.set('courses', courses);
     });
 
     $scope.goBack = function () {
