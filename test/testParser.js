@@ -27,6 +27,10 @@ const COURSE_DETAILS = require('./json/parsed/course_details');
 const LANGUAGES_RAW = require('./json/raw/languages');
 const LANGUAGES = require('./json/parsed/languages');
 
+// ects
+const ECTS_RAW = require('./json/raw/ects');
+const ECTS = require('./json/parsed/ects');
+
 // test
 describe('parser.js', function () {
 
@@ -83,6 +87,15 @@ describe('parser.js', function () {
             it('should return OTHER if language neither German nor English', function () {
                 const parsed = parser.parseLanguage('Chinese');
                 assert.deepEqual(parsed, ['OTHER']);
+            });
+        });
+
+        describe('#parseECTS()', function () {
+            it('should correctly parse the crazy ECTS in Campus', function () {
+                ECTS_RAW.forEach(function (ects, index) {
+                    const parsed = parser.parseECTS(ects);
+                    assert.deepEqual(parsed, ECTS[index]);
+                });
             });
         });
     }

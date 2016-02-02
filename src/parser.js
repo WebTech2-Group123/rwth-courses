@@ -147,6 +147,18 @@ function parseLanguage(language) {
     return parsed;
 }
 
+function parseECTS(ects) {
+
+    // replace , with . (to identify numbers with comma, yes also this is present in Campus)
+    var ectsPoint = ects.replace(/,/g, '.');
+
+    // extract numbers
+    var matches = ectsPoint.match(/\d+\.?(\d+)?(\s|$)/g);
+
+    // transform in numbers
+    return matches ? matches.map(s => parseInt(s, 10)) : [];
+}
+
 /**
  * Parse a Course response in a clean Course object.
  */
@@ -160,8 +172,8 @@ function parseCourseDetails(result) {
     return {
         gguid: event['attributes']['gguid'],
         name: event['info'][0]['title'],
-        ects: event['attributes']['ects'],
-        language: event['attributes']['language'],
+        ects: parseECTS(event['attributes']['ects']),
+        language: parseLanguage(event['attributes']['language']),
         semester: event['attributes']['termname'],
         type: event['attributes']['type'],
         details: {
@@ -212,3 +224,4 @@ exports.parseCourseDetails = parseCourseDetails;
 
 // utils
 exports.parseLanguage = parseLanguage;
+exports.parseECTS = parseECTS;
