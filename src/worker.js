@@ -15,7 +15,7 @@ process.on('unhandledRejection', function (error) {
 });
 
 // TODO: remove
-const N = 3;
+const N = 7;
 
 // create campus client
 var client = new Campus({
@@ -28,7 +28,7 @@ var client = new Campus({
 info('Starting getting data from CampusOffice');
 const startTime = +Date.now();
 
-// API-call to CampusOffice for all Semesters
+// initialize the Campus client
 const s = Rx.Observable.fromPromise(client.init())
 
     // get semesters list
