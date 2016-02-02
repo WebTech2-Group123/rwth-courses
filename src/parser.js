@@ -193,18 +193,49 @@ function parseType(type) {
 
 function parseInfo(info) {
     var response = {};
+
+    // parse languages
     info.forEach(el => {
         switch (el['attributes']['lang']) {
             case 'gb':
-                response.name = striptags(el['title']);
-                response.description = striptags(el['description']);
+                response.name = el['title'] ? striptags(el['title']) : undefined;
+                response.description = el['description'] ? striptags(el['description']) : undefined;
                 break;
             case 'de':
-                response.name_de = striptags(el['title']);
-                response.description_de = striptags(el['description']);
+                response.name_de = el['title'] ? striptags(el['title']) : undefined;
+                response.description_de = el['description'] ? striptags(el['description']) : undefined;
                 break;
         }
     });
+
+    // check if only one description... then copy the other language
+    if (typeof response.name === 'undefined' && typeof response.name_de !== 'undefined') {
+        response.name = response.name_de;
+    }
+    if (typeof response.name_de === 'undefined' && typeof response.name !== 'undefined') {
+        response.name_de = response.name;
+    }
+    if (typeof response.description === 'undefined' && typeof response.description_de !== 'undefined') {
+        response.description = response.description_de;
+    }
+    if (typeof response.name_de === 'undefined' && typeof response.description_de !== 'undefined') {
+        response.name_de = response.description_de;
+    }
+
+    // substitute undefined with ""
+    if (typeof response.name === 'undefined') {
+        response.name = "";
+    }
+    if (typeof response.description === 'undefined') {
+        response.description = "";
+    }
+    if (typeof response.name_de === 'undefined') {
+        response.name_de = "";
+    }
+    if (typeof response.description_de === 'undefined') {
+        response.description_de = "";
+    }
+
     return response;
 }
 
@@ -286,3 +317,4 @@ exports.parseCourseDetails = parseCourseDetails;
 exports.parseLanguage = parseLanguage;
 exports.parseECTS = parseECTS;
 exports.parseType = parseType;
+exports.parseInfo = parseInfo;

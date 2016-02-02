@@ -35,6 +35,12 @@ const ECTS = require('./json/parsed/ects');
 const TYPES_RAW = require('./json/raw/types');
 const TYPES = require('./json/parsed/types');
 
+// info
+const INFO_1_RAW = require('./json/raw/info_1');
+const INFO_1 = require('./json/parsed/info_1');
+const INFO_2_RAW = require('./json/raw/info_2');
+const INFO_2 = require('./json/parsed/info_2');
+
 // test
 describe('parser.js', function () {
 
@@ -113,6 +119,17 @@ describe('parser.js', function () {
                     const parsed = parser.parseType(type);
                     assert.deepEqual(parsed, TYPES[index]);
                 });
+            });
+        });
+
+        describe('#parseInfo()', function () {
+            it('should correctly parse the info section (1)', function () {
+                const parsed = parser.parseInfo(INFO_1_RAW);
+                assert.deepEqual(parsed, INFO_1);
+            });
+            it('should correctly parse the info section (2)', function () {
+                const parsed = parser.parseInfo(INFO_2_RAW);
+                assert.deepEqual(parsed, INFO_2);
             });
         });
     }
