@@ -146,7 +146,6 @@ app.factory('Courses', function ($q, $http) {
                 console.log('error! unsuccessful');
                 //return;
             });
-            return;
         },
 
 
