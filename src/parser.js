@@ -8,9 +8,6 @@
 const utils = require('./utils');
 const log = require('debug')('rwth-courses:parser');
 
-// TODO: remove
-const warnings = require('debug')('rwth-courses:parser-warnings');
-
 /**
  * Parse a Semesters response in an Array of semesters.
  */
@@ -96,11 +93,6 @@ function parseSubFields(result) {
  * (with only gguid and a couple of other attributes).
  */
 function parseCoursesList(result) {
-
-    if (typeof result['field']['event'] == 'undefined') {
-        warnings('WARNING -> ' + JSON.stringify(result));
-    }
-
     var courses = utils.map(result, 'field', 'event', course => {
             return {
                 gguid: course['attributes']['gguid'],
