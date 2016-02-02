@@ -9,6 +9,8 @@ app.controller('OverviewCtrl', function ($scope, localStorageService, $location,
     // load courses from local storage
     var ids = localStorageService.get('selected') || [];
 
+    console.log('IDs: ' + ids);
+
     // retrieve courses
     Courses.getByIDs(ids).then(function (courses) {
         $scope.courses = courses;

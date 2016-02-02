@@ -1,9 +1,14 @@
 app.controller('CoursesCtrl', CoursesCtrl);
 
-function CoursesCtrl($scope, localStorageService, $location, Courses) {
+function CoursesCtrl($scope, localStorageService, $location, $routeParams, Courses) {
+
+    // store route params
+    var semester = window.decodeURIComponent($routeParams.semester);
+    var field = $routeParams.field;
 
     // get courses from local storage
     $scope.selected = localStorageService.get('selected') || [];
+    console.log($scope.selected);
 
     // store courses into local storage on changes
     $scope.$watchCollection('selected', function (selected) {
@@ -20,8 +25,11 @@ function CoursesCtrl($scope, localStorageService, $location, Courses) {
 
     $scope.courses = [];
 
-    Courses.get().then(function (courses) {
+    Courses.get(semester, field).then(function (courses) {
         $scope.courses = courses;
+
+        // save courses in browser storage
+        localStorageService.set('courses', courses);
     });
 
     $scope.goBack = function () {

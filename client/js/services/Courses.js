@@ -1,110 +1,4 @@
-app.factory('Courses', function ($q, $http) {
-
-
-    // TODO: remove, developent only
-    var coursesList = [
-        {
-            name: 'Advanced Internet Technology',
-            lecturer: 'Dr. Thissen',
-            institute: 'Informatik 4 (Kommunikation und verteilte Systeme)',
-            subsection: 'Praktische Informatik',
-            creditpoints: 3,
-            gguid: 1,
-            weekday: 2,
-            time: '8:30h'
-        },
-        {
-            name: 'Advanced Web Technologies (WebTech 2)',
-            lecturer: 'Prof. Schröder',
-            institute: 'Informatik 9 (Lerntechnologien)',
-            subsection: 'Praktische Informatik',
-            creditpoints: 6,
-            gguid: 2,
-            weekday: 2,
-            time: '8:30h'
-        },
-        {
-            name: 'Berechenbarkeit und Komplexität',
-            lecturer: 'Prof. Grohe',
-            institute: 'Informatik 1 (Algorithmen und Komplexität) (N.N.) Lehrstuhl für Informatik 7 (Logik und Theorie diskreter Systeme)',
-            subsection: 'Praktische Informatik',
-            creditpoints: 6,
-            gguid: 3,
-            weekday: 1,
-            time: '10:15h'
-        },
-        {
-            name: 'Content-based Multimedia Search',
-            lecturer: 'Prof. Seidl',
-            institute: 'Informatik 9 (Datenmanagement und -exploration)',
-            subsection: 'Praktische Informatik',
-            creditpoints: 6,
-            gguid: 4,
-            weekday: 6,
-            time: '12:15h'
-        },
-        {
-            name: 'Data Mining Algorithmen I',
-            lecturer: 'Prof. Seidl',
-            institute: 'Informatik 9 (Datenmanagement und -exploration)',
-            subsection: 'Cool Informatik',
-            creditpoints: 6,
-            gguid: 5,
-            weekday: 1,
-            time: '10:15h'
-        },
-        {
-            name: 'Lorem Ipsum',
-            lecturer: 'Mr. Bean',
-            institute: 'Informatik 55 (Lorem Ipsum)',
-            subsection: 'Ipsum Science',
-            creditpoints: 60,
-            gguid: 6,
-            weekday: 3,
-            time: '10:15h'
-        },
-        {
-            name: 'Designing Interactive Systems 1  ',
-            lecturer: 'Prof.  Borchers ',
-            institute: 'Informatik 10 (Mensch-Computer-Interaktion)',
-            subsection: 'Praktische Informatik',
-            creditpoints: 6,
-            gguid: 7,
-            weekday: 2,
-            time: '12:15h'
-        },
-        {
-            name: 'Pizza',
-            lecturer: 'Mr. Bean',
-            institute: 'Informatik 55 (Lorem Ipsum)',
-            subsection: 'Lorem Science',
-            creditpoints: 6,
-            gguid: 8,
-            weekday: 2,
-            time: '8:30h'
-        },
-        {
-            name: 'Agile Pizza',
-            lecturer: 'Mr. Bean',
-            institute: 'Informatik 55 (Lorem Ipsum)',
-            subsection: 'Lorem Science',
-            creditpoints: 2,
-            gguid: 9,
-            weekday: 4,
-            time: '12:15h'
-        },
-        {
-            name: 'Advanced Pizza Eating',
-            lecturer: 'Mr. Bean',
-            institute: 'Informatik 55 (Lorem Ipsum)',
-            subsection: 'Theoretical Computer Science',
-            creditpoints: 6,
-            gguid: 10,
-            weekday: 1,
-            time: '10:15h'
-        }
-    ];
-
+app.factory('Courses', function ($q, $http, localStorageService) {
 
     function mapByGGUID(courses) {
         return courses.reduce(function (accumulator, course) {
@@ -122,45 +16,46 @@ app.factory('Courses', function ($q, $http) {
         });
     }
 
+    // convert the time into a string
+    function convertTime(time){
+        time = new Date(time);
+
+        var hours = time.getHours();
+        var min = time.getMinutes();
+        var strTime = hours + ':' + min;
+
+        return strTime;
+    }
+
     return {
-        getCoursesFromServer: function(semester, field){
+        get: function(semester, field){
 
-            //here we will get data from server
-            var requestData = {"semester" : semester, "field": field};
-
-            console.log(requestData);
-
-            var req = {
-                method: 'POST',
-                url: 'http://example.com',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: requestData
-            }
-
-            $http(req).then(function(response, error){
-                console.log(response);
-                $location.path('/courses');
-            }, function(error){
-                console.log('error! unsuccessful');
-                //return;
-            });
-        },
-
-
-        // TODO: create cache
-
-        // get list of courses from the server
-        get: function () {
             var defered = $q.defer();
-            defered.resolve(coursesList);
+
+            // define query for the request to get the right courses
+            var query = {"semester" : semester, "field": field};
+
+            // get courses from server
+            $http({
+                method: 'get',
+                url: '/api/courses',
+                data: query
+            }).success(function(res){
+                defered.resolve(res);
+            }).error(function(res){
+                console.log(res);
+            });
+
             return defered.promise;
         },
+
+        // TODO: create cache
 
         // get list of courses of specified IDs
         getByIDs: function (ids) {
             var defered = $q.defer();
+
+            var coursesList = localStorageService.get('courses');
 
             // get courses from cache
             var cachedCourses = coursesByIDS(coursesList, ids);
@@ -191,7 +86,7 @@ app.factory('Courses', function ($q, $http) {
             ];
 
             for (var i = 0; i < courses.length; i++) {
-                switch (courses[i].time) {
+                switch (convertTime(courses[i].events[0].start)) {
                     case '8:30h':
                         schedule[0][courses[i].weekday - 1] == null ? schedule[0][courses[i].weekday - 1] = [{
                             name: courses[i].name,

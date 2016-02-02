@@ -42,6 +42,11 @@ function HomeCtrl($scope, $filter, $location, $http, $log) {
 
     $scope.getCourseList = function (semester, field) {
 
+
+        var semester = window.encodeURIComponent(semester);
+
+        console.log(semester + '      ' + field);
+
         if (semester == undefined || field == null) {
             //some error message
             return;
@@ -50,10 +55,11 @@ function HomeCtrl($scope, $filter, $location, $http, $log) {
 
         // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        var result = Courses.getCoursesFromServer(semester, field);
+        //var result = Courses.getCoursesFromServer(semester, field);
         //if (result)
 
-        $location.path('/courses');
+        // pass semester and field to the next route
+        $location.path('courses/' + semester + '/' + field);
     };
 
 }
