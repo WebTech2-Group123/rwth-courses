@@ -132,20 +132,8 @@ DB.prototype.getStudyFields = function () {
 };
 
 // get courses (not temp)
-DB.prototype.getCourses = function (params) {
-    var parameters = params || {};
-    var query = {};
-
-    // select only allowed parameters
-    const allowed = ['semester', 'language', 'field', 'id'];
-    allowed.forEach(function (arg) {
-        if (typeof parameters[arg] !== 'undefined') {
-            query[arg] = parameters[arg];
-        }
-    });
-
-    // search courses
-    return this.Courses.find(query).select(PROJECT_FILTER).exec().then(transform);
+DB.prototype.getCourses = function (parameters) {
+    return this.Courses.find(parameters).select(PROJECT_FILTER).exec().then(transform);
 };
 
 // returns the array of courses that match gguids included in parameter array
