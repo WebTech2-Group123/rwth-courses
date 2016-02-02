@@ -5,3 +5,52 @@ app > #loading {
     top: 50%;
     left: 50%;
 }
+
+.app-container {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+.bottom-navigation{
+    position: fixed;
+    bottom:0;
+    width:100%;
+    max-width: 1024px;
+}
+
+/* home */
+.semester-span{
+    border-bottom: 2px solid #FF4081;
+    cursor: pointer;
+    /* remove dotted border onclick event */
+    outline: 0;
+}
+
+/* overview */
+.delete-btn {
+    min-width: 0px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+}
+
+.event-ctn {
+    max-width: 100px;
+    height: 100px;
+    padding: 5px;
+    background-color: #aed581;
+    position: relative;
+}
+
+.event-ctn:not(:last-child) {
+    margin-right: 5px;
+}
+
+.event-ctn a {
+    cursor: pointer;
+}
+
+.event-ctn a:hover{
+    text-decoration: underline;
+}

@@ -3,8 +3,7 @@ var app = angular.module('Campus', [
     'ngMaterial',
     'md.data.table',
     'angular.filter',
-    'LocalStorageModule',
-    'door3.css'
+    'LocalStorageModule'
 ]);
 
 // contains the whole app
@@ -12,28 +11,17 @@ var app = angular.module('Campus', [
 app.directive('app', function () {
     return {
         restrict: 'E',
-        templateUrl: 'templates/app.html',
-        css: 'css/desktop/app.css'
+        templateUrl: 'templates/app.html'
     };
 });
 
 // router & local storage
-app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider) {
-
-    // config for responsive design
-    angular.extend($cssProvider.defaults, {
-        breakpoints: {
-            mobile: '(max-width: 480px)',
-            tablet: '(min-width: 768px) and (max-width: 1024px)',
-            desktop: '(min-width: 1224px)'
-        }
-    });
+app.config(function ($routeProvider, localStorageServiceProvider) {
 
     $routeProvider
         .when('/', {
             templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl',
-            css: 'css/desktop/home.css'
+            controller: 'HomeCtrl'
         })
         .when('/courses', {
             templateUrl: 'templates/courses.html',
@@ -41,21 +29,7 @@ app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider) 
         })
         .when('/overview', {
             templateUrl: 'templates/overview.html',
-            controller: 'OverviewCtrl',
-            css: [
-                {
-                    href: 'css/desktop/overview.css',
-                    breakpoint: 'mobile'
-                },
-                {
-                    href: 'css/desktop/overview.css',
-                    breakpoint: 'tablet'
-                },
-                {
-                    href: 'css/desktop/overview.css',
-                    breakpoint: 'desktop'
-                }
-            ]
+            controller: 'OverviewCtrl'
         })
         .when('/details/:gguid', {
             templateUrl: 'templates/details.html',
