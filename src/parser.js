@@ -191,11 +191,29 @@ function parseType(type) {
     });
 }
 
+function parseInfo(info) {
+    var response = {};
+    info.forEach(el => {
+        switch (el['attributes']['lang']) {
+            case 'gb':
+                response.name = striptags(el['title']);
+                response.description = striptags(el['description']);
+                break;
+            case 'de':
+                response.name_de = striptags(el['title']);
+                response.description_de = striptags(el['description']);
+                break;
+        }
+    });
+    return response;
+}
+
 /**
  * Parse a Course response in a clean Course object.
  */
 function parseCourseDetails(result) {
     var event = result['event'];
+    var info = parseInfo(event['info']);
 
     // TODO!
     // NB: some courses miss contact
@@ -203,18 +221,40 @@ function parseCourseDetails(result) {
 
     return {
         gguid: event['attributes']['gguid'],
-        name: event['info'][0]['title'],
+
+        // name & description
+        name: info.name,
+        description: info.description,
+        name_de: info.name_de,
+        description_de: info.description_de,
+
+        // important info
         ects: parseECTS(event['attributes']['ects']),
         language: parseLanguage(event['attributes']['language']),
         semester: event['attributes']['termname'],
         type: parseType(event['attributes']['type']),
+
+        // other details
         details: {
-            description: striptags(event['info'][0]['description']),
             test: striptags(event['test']),
             prereq: striptags(event['prereq']),
             follow: striptags(event['follow']),
             note: striptags(event['note'])
         },
+
+        // seminars do not have this field!
+        events: utils.map(event, 'periodical', el => {
+            var appointment = el['appointment'][0]['attributes'];
+            return {
+                gguid: el['gguid'],
+                weekday: new Date(appointment['start']).getDay(),
+                start: new Date(appointment['start']).getTime(),
+                end: new Date(appointment['end']).getTime(),
+                room: appointment['room']
+            }
+        }),
+
+        // other info
         contact: (utils.map(event, 'address', contact => {
             return {
                 surname: contact['christianname'],
@@ -231,19 +271,7 @@ function parseCourseDetails(result) {
                 consultationhour: utils.get(contact, 'consultationhour'),
                 website: utils.map(contact, 'www', website => website['attributes']['href'])
             }
-        }) || []).filter(contact => contact.name !== 'Stundenplaner'),
-
-        // seminars do not have this field!
-        events: utils.map(event, 'periodical', el => {
-            var appointment = el['appointment'][0]['attributes'];
-            return {
-                gguid: el['gguid'],
-                weekday: new Date(appointment['start']).getDay(),
-                start: new Date(appointment['start']).getTime(),
-                end: new Date(appointment['end']).getTime(),
-                room: appointment['room']
-            }
-        })
+        }) || []).filter(contact => contact.name !== 'Stundenplaner')
     }
 }
 
