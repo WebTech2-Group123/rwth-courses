@@ -76,12 +76,19 @@ function getSubfields(subfield) {
 
 /**
  * Parse a SubField of Studies response in an Array of SubField of Studies.
+ * NB: ignore courses without subfield (see worker.js)
  */
 function parseSubFields(result) {
-    return {
-        courses: result['field']['event'] || [],
-        subfields: getSubfields(result['field']['subfield'])
+    var subfields = getSubfields(result['field']['subfield']);
+    var fieldAttributes = result['field']['attributes'];
+    var field = {
+        gguid: fieldAttributes['gguid'],
+        name: fieldAttributes['name'],
+        semester: fieldAttributes['termname'],
+        path: ""
     };
+    subfields.unshift(field);
+    return subfields;
 }
 
 /**

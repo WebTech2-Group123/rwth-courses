@@ -1,66 +1,32 @@
-{
-  "courses": [
-    {
-      "attributes": {
-        "gguid": "0xF2B20848FD1C094BA186DD01AB5A810D",
-        "nr": "15ws-19940",
-        "termname": "WS 2015/2016",
-        "copy": "true",
-        "vvz": "false",
-        "kvvz": "false",
-        "confirmed": "true",
-        "notpublished": "false"
-      },
-      "info": [
-        {
-          "attributes": {
-            "lang": "de"
-          },
-          "title": "Master-Mentorenprogramm: Keine Präferenz",
-          "description": "<p><em>Die Fachgruppe Informatik bietet ein Mentorenprogramm f&#252;r Studierende des Masterstudiengangs Informatik an.</em><br />  <br />  Wenn Sie sich sich f&#252;r <strong>keinen </strong>der vier Kernbereiche entscheiden k&#246;nnen, dann&#160; melden Sie sich &#252;ber das <strong>Online-Anmeldeverfahren</strong> in dieser Gruppe an.</p>  <br />  Nach Ablauf der Anmeldefrist werden Sie von Ihrem Mentor angeschrieben  (typisch per E-Mail), der Sie dann zu einem ersten Mentorengespr&#228;ch  einladen wird."
-        }
-      ],
-      "link": [
-        {
-          "attributes": {
-            "type": "Homepage",
-            "href": "http://www.informatik.rwth-aachen.de/Studierende/Master/Mentorenprogramm/"
-          }
-        }
-      ],
-      "l2p": {
-        "attributes": {
-          "use": "false",
-          "reset": "false",
-          "lang": "0"
-        }
-      }
-    }
-  ],
-  "subfields": [
-    {
-      "gguid": "0x614EBE7FF82A6A4E9961C73D0E8FD225",
-      "name": "Theoretische Informatik",
-      "semester": "WS 2015/2016",
-      "path": "Theoretische Informatik"
-    },
-    {
-      "gguid": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
-      "name": "Anwendungsfächer",
-      "semester": "WS 2015/2016",
-      "path": "Anwendungsfächer"
-    },
-    {
-      "gguid": "0x3174786BC014774C9EB96D42EC160704",
-      "name": "Biologie",
-      "semester": "WS 2015/2016",
-      "path": "Anwendungsfächer/Biologie"
-    },
-    {
-      "gguid": "0x95C39BAE6C0BEA4982AC283EB2FE0051",
-      "name": "Zusatzveranstaltungen",
-      "semester": "WS 2015/2016",
-      "path": "Zusatzveranstaltungen"
-    }
-  ]
-}
+[
+  {
+    "gguid": "0x04FA11478F05804CA71DBF7573B80160",
+    "name": "Informatik (M.Sc.)",
+    "semester": "WS 2015/2016",
+    "path": ""
+  },
+  {
+    "gguid": "0x614EBE7FF82A6A4E9961C73D0E8FD225",
+    "name": "Theoretische Informatik",
+    "semester": "WS 2015/2016",
+    "path": "Theoretische Informatik"
+  },
+  {
+    "gguid": "0x22401D3DDB6FF04F8959C2DC0154CE4B",
+    "name": "Anwendungsfächer",
+    "semester": "WS 2015/2016",
+    "path": "Anwendungsfächer"
+  },
+  {
+    "gguid": "0x3174786BC014774C9EB96D42EC160704",
+    "name": "Biologie",
+    "semester": "WS 2015/2016",
+    "path": "Anwendungsfächer/Biologie"
+  },
+  {
+    "gguid": "0x95C39BAE6C0BEA4982AC283EB2FE0051",
+    "name": "Zusatzveranstaltungen",
+    "semester": "WS 2015/2016",
+    "path": "Zusatzveranstaltungen"
+  }
+]

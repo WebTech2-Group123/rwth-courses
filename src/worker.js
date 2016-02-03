@@ -1,89 +1,26 @@
-// this does the magic
-const soap = require('soap');
-const log = require('debug')('worker');
-const parser = require('./parser');
+'use strict';
+
+const Rx = require('rx');
+const Campus = require('./campus');
+const Parser = require('./parser');
 const mongo = require('./mongo');
 
-const info = require('debug')('info');
+// log
+const info = require('debug')('worker:info');
+const error = require('debug')('worker:error');
 
-// TODO: move to better place
-// make sure not-handled rejected Promises throw an error
-const Promise = require('bluebird');
-process.on("unhandledRejection", function (error) {
-    throw error;
-});
+// TODO: remove
+const N = 5;
 
-// APIs' endpoints
-const WSDL_TERM = 'http://www.campus.rwth-aachen.de/anonapi/TermSrv.asmx?WSDL';
-const WSDL_FIELD = 'http://www.campus.rwth-aachen.de/anonapi/FieldSrv.asmx?WSDL';
-const WSDL_EVENT = 'http://www.campus.rwth-aachen.de/anonapi/EventSrv.asmx?WSDL';
-
-// utils functions
-function getClients() {
-
-    // make 'soap' library Promise-friendly
-    Promise.promisifyAll(soap);
-
-    // create three different clients
-    const clients = [WSDL_TERM, WSDL_FIELD, WSDL_EVENT]
-        .map(endpoint => soap.createClientAsync(endpoint));
-
-    // wait until all clients are created
-    return Promise.all(clients)
-
-        // promisify every single client
-        .each(client => Promise.promisifyAll(client));
-}
-
-function getSemestersList(termClient) {
-    log('Getting semesters list');
-    return termClient.GetAllAsync({});
-}
-
-function getStudyFieldsBySemster(termClient, semester) {
-    log('Getting list of study fields for semester: ' + semester.name);
-    return termClient.GetFieldsAsync({
-        'sGuid': semester.gguid
-    });
-}
-
-function getSubFields(fieldClient, field) {
-    log('Getting subfields for field: [' + field.gguid + '] ' + field.name);
-    return fieldClient.GetLinkedAsync({
-        'sGuid': field.gguid,
-        'bTree': true,              // tree of subfields
-        'bIncludeEvents': true      // courses without subfield
-    });
-}
-
-function getCoursesBySubfiled(fieldClient, subfield) {
-    log('Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name);
-    return fieldClient.GetLinkedAsync({
-        'sGuid': subfield.gguid,
-        'bTree': false,             // we do not need the tree of subfields (handled before)
-        'bIncludeEvents': true      // get courses
-    });
-}
-
-function getCourseDetails(eventClient, course) {
-    log('Getting course details for course: [' + course.gguid + '] ' + course.name);
-    return eventClient.GetLinkedAsync({
-        'sEvtSpec': course.gguid,
-        'bIncludeFields': true,
-        'bIncludeAdresses': true,
-        'bIncludeAppointments': true,
-        'bIncludeUnits': true
-    });
-}
-
+// TODO: move to other place
 function getCleanDB() {
     return mongo.createClient().then(db => {
         return db.renameTempCourses().then(_ => db);
-    })
+    });
 }
 
 // unwrap clients
-Promise.all([getClients(), getCleanDB()]).then(promises => {
+Promise.all([Campus.getClients(), getCleanDB()]).then(promises => {
 
     // unwrap mongo
     const db = promises[1];
@@ -94,59 +31,148 @@ Promise.all([getClients(), getCleanDB()]).then(promises => {
     const fieldClient = arrayOfClients[1];
     const eventClient = arrayOfClients[2];
 
-    // API-call to CampusOffice for all Semesters
-    getSemestersList(termClient)
+    // log
+    info('Starting getting data from CampusOffice');
+    const startTime = +Date.now();
 
-    // select the first two semesters
-        .then(semesters => {
-            return parser.parseSemesters(semesters);
+    // API-call to CampusOffice for all Semesters
+    const s = Rx.Observable.fromPromise(Campus.getSemestersList(termClient))
+
+        // select the first two semesters
+        .flatMap(semestersResponse => {
+            return Parser.parseSemesters(semestersResponse);
         })
 
         // for each semester -> get all fields
-        .map(semester => {
-            return getStudyFieldsBySemster(termClient, semester).then(fieldsListResponse => {
+        .flatMap(semester => {
+            return Campus.getStudyFieldsBySemster(termClient, semester);
+        })
 
-                // parse raw response with list of fields
-                var fields = parser.parseFieldOfStudies(fieldsListResponse);
+        // parse raw response with list of fields
+        .flatMap(fieldsListResponse => {
+            return Parser.parseFieldOfStudies(fieldsListResponse)
+        })
 
-                // for each field -> request the subfields
-                fields.filter(field => field.name.indexOf('Informatik') == 0).forEach(field => {
+        // TODO: remove
+        .filter(field => field.name.indexOf('Informatik') == 0)
 
-                    // api call
-                    getSubFields(fieldClient, field).then(subfieldsResponse => {
-
-                        // parse response
-                        var temp = parser.parseSubFields(subfieldsResponse);
-
-                        // raw courses
-                        var coursesWithoutSubfield = temp.courses;
-
-                        // subfields
-                        var subfields = temp.subfields;
-
-                        // for each subfield -> request list of courses
-                        subfields.forEach(subfield => {
-
-                            // api call
-                            getCoursesBySubfiled(fieldClient, subfield).then(coursesListResponse => {
-
-                                // TODO: filter for types
-                                var courses = parser.parseCoursesList(coursesListResponse);
-
-                                courses.map(course => {
-                                    getCourseDetails(eventClient, course)
-                                        .then(courseDetailsResponse => {
-                                            db.insertCourse(parser.parseCourseDetails(courseDetailsResponse));
-                                            console.log("alex");
-                                        });
-                                });
-                            });
-                        });
-                    });
-                });
+        // for each field -> request the subfields
+        // NB: pass also the field (contains info about B.Sc. vs M.Sc. etc.)
+        .flatMap(field => {
+            return Campus.getSubFields(fieldClient, field).then(subfieldsResponse => {
+                return {
+                    field: field,
+                    subfieldsResponse: subfieldsResponse
+                };
             });
+        })
+
+        // parse subfields
+        .flatMap(object => {
+            let field = object.field;
+            let subfieldsResponse = object.subfieldsResponse;
+
+            return Parser.parseSubFields(subfieldsResponse).map(subfield => {
+                return {
+                    field: field,
+                    subfield: subfield
+                };
+            });
+        })
+
+        // TODO: remove
+        .take(N)
+
+        // request courses for each subfield
+        .flatMap(object => {
+            let field = object.field;
+            let subfield = object.subfield;
+
+            return Campus.getCoursesBySubfiled(fieldClient, subfield).then(coursesListResponse => {
+                return {
+                    field: field,
+                    subfield: subfield,
+                    coursesListResponse: coursesListResponse
+                };
+            });
+        })
+
+        // TODO: remove
+        .take(N)
+
+        // parse courses
+        .flatMap(object => {
+            let field = object.field;
+            let subfield = object.subfield;
+            let coursesListResponse = object.coursesListResponse;
+
+            return Parser.parseCoursesList(coursesListResponse).map(course => {
+                return {
+                    field: field,
+                    subfield: subfield,
+                    course: course
+                };
+            });
+        })
+
+        // TODO: filter types of courses
+        .filter(course => true)
+
+        // request details for this course
+        // and parse the result
+        .flatMap(object => {
+            let field = object.field;
+            let subfield = object.subfield;
+            let course = object.course;
+
+            // TODO: check if course was already in the database before doing this
+
+            return Campus.getCourseDetails(eventClient, course).then(courseDetailsResponse => {
+                return {
+                    field: field,
+                    subfield: subfield,
+                    course: Parser.parseCourseDetails(courseDetailsResponse)
+                };
+            });
+        })
+
+        // store course in the DB
+        .flatMap(object => {
+            let field = object.field;
+            let subfield = object.subfield;
+            let course = object.course;
+
+            // combine useful info
+            course.group = field.group;
+            course.field = field.name;
+            course.subfield = subfield.name;
+            course.path = subfield.aath;
+
+            // store in mongo
+            return db.insertCourse(course);
+        })
+
+        // make sure to use hot observables
+        // NB: do not remove this
+        .publish().refCount();
+
+
+    // subscribe to know the end of the process
+    s.subscribe(function (x) {
+        // do nothing here
+    }, function (e) {
+        error(e);
+    }, function () {
+
+        // we are done
+        const endTime = +Date.now();
+        info('Finish getting data from CampusOffice. Total time: ' + (startTime - endTime));
+
+        db.renameTempCourses().then(function(){
+            // close connection to DB
+            db.db.close();
         });
 
-    // TODO: close the db
+    });
 
 });

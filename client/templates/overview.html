@@ -1,0 +1,40 @@
+<h2>Overview</h2>
+
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>Time</th>
+            <th md-column>Monday</th>
+            <th md-column>Tuesday</th>
+            <th md-column>Wednesday</th>
+            <th md-column>Thursday</th>
+            <th md-column>Friday</th>
+            <th md-column>Saturday</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="items in schedule track by $index">
+            <td md-cell>{{ times[$index] }}</td>
+            <td md-cell ng-repeat="events in items track by $index">
+                <div layout="row">
+                    <div class="event-ctn" flex ng-repeat="event in events track by $index">
+                        <div>
+                            <a ng-click="goToDetails(event.gguid)">
+                                <md-tooltip md-direction="left">Show details</md-tooltip>
+                                {{ event.name }}
+                            </a>
+                        </div>
+                        <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)">
+                            <md-tooltip md-direction="bottom">Delete course</md-tooltip>
+                            <md-icon md-svg-src='img/icons/ic_delete_black_18px.svg'></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<md-button class="md-raised" ng-click="goBack()">Back</md-button>
