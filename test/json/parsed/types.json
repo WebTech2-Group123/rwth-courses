@@ -1,0 +1,14 @@
+[
+  ["Vorlesung"],
+  ["Seminar"],
+  ["Übung"],
+  ["Praktikum"],
+  ["Tutorium"],
+  ["Vorlesung", "Übung"],
+  ["Seminar"],
+  ["Arbeitsgemeinschaft"],
+  ["Vorlesung", "Praktikum"],
+  ["Vorlesung", "Praktikum", "Seminar"],
+  ["Vorlesung", "Übung", "Praktikum"],
+  ["Seminar"]
+]
