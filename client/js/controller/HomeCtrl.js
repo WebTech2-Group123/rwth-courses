@@ -25,8 +25,6 @@ function HomeCtrl($scope, $filter, $location, $http, $log) {
         }
     };
 
-    //$scope.fields = ["Architektur (D)", "Bauingenieurwesen (D)", "Metallurgie und Werkstofftechnik (D)", "Werkstoffinformatik (D)", "Wirtschaftsingenieurwesen FR Bauingenieurwesen (D)", "Technik-Kommunikation (M.A.)", "Erziehungswissenschaftliches Studium (GYM+GS,BK,SII)", "Faszination Technik (GYM+GS,BK)", "Neue Medien (GYM+GS,BK,SII)", "Bautechnik (BK,SII)", "Biologie (GYM+GS,BK,SII)", "Chemie (GYM+GS,BK,SII)", "Deutsch (GYM+GS,BK,SII)", "Elektrotechnik (BK,SII)", "Energietechnik (BK,SII)", "Englisch (GYM+GS,BK,SII)", "Evangelische Religionslehre (SII)", "Fahrzeugtechnik (BK,SII)", "Fertigungstechnik (BK,SII)", "Französisch (GYM+GS,BK,SII)"];
-
     $http({
         method: 'get',
         url: '/api/fields'
@@ -45,20 +43,11 @@ function HomeCtrl($scope, $filter, $location, $http, $log) {
 
         var semester = window.encodeURIComponent(semester);
 
-        console.log(semester + '      ' + field);
-
         if (semester == undefined || field == null) {
             //some error message
             return;
         }
 
-
-        // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        //var result = Courses.getCoursesFromServer(semester, field);
-        //if (result)
-
-        // pass semester and field to the next route
         $location.path('courses/' + semester + '/' + field);
     };
 

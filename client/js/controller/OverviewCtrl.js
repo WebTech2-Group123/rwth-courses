@@ -1,4 +1,4 @@
-app.controller('OverviewCtrl', function ($scope, localStorageService, $location, $log, Courses) {
+app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService, $location, $log, Courses) {
 
     // TODO: useful?
     $scope.loading = true;
@@ -43,8 +43,8 @@ app.controller('OverviewCtrl', function ($scope, localStorageService, $location,
     }
 
     // go back button
-    // TODO: got back to the rigth course list
+    /*// TODO: got back to the rigth course list
     $scope.goBack = function () {
-        $location.url('/');
-    }
+        $location.url($scope.$parent.courseRoute);
+    }*/
 });

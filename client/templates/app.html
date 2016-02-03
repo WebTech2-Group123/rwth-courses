@@ -5,14 +5,14 @@
     </md-toolbar>
 
     <!-- main content -->
-    <md-content ng-view ng-cloak></md-content>
+    <md-content ng-view ng-cloak class="content-ctn"></md-content>
 
     <!-- navigation -->
-    <!--<div class="bottom-navigation">-->
-        <!--<md-tabs md-stretch-tabs="always">-->
-            <!--<md-tab label="Tab #1"></md-tab>-->
-            <!--<md-tab label="Tab #2"></md-tab>-->
-            <!--<md-tab label="Tab #3"></md-tab>-->
-        <!--</md-tabs>-->
-    <!--</div>-->
+    <div class="bottom-navigation">
+        <md-tabs md-stretch-tabs="always">
+            <md-tab ng-click="goToRoute('home')" label="Home"></md-tab>
+            <md-tab md-active="courseActive" ng-disabled="courseListExist" ng-click="goToRoute('courses')" label="Courses List"></md-tab>
+            <md-tab ng-disabled="selectedCoursesExist" ng-click="goToRoute('overview')" label="Schedule"></md-tab>
+        </md-tabs>
+    </div>
 </div>

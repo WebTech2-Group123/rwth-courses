@@ -11,7 +11,8 @@ var app = angular.module('Campus', [
 app.directive('app', function () {
     return {
         restrict: 'E',
-        templateUrl: 'templates/app.html'
+        templateUrl: 'templates/app.html',
+        controller: 'AppCtrl'
     };
 });
 
