@@ -4,13 +4,13 @@
   "name_de": "Advanced Web Technologies (WebTech 2)",
   "description": "*** IMPORTANT: If you have taken the \"Web Technologies\" course&#160; in the previous semesters you can NOT take this one, because it is almost identical to the previous courses! ***\r\nThe World Wide Web has a tremendous effect on the everyday life of  people. Within just a few years, we have learned to use the Web for  many different tasks, ranging from simple gathering of information to  processing complex workflows.  Thus the World Wide Web and its underlying technologies gain importance  for the development of interactive Web applications. Today, lots of  systems are developed in a mostly ad-hoc and unsystematic way, and the  systems' quality is not assured. Although known methods from software  engineering and for the design of information systems and distributed  systems exist, these do not carry over easily to the development of web  applications.\r\nThe course focuses on the combination of different methods and web  technologies; these will generally not be discussed in great detail,  but instead exemplarily presented by student teams.  In other departments the underlying theories and technologies may be studied in  greater detail and with specific focuses (e.g. distributed systems,  data communication, software engineering, eCommerce systems,  information systems, hypermedia, human computer interaction, and  eLearning). In this course the methods and technologies are combined  and discussed in the context of web projects.\r\nBasic WWW technologies (HTML, HTTP, CSS, XML, JavaScript, Ajax, php, Java Servlets, JSP), which are introduced in \"Introduction to Web Technologies (WebTech 1)\" are a prerequisite to take this course. Advanced and emerging Web technologies will be presented in the lecture by the students.\r\nAll participants will work on a project evolving with the course.",
   "description_de": "*** WICHTIG: Aufgrund der Neuorganisation der Lehrveranstaltungen des i9, ist diese neue Web Tech 2 Verantaltung praktisch identisch zur bisherigen Web Tech 1. Daher k&#246;nnen STudierende, die in den vorherigen Semestern an der Web TEch teilgenommen haben, diese Vorlesung NICHT belegen.&#160; ***Das Internet hat einen gewaltigen Einfluss auf  unseren Alltag. Innerhalb weniger Jahre haben wir gelernt, mit Hilfe des  Internets verschiedenste Aufgaben zu bew&#228;ltigen, angefangen von der einfachen  Informationssuche bis hin zu komplexen Workflows. Somit gewinnen das World Wide  Web und die ihm zugrundeliegenden Technologien zunehmend an Bedeutung f&#252;r die  Entwicklung interaktiver Softwaresysteme. \r\n Im Kern greift diese Lehrveranstaltung eine Menge verschiedener Konzepte, Prinzipien,  Methoden und Web-Technologien auf. Diese werden daher in der Vorlesung &#252;berblicksartig behandelt und exemplarisch  vorgestellt und im begleitenden Praktikum praktisch erprobt. Z.T. k&#246;nnen die  zugrundeliegenden Technologien aus spezifischen Blickrichtungen in anderen  Fachgebieten vertieft und theoretisch fundiert studiert werden (z.B. Verteilte  Systeme, Datenkommunikation, Software Engineering, eCommerce Systeme,  Informationssysteme, Hypermedia, Human-Computer Interaction und eLearning). In  diesem Modul werden die Methoden und Techniken zusammengef&#252;hrt und im Kontext  von (kleinen) Webprojekten besprochen.  Ziel des Moduls ist es, in die f&#252;r die Entwicklung von Web-Anwendungen  notwendigen Technologien und relevanten Themenbereiche einzuf&#252;hren und diese im  Zusammenhang und praktischer Erprobung kennen zu lernen. Die Basistechnologien des WWW&#160; (u.a. HTML, CSS, HTTP. XML, php, JavaScript, Ajax, Java Servlets und Java  Server Pages), wie sie in der Introduction to Web Technologies (WebTech 1 ) behandelt werden, werden in diesem Modul vporausgesetzt.. Die Vorlesung wird durch Expertenvortr&#228;ge der Studierenden gestaltet und von Projekten  im Praktikum mit konkreten Werkzeugen begleitet.\r\n\r\nWeb Application  Development Frameworks\r\nServer-side technologies\r\nClient-side technologies: RIA\r\nWeb Services: Web-APIs, REST, SOAP, Mash-Ups\r\nMobile technologies\r\n",
+  "semester": "WS 2015/2016",
   "ects": [
     6
   ],
   "language": [
     "EN"
   ],
-  "semester": "WS 2015/2016",
   "type": [
     "Vorlesung",
     "Praktikum",
@@ -24,14 +24,12 @@
   },
   "events": [
     {
-      "gguid": "0x2861700E019CC3428502232F52390641",
       "weekday": 2,
       "start": "1450779300000",
       "end": "1450784700000",
       "room": "2356|051"
     },
     {
-      "gguid": "0xF7E472C2B0F7CB48A8932F7636D8D284",
       "weekday": 3,
       "start": "1452708900000",
       "end": "1452714300000",
@@ -40,8 +38,7 @@
   ],
   "contact": [
     {
-      "surname": "Ulrik",
-      "name": "Schroeder",
+      "name": "Ulrik Schroeder",
       "mail": "schroeder@informatik.rwth-aachen.de",
       "address": {
         "department": "Lehr- und Forschungsgebiet Informatik 9 (Lerntechnologien)",
@@ -50,11 +47,7 @@
         "zip": "52074",
         "building": "Informatikzentrum (E2) - 2356",
         "room": "6310"
-      },
-      "consultationhour": "Do. 11:30-12:30 nach vorheriger Anmeldung per eMail",
-      "website": [
-        "learntech.rwth-aachen.de/"
-      ]
+      }
     }
   ]
 }

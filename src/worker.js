@@ -28,7 +28,7 @@ function doJob(n) {
     const startTime = +Date.now();
 
     // initialize the Campus client
-    const s = Rx.Observable.fromPromise(client.init())
+    const s = Rx.Observable.fromPromise(client._fake())
 
         // get semesters list
         .flatMap(() => {

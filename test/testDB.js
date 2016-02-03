@@ -3,17 +3,9 @@
 var assert = require('chai').assert;
 var db = require('../src/db');
 
-const COURSE_A = {
-    gguid: '0x0001',
-    field: 'some value',
-    semester: 'SS 2015'
-};
-
-const COURSE_B = {
-    gguid: '0x0002',
-    field: 'some other value',
-    semester: 'WS 2015/2016'
-};
+// load test data
+const COURSE_A = require('./json/parsed/course_details.json');
+const COURSE_B = require('./json/parsed/course_details_2.json');
 
 const ids = ['0x0001', '0x0002'];
 const filter = {

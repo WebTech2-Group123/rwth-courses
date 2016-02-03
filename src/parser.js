@@ -284,7 +284,6 @@ function parseCourseDetails(result) {
         events: utils.map(event, 'periodical', el => {
             var appointment = el['appointment'][0]['attributes'];
             return {
-                gguid: el['gguid'],
                 weekday: new Date(appointment['start']).getDay(),
                 start: new Date(appointment['start']).getTime(),
                 end: new Date(appointment['end']).getTime(),
@@ -295,8 +294,7 @@ function parseCourseDetails(result) {
         // other info
         contact: (utils.map(event, 'address', contact => {
             return {
-                surname: contact['christianname'],
-                name: contact['name'],
+                name: contact['christianname'] + ' ' + contact['name'],
                 mail: utils.get(contact, 'mail') && contact['mail'][0]['attributes']['mail'],
                 address: {
                     department: utils.get(contact, 'work', 'company2'),
@@ -305,11 +303,9 @@ function parseCourseDetails(result) {
                     zip: utils.get(contact, 'work', 'zip'),
                     building: utils.get(contact, 'work', 'attributes', 'building'),
                     room: utils.get(contact, 'work', 'attributes', 'office')
-                },
-                consultationhour: utils.get(contact, 'consultationhour'),
-                website: utils.map(contact, 'www', website => website['attributes']['href'])
+                }
             }
-        }) || []).filter(contact => contact.name !== 'Stundenplaner')
+        }) || []).filter(contact => contact.name.indexOf('Stundenplaner') < 0 && contact.name.indexOf('Raumvergabe') < 0)
     }
 }
 

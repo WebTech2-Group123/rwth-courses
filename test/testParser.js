@@ -20,8 +20,10 @@ const COURSES_LIST_RESPONSE = require('./json/raw/courses');
 const COURSES_LIST = require('./json/parsed/courses');
 
 // course details
-const COURSE_DETAILS_RESPONSE = require('./json/raw/course_details');
-const COURSE_DETAILS = require('./json/parsed/course_details');
+const COURSE_DETAILS_RESPONSE_1 = require('./json/raw/course_details_1');
+const COURSE_DETAILS_1 = require('./json/parsed/course_details_1');
+const COURSE_DETAILS_RESPONSE_2 = require('./json/raw/course_details_2');
+const COURSE_DETAILS_2 = require('./json/parsed/course_details_2');
 
 // languages
 const LANGUAGES_RAW = require('./json/raw/languages');
@@ -77,9 +79,13 @@ describe('parser.js', function () {
         });
 
         describe('#parseCourseDetails()', function () {
-            it('should return all the details for a specific course', function () {
-                const details = parser.parseCourseDetails(COURSE_DETAILS_RESPONSE);
-                assert.deepEqual(details, COURSE_DETAILS);
+            it('should return all the details for a specific course (1)', function () {
+                const details = parser.parseCourseDetails(COURSE_DETAILS_RESPONSE_1);
+                assert.deepEqual(details, COURSE_DETAILS_1);
+            });
+            it('should return all the details for a specific course (2)', function () {
+                const details = parser.parseCourseDetails(COURSE_DETAILS_RESPONSE_2);
+                assert.deepEqual(details, COURSE_DETAILS_2);
             });
         });
 

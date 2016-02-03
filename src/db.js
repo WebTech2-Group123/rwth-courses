@@ -23,28 +23,39 @@ const CoursesSchema = new mongoose.Schema({
         unique: true
     },
     name: {
-        type: String
+        type: String,
+        required: true
     },
     name_de: {
         type: String
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
     description_de: {
         type: String
     },
     ects: {
-        type: Array
+        type: Array,
+        required: true
     },
     language: {
-        type: Array
+        type: Array,
+        required: true
     },
     semester: {
-        type: String
+        type: String,
+        required: true
     },
     type: {
-        type: Array
+        type: Array,
+        required: true
+    },
+    fields: {
+        type: Array,
+        required: true,
+        index: true
     },
     details: {
         type: mongoose.Schema.Types.Mixed
@@ -55,7 +66,7 @@ const CoursesSchema = new mongoose.Schema({
     contact: {
         type: Array
     }
-}, {strict: true});
+});
 
 // Cache Schema
 const CacheSchema = new mongoose.Schema({
