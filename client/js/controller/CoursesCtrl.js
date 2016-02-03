@@ -1,6 +1,6 @@
 app.controller('CoursesCtrl', CoursesCtrl);
 
-function CoursesCtrl($scope, localStorageService, $routeParams, Courses) {
+function CoursesCtrl($scope, localStorageService, $routeParams, $location, Courses) {
 
     // store route params
     var semester = window.decodeURIComponent($routeParams.semester);
@@ -37,6 +37,11 @@ function CoursesCtrl($scope, localStorageService, $routeParams, Courses) {
 
         $scope.$parent.courseListExist = false;
     });
+
+    $scope.showDetails = function (gguid) {
+        console.log(gguid);
+        $location.url('/details/' + gguid);
+    }
 
     $scope.clearAll = function () {
 

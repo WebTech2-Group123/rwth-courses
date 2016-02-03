@@ -72,14 +72,26 @@ app > #loading {
     margin-right: 5px;
 }
 
-.event-ctn a {
+a {
     cursor: pointer;
 }
 
-.event-ctn a:hover {
+a:hover {
     text-decoration: underline;
 }
 
 .my-tr {
     max-height: 48px;
+}
+
+.icon-ctn > md-icon {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    outline: none;
+}
+
+.icon-ctn {
+    float: right;
+    margin: 15px;
 }
