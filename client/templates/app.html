@@ -10,9 +10,9 @@
     <!-- navigation -->
     <div class="bottom-navigation">
         <md-tabs md-stretch-tabs="always">
-            <md-tab ng-click="goToRoute('home')" label="Home"></md-tab>
-            <md-tab md-active="courseActive" ng-disabled="courseListExist" ng-click="goToRoute('courses')" label="Courses List"></md-tab>
-            <md-tab ng-disabled="selectedCoursesExist" ng-click="goToRoute('overview')" label="Schedule"></md-tab>
+            <md-tab md-active="courseActive('/')" ng-click="goToRoute('home')" label="Home"></md-tab>
+            <md-tab md-active="courseActive('/courses')" ng-disabled="courseListExist" ng-click="goToRoute('courses')" label="Courses List"></md-tab>
+            <md-tab md-active="courseActive('/overview')" ng-disabled="selectedCoursesExist" ng-click="goToRoute('overview')" label="Schedule"></md-tab>
         </md-tabs>
     </div>
 </div>

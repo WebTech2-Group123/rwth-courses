@@ -2,7 +2,7 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
 
     $scope.courseListExist = true;
 
-    if (localStorageService.get('selected')) {
+    if (localStorageService.get('selected') != []) {
         $scope.selectedCoursesExist = false;
     } else {
         $scope.selectedCoursesExist = true;
@@ -10,13 +10,29 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
 
     // cache location of course list
     $scope.$on('$locationChangeStart', function (event, newUrl, oldUrl) {
+
+        if (newUrl) {
+            if (newUrl.indexOf('/course') != -1) {
+                $scope.courseListExist = false;
+            }
+        }
+
         if (oldUrl) {
             if (oldUrl.lastIndexOf('/courses') != -1) {
                 var index = oldUrl.lastIndexOf('/courses');
                 var path = oldUrl.substr(index, oldUrl.length);
-                $scope.courseRoute = path;
+                localStorageService.set('coursePath', path);
             }
         }
+
+        $scope.courseActive = function (path) {
+
+            // get the beginning of the current path
+            var currLocation = '/' + ($location.url().split('/', 2)).join('');
+
+            return (path == currLocation);
+        }
+
     });
 
     $scope.goToRoute = function (target) {
@@ -25,7 +41,7 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
                 $location.url('/');
                 break;
             case 'courses':
-                $location.url($scope.courseRoute);
+                $location.url(localStorageService.get('coursePath'));
                 break;
             case 'overview':
                 $location.url('/overview');
