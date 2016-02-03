@@ -5,6 +5,7 @@
  * the CampusOffice APIs' responses.
  */
 
+const striptags = require('striptags');
 const utils = require('./utils');
 const log = require('debug')('rwth-courses:parser');
 
@@ -103,8 +104,144 @@ function parseCoursesList(result) {
 
     // remove exams
     return courses.filter(course => {
-        return course.type !== 'Klausur (Kl)';
+        return course.type !== 'Klausur (Kl)' && course.type !== 'Mündliche Prüfung (MP)';
     });
+}
+
+/**
+ * Utility function to match at least one element of an array of strings against one string.
+ */
+function contains(string, array) {
+    return array.reduce((accumulator, current) => {
+        return accumulator || string.indexOf(current) >= 0;
+    }, false);
+}
+
+/**
+ * Parse the language field.
+ */
+function parseLanguage(language) {
+
+    // if language not existing -> return 'UNKNOWN'
+    if (typeof language === 'undefined') {
+        return ['UNKNOWN'];
+    }
+
+    // init a empty array for the found languages
+    var parsed = [];
+
+    // check german
+    if (contains(language.toLowerCase(), ['deutsch', 'german'])) {
+        parsed.push('DE');
+    }
+
+    // check english
+    if (contains(language.toLowerCase(), ['english', 'englisch'])) {
+        parsed.push('EN');
+    }
+
+    // if nothing, return "OTHER"
+    if (parsed.length === 0) {
+        parsed.push('OTHER');
+    }
+
+    return parsed;
+}
+
+function parseECTS(ects) {
+
+    // some courses simply do not have a credit points numbers... return 0
+    if (typeof ects === 'undefined') {
+        return [0];
+    }
+
+    // replace , with . (to identify numbers with comma, yes also this is present in Campus)
+    var ectsPoint = ects.replace(/,/g, '.');
+
+    // extract numbers
+    var matches = ectsPoint.match(/\d+\.?(\d+)?(\s|$)/g);
+
+    // transform in numbers
+    return matches ? matches.map(s => parseInt(s, 10)) : [];
+}
+
+function parseType(type) {
+
+    // some courses simply do not have a credit points numbers... return 0
+    if (typeof type === 'undefined') {
+        return [];
+    }
+
+    // mapping
+    const MAPPING = Object.freeze({
+        "Vorlesung": "Vorlesung",
+        "Proseminar": "Seminar",
+        "Übung": "Übung",
+        "Praktikum": "Praktikum",
+        "Tutorium": "Tutorium",
+        "Seminar": "Seminar",
+        "Arbeitsgemeinschaft": "Arbeitsgemeinschaft",
+        "Hauptseminar": "Seminar"
+    });
+
+    // remove abbreviations
+    var typeWithoutAbbreviations = type.split(' ')[0];
+
+    // split types
+    var types = typeWithoutAbbreviations.split('/');
+
+    // return new types
+    return types.map(type => {
+        return MAPPING[type];
+    });
+}
+
+function parseInfo(info) {
+    var response = {};
+
+    // parse languages
+    info.forEach(el => {
+        switch (el['attributes']['lang']) {
+            case 'gb':
+                response.name = el['title'] ? striptags(el['title']) : undefined;
+                response.description = el['description'] ? striptags(el['description']) : undefined;
+                break;
+            case 'de':
+                response.name_de = el['title'] ? striptags(el['title']) : undefined;
+                response.description_de = el['description'] ? striptags(el['description']) : undefined;
+                break;
+        }
+    });
+
+    // check if only one description... then copy the other language
+    if (typeof response.name === 'undefined' && typeof response.name_de !== 'undefined') {
+        response.name = response.name_de;
+    }
+    if (typeof response.name_de === 'undefined' && typeof response.name !== 'undefined') {
+        response.name_de = response.name;
+    }
+    if (typeof response.description === 'undefined' && typeof response.description_de !== 'undefined') {
+        response.description = response.description_de;
+    }
+    if (typeof response.name_de === 'undefined' && typeof response.description_de !== 'undefined') {
+        response.name_de = response.description_de;
+    }
+
+    // substitute undefined with ""
+    if (typeof response.name === 'undefined') {
+        response.name = "";
+    }
+    if (typeof response.description === 'undefined') {
+        response.description = "";
+    }
+    if (typeof response.name_de === 'undefined') {
+        response.name_de = "";
+    }
+    if (typeof response.description_de === 'undefined') {
+        response.description_de = "";
+    }
+
+    return response;
 }
 
 /**
@@ -112,6 +249,9 @@ function parseCoursesList(result) {
  */
 function parseCourseDetails(result) {
     var event = result['event'];
+    var info = parseInfo(event['info']);
+
+    // TODO: some courses no type -> log?
 
     // TODO!
     // NB: some courses miss contact
@@ -119,18 +259,40 @@ function parseCourseDetails(result) {
 
     return {
         gguid: event['attributes']['gguid'],
-        name: event['info'][0]['title'],
-        ects: event['attributes']['ects'],
-        language: event['attributes']['language'],
+
+        // name & description
+        name: info.name,
+        description: info.description,
+        name_de: info.name_de,
+        description_de: info.description_de,
+
+        // important info
+        ects: parseECTS(event['attributes']['ects']),
+        language: parseLanguage(event['attributes']['language']),
         semester: event['attributes']['termname'],
-        type: event['attributes']['type'],
+        type: parseType(event['attributes']['type']),
+
+        // other details
         details: {
-            description: event['info'][0]['description'],
-            test: event['test'],
-            prereq: event['prereq'],
-            follow: event['follow'],
-            note: event['note']
+            test: striptags(event['test']),
+            prereq: striptags(event['prereq']),
+            follow: striptags(event['follow']),
+            note: striptags(event['note'])
         },
+
+        // seminars do not have this field!
+        events: utils.map(event, 'periodical', el => {
+            var appointment = el['appointment'][0]['attributes'];
+            return {
+                gguid: el['gguid'],
+                weekday: new Date(appointment['start']).getDay(),
+                start: new Date(appointment['start']).getTime(),
+                end: new Date(appointment['end']).getTime(),
+                room: appointment['room']
+            }
+        }),
+
+        // other info
         contact: (utils.map(event, 'address', contact => {
             return {
                 surname: contact['christianname'],
@@ -147,19 +309,7 @@ function parseCourseDetails(result) {
                 consultationhour: utils.get(contact, 'consultationhour'),
                 website: utils.map(contact, 'www', website => website['attributes']['href'])
             }
-        }) || []).filter(contact => contact.name !== 'Stundenplaner'),
-
-        // seminars do not have this field!
-        events: utils.map(event, 'periodical', el => {
-            var appointment = el['appointment'][0]['attributes'];
-            return {
-                gguid: el['gguid'],
-                weekday: new Date(appointment['start']).getDay(),
-                start: new Date(appointment['start']).getTime(),
-                end: new Date(appointment['end']).getTime(),
-                room: appointment['room']
-            }
-        })
+        }) || []).filter(contact => contact.name !== 'Stundenplaner')
     }
 }
 
@@ -169,3 +319,9 @@ exports.parseFieldOfStudies = parseFieldOfStudies;
 exports.parseSubFields = parseSubFields;
 exports.parseCoursesList = parseCoursesList;
 exports.parseCourseDetails = parseCourseDetails;
+
+// utils
+exports.parseLanguage = parseLanguage;
+exports.parseECTS = parseECTS;
+exports.parseType = parseType;
+exports.parseInfo = parseInfo;

@@ -1,0 +1,449 @@
+{
+  "event": {
+    "l2p": {
+      "attributes": {
+        "lang": "1031",
+        "reset": "false",
+        "use": "true"
+      }
+    },
+    "link": [
+      {
+        "attributes": {
+          "href": "http://www.sz.rwth-aachen.de/kursbeschreibungenarabisch.html",
+          "type": "Homepage"
+        }
+      }
+    ],
+    "registration": {
+      "link": "www.sz.rwth-aachen.de",
+      "notes": "Anmeldung erfolgt über das Benutzerkonto auf der Homepage des Sprachenzentrums",
+      "end": "2135596800000",
+      "start": "6213559680000",
+      "attributes": {
+        "seats": "-1",
+        "mode": "offline"
+      }
+    },
+    "info": [
+      {
+        "title": "Go out Arabic B (GK 1+2)",
+        "attributes": {
+          "lang": "gb"
+        }
+      },
+      {
+        "title": "Go out Arabisch B (GK 1+2)",
+        "attributes": {
+          "lang": "de"
+        }
+      }
+    ],
+    "unit": [
+      {
+        "link": "http://www.sz.rwth-aachen.de",
+        "attributes": {
+          "abbr": "SZ",
+          "alias": "Sprachenzentrum",
+          "ikz": "027000",
+          "name": "Sprachenzentrum",
+          "gguid": "0x4D48C8C10685D51196700000F4B4937D"
+        }
+      },
+      {
+        "link": "http://www.sz.rwth-aachen.de",
+        "attributes": {
+          "abbr": "HaF",
+          "alias": "Sprachenzentrum - Fremdsprachen für H. a. F.",
+          "ikz": "027000-1",
+          "name": "Fremdsprachen für Hörer aller Fakultäten",
+          "gguid": "0x673A0BF5315ED611BDBA0002A5871170"
+        }
+      }
+    ],
+    "periodical": [
+      {
+        "appointment": [
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-11-10T15:45:00",
+              "start": "2015-11-10T14:15:00",
+              "gguid": "0xF5D6C3BE72A08F4D82B171BFB7B1310A"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2016-02-02T15:45:00",
+              "start": "2016-02-02T14:15:00",
+              "gguid": "0x73AAA63BA9FD9D4AB5CD5E29F2045608"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-12-01T15:45:00",
+              "start": "2015-12-01T14:15:00",
+              "gguid": "0x8D7AC9F219689A45B379487E18A63818"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-11-17T15:45:00",
+              "start": "2015-11-17T14:15:00",
+              "gguid": "0x0BB7D2DBB67E0F4A9394114A94D75D98"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2016-02-09T15:45:00",
+              "start": "2016-02-09T14:15:00",
+              "gguid": "0x2DF4673553C5B5419C5E9A8B2FD2A1F7"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-12-22T15:45:00",
+              "start": "2015-12-22T14:15:00",
+              "gguid": "0x2317CE4ED8764446B40AB9108DBD2DCC"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-10-27T15:45:00",
+              "start": "2015-10-27T14:15:00",
+              "gguid": "0xA87C1D8C7EA87C49B54626A8F97A66C5"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-11-24T15:45:00",
+              "start": "2015-11-24T14:15:00",
+              "gguid": "0xDD809B72770FB24E929C402BB2AB769B"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2016-01-12T15:45:00",
+              "start": "2016-01-12T14:15:00",
+              "gguid": "0xE8DB6E7754A3FE49BDD9BCD33F4915D4"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2016-01-26T15:45:00",
+              "start": "2016-01-26T14:15:00",
+              "gguid": "0xD89E1E8AF8E707449AC830CFB4AF779C"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-12-15T15:45:00",
+              "start": "2015-12-15T14:15:00",
+              "gguid": "0xE9F3E078D7A2014A94C5DF5B921B7224"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2016-01-19T15:45:00",
+              "start": "2016-01-19T14:15:00",
+              "gguid": "0xFFA6E8119C6DD4429960B8CC6DB4F231"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-12-08T15:45:00",
+              "start": "2015-12-08T14:15:00",
+              "gguid": "0xE5B48FBB49ED3147905322D362654DD3"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1580|209",
+              "end": "2015-11-03T15:45:00",
+              "start": "2015-11-03T14:15:00",
+              "gguid": "0x59AE588A61342D429D474D60B5BA69D8"
+            }
+          }
+        ],
+        "gguid": "0xA2035BE2B4B7C449BF96D6AEC86EEB67",
+        "attributes": {
+          "end": "2016-02-09T15:45:00",
+          "start": "2015-10-20T14:15:00",
+          "scheme": "7"
+        }
+      },
+      {
+        "appointment": [
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-11-26T11:45:00",
+              "start": "2015-11-26T10:15:00",
+              "gguid": "0x02F724B13FE273439BF2468B6F66D750"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-01-07T11:45:00",
+              "start": "2016-01-07T10:15:00",
+              "gguid": "0xC21FD79809029842A3D5760A3552BB1F"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-11-05T11:45:00",
+              "start": "2015-11-05T10:15:00",
+              "gguid": "0xF5CBFC9DEEE54E499953E92AE54CA180"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-12-10T11:45:00",
+              "start": "2015-12-10T10:15:00",
+              "gguid": "0x369B6B584357CB49A4DFEB966CC04E77"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-10-29T11:45:00",
+              "start": "2015-10-29T10:15:00",
+              "gguid": "0xCA97D355F379FD40A2391E5AB05C477E"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-01-21T11:45:00",
+              "start": "2016-01-21T10:15:00",
+              "gguid": "0x466507095C41B64E9B8E2BE1C2FBF23A"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-12-03T11:45:00",
+              "start": "2015-12-03T10:15:00",
+              "gguid": "0x04DC626BD26A034AACB697E7CEA375E6"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-02-04T11:45:00",
+              "start": "2016-02-04T10:15:00",
+              "gguid": "0x253CCB9457D8C044B75ECDA7720B195E"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-01-28T11:45:00",
+              "start": "2016-01-28T10:15:00",
+              "gguid": "0x5F43D23284B7F9488C3D934B50CC5942"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-11-12T11:45:00",
+              "start": "2015-11-12T10:15:00",
+              "gguid": "0xB57D81DEAEC2DB45BB9D5A28F4740C8D"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-02-11T11:45:00",
+              "start": "2016-02-11T10:15:00",
+              "gguid": "0x28F9A0C3EF56104BA3BFB6EA12CF0ADF"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-11-19T11:45:00",
+              "start": "2015-11-19T10:15:00",
+              "gguid": "0xCEB016096EC1BC42BA49C5A0CBE864D7"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2016-01-14T11:45:00",
+              "start": "2016-01-14T10:15:00",
+              "gguid": "0x53E11FC76F3BE440B000E69C7610D2E3"
+            }
+          },
+          {
+            "keyword": "Go out Arabisch B (GK 1+2)",
+            "attributes": {
+              "room": "1821|003",
+              "end": "2015-12-17T11:45:00",
+              "start": "2015-12-17T10:15:00",
+              "gguid": "0xB6EF87722C32CC4989288E660C423038"
+            }
+          }
+        ],
+        "gguid": "0x7E655AA20F3E434592852193179A3643",
+        "attributes": {
+          "end": "2016-02-11T11:45:00",
+          "start": "2015-10-22T10:15:00",
+          "scheme": "7"
+        }
+      }
+    ],
+    "field": [
+      {
+        "path": "Nicht-technisches Wahlfach (BPO 2010)/Sprachkurse",
+        "fieldname": "Informatik (B.Sc.)",
+        "group": "Bachelor of Science (B.Sc.)",
+        "attributes": {
+          "termname": "WS 2015/2016",
+          "name": "Sprachkurse",
+          "gguid": "0xCA34019A0AB64141A019ADA7FD9EDE61"
+        }
+      },
+      {
+        "path": "Nicht-technisches Wahlfach (BPO 2010)/Sprachkurse/Weitere Sprachen",
+        "fieldname": "Informatik (B.Sc.)",
+        "group": "Bachelor of Science (B.Sc.)",
+        "attributes": {
+          "termname": "WS 2015/2016",
+          "name": "Weitere Sprachen",
+          "gguid": "0x2540E5C45F3B1C44A563718A17203FFB"
+        }
+      },
+      {
+        "path": "Ergänzungsmodul \"Fremdsprachen\"/Arabisch für H. a. F./Grundkurse (GK)/Stufe A1 GER (GK 1 - 4)",
+        "fieldname": "Ergänzungsbereich (FB07)",
+        "group": "Bachelor of Arts (B.A.)",
+        "attributes": {
+          "termname": "WS 2015/2016",
+          "name": "Stufe A1 GER (GK 1 - 4)",
+          "gguid": "0x4BCBA18E1D70B746B90AE9DEDAFDE53A"
+        }
+      },
+      {
+        "path": "Fremdsprachen für Hörer aller Fakultäten/Arabisch für H. a. F./Grundkurse (GK)/Stufe A1 GER (GK 1 - 4)",
+        "fieldname": "Sprachenzentrum",
+        "group": "Sprachenzentrum",
+        "attributes": {
+          "termname": "WS 2015/2016",
+          "name": "Stufe A1 GER (GK 1 - 4)",
+          "gguid": "0x4BCC341C34A2904287912C3485F6B02A"
+        }
+      }
+    ],
+    "address": [
+      {
+        "www": [
+          {
+            "attributes": {
+              "href": "http://www.sz.rwth-aachen.de",
+              "type": "Homepage"
+            }
+          }
+        ],
+        "mail": [
+          {
+            "attributes": {
+              "mail": "marzouk-rucker@sz.rwth-aachen.de",
+              "type": "Email 1"
+            }
+          }
+        ],
+        "phone": [
+          {
+            "attributes": {
+              "number": "+49 241 80 90170",
+              "type": "Work"
+            }
+          },
+          {
+            "attributes": {
+              "number": "+49 241 80 92342",
+              "type": "FAX Work"
+            }
+          }
+        ],
+        "work": {
+          "company2": "Fremdsprachen für Hörer aller Fakultäten",
+          "company": "RWTH Aachen",
+          "town": "Aachen",
+          "zip": "52056",
+          "street": "Eilfschornsteinstr. 15",
+          "attributes": {
+            "building": "Kármán-Auditorium"
+          }
+        },
+        "salutation": "Nozha Marzouk-Rucker M. A.",
+        "titleback": "M. A.",
+        "name": "Marzouk-Rucker",
+        "christianname": "Nozha",
+        "attributes": {
+          "type": "ADDRESS",
+          "addressletter": "Sehr geehrte Frau",
+          "addressterm": "Frau",
+          "gguid": "0x70F59A1CFBC1444DAA3BE4E8EA3FBA07"
+        }
+      }
+    ],
+      "attributes": {
+      "notpublished": "false",
+      "confirmed": "true",
+      "kvvz": "true",
+      "vvz": "true",
+      "copy": "true",
+      "language": "Arabisch, Deutsch",
+      "ects": "laut Studienordnung",
+      "sws": "4",
+      "type": "Sprachkurs (SK)",
+      "termname": "WS 2015/2016",
+      "nr": "15ws-37696",
+      "gguid": "0x00836B8EDC153F499B70A74637924BE7"
+    }
+  }
+}

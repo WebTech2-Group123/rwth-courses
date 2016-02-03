@@ -3,8 +3,11 @@
 // this does the magic
 const soap = require('soap');
 const Promise = require('bluebird');
+
+// logs
 const log = require('debug')('rwth-courses:campus');
-const details = require('debug')('rwth-courses:campus:details');
+const cache = require('debug')('rwth-courses:campus:cache');
+const proxy = require('debug')('rwth-courses:campus:proxy');
 
 // make promises crash if rejected
 process.on('unhandledRejection', function (error) {
@@ -46,6 +49,13 @@ var Campus = function (o) {
 
     // remember if clients ready
     this.ready = false;
+};
+
+// TODO: remove
+Campus.prototype._fake = function () {
+    log('FAKEEE');
+    this.ready = true;
+    return Promise.resolve(1);
 };
 
 // create clients
@@ -104,7 +114,7 @@ Campus.prototype._getEventClient = function () {
 
 // get list of semesters
 Campus.prototype.getSemestersList = function () {
-    log('Getting semesters list');
+    const LOG = 'Get semesters list';
 
     // check that clients are ready
     if (this.ready !== true) {
@@ -113,7 +123,7 @@ Campus.prototype.getSemestersList = function () {
 
     // function to get the semesters list from the Campus APIs
     var getSemstersListFromCampus = () => {
-        details('Get semesters list from Campus');
+        proxy(LOG);
 
         // api call
         return this._termClient.GetAllAsync({});
@@ -127,7 +137,7 @@ Campus.prototype.getSemestersList = function () {
 
             // if cached -> return it
             if (semestersResponse !== null) {
-                details('Get semesters list from Cache');
+                cache(LOG);
                 return semestersResponse;
             }
 
@@ -148,7 +158,7 @@ Campus.prototype.getSemestersList = function () {
 
 // get the list of study fields by semester
 Campus.prototype.getStudyFieldsBySemester = function (semester) {
-    log('Getting list of study fields for semester: ' + semester.name);
+    const LOG = 'Getting list of study fields for semester: ' + semester.name;
 
     // check that clients are ready
     if (this.ready !== true) {
@@ -157,7 +167,7 @@ Campus.prototype.getStudyFieldsBySemester = function (semester) {
 
     // function to get the study fields from the Campus APIs
     var getStudyFieldsBySemesterFromCampus = () => {
-        details('Get list of study fields for semester from Campus: ' + semester.name);
+        proxy(LOG);
 
         // api call
         return this._termClient.GetFieldsAsync({
@@ -173,7 +183,7 @@ Campus.prototype.getStudyFieldsBySemester = function (semester) {
 
             // if cached -> return it
             if (fieldsResponse !== null) {
-                details('Get list of study fields for semester from Cache: ' + semester.name);
+                cache(LOG);
                 return fieldsResponse;
             }
 
@@ -194,11 +204,11 @@ Campus.prototype.getStudyFieldsBySemester = function (semester) {
 
 // get the list of subfields by field of study
 Campus.prototype.getSubFields = function (field) {
-    log('Getting subfields for field: [' + field.gguid + '] ' + field.name);
+    const LOG = 'Getting subfields for field: [' + field.gguid + '] ' + field.name;
 
     // function to get the subfields from the Campus APIs
     var getSubFieldsFromCampus = () => {
-        details('Getting subfields for field from Campus: [' + field.gguid + '] ' + field.name);
+        proxy(LOG);
 
         // api call
         return this._fieldClient.GetLinkedAsync({
@@ -216,7 +226,7 @@ Campus.prototype.getSubFields = function (field) {
 
             // if cached -> return it
             if (subFieldsResponse !== null) {
-                details('Getting subfields for field from Cache: [' + field.gguid + '] ' + field.name);
+                cache(LOG);
                 return subFieldsResponse;
             }
 
@@ -237,11 +247,11 @@ Campus.prototype.getSubFields = function (field) {
 
 // get the list of courses by subfield
 Campus.prototype.getCoursesBySubfiled = function (subfield) {
-    log('Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name);
+    const LOG = 'Getting courses for subfield: [' + subfield.gguid + '] ' + subfield.name;
 
     // function to get the subfields from the Campus APIs
     var getCoursesFromCampus = () => {
-        details('Getting courses for subfield from Campus: [' + subfield.gguid + '] ' + subfield.name);
+        proxy(LOG);
 
         return this._fieldClient.GetLinkedAsync({
             'sGuid': subfield.gguid,
@@ -258,7 +268,7 @@ Campus.prototype.getCoursesBySubfiled = function (subfield) {
 
             // if cached -> return it
             if (coursesListResponse !== null) {
-                details('Getting courses for subfield from Cache: [' + subfield.gguid + '] ' + subfield.name);
+                cache(LOG);
                 return coursesListResponse;
             }
 
@@ -279,11 +289,11 @@ Campus.prototype.getCoursesBySubfiled = function (subfield) {
 
 // get the details of a course
 Campus.prototype.getCourseDetails = function (course) {
-    log('Getting course details for course: [' + course.gguid + '] ' + course.name);
+    const LOG = 'Getting course details for course: [' + course.gguid + '] ' + course.name;
 
     // function to get the subfields from the Campus APIs
     var getCourseDetailsFromCampus = () => {
-        details('Getting course details for course from Campus: [' + course.gguid + '] ' + course.name);
+        proxy(LOG);
 
         return this._eventClient.GetLinkedAsync({
             'sEvtSpec': course.gguid,
@@ -302,7 +312,7 @@ Campus.prototype.getCourseDetails = function (course) {
 
             // if cached -> return it
             if (courseDetailsResponse !== null) {
-                details('Getting course details for course from Cache: [' + course.gguid + '] ' + course.name);
+                cache(LOG);
                 return courseDetailsResponse;
             }
 
