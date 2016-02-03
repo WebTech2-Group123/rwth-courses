@@ -167,6 +167,11 @@ function parseECTS(ects) {
 
 function parseType(type) {
 
+    // some courses simply do not have a credit points numbers... return 0
+    if (typeof type === 'undefined') {
+        return [];
+    }
+
     // mapping
     const MAPPING = Object.freeze({
         "Vorlesung": "Vorlesung",
@@ -245,6 +250,8 @@ function parseInfo(info) {
 function parseCourseDetails(result) {
     var event = result['event'];
     var info = parseInfo(event['info']);
+
+    // TODO: some courses no type -> log?
 
     // TODO!
     // NB: some courses miss contact
