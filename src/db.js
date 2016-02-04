@@ -1,7 +1,7 @@
 'use strict';
 
-const assert = require('assert');
-const log = require('debug')('rwth-courses:db');
+const log = require('debug')('rwth-courses:db:info');
+const error = require('debug')('rwth-courses:db:error');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 mongoose.Promise = Promise;
@@ -39,7 +39,8 @@ const CoursesSchema = new mongoose.Schema({
     },
     semester: {
         type: String,
-        required: true
+        required: true,
+        index: true
     },
     ects: {
         type: Array,
@@ -55,7 +56,7 @@ const CoursesSchema = new mongoose.Schema({
     },
     fields: {
         type: Array,
-        //required: true,
+        required: true,
         index: true
     },
     details: {
@@ -212,7 +213,9 @@ DB.prototype.insertCourseInTemp = function (course, field) {
 
                 // doc !== null -> document found and updated
                 // doc === null -> document not found, need to insert it
-                assert(doc !== null);
+                if (doc === null) {
+                    error('Duplicate ID -> [' + course.gguid + '] ' + course.name + ' || ' + e);
+                }
 
                 log('Update course [' + course.gguid + '] ' + course.name);
                 return false;

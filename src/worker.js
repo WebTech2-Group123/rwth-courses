@@ -14,30 +14,39 @@ process.on('unhandledRejection', function (error) {
     throw error;
 });
 
+// utils
+function delayBy(time) {
+    return function (value, index) {
+        return Rx.Observable.return(value).delay(index === 0 ? 0 : time);
+    };
+}
+
 // time constants
 const SECONDS = 1000;
+const MINUTES = 60 * SECONDS;
 
 // download courses list
 function doJob(o) {
 
     // parse options to slow down the worker
     var options = o || {};
-    var delaySemesters = options.delaySemesters || 30 * SECONDS;
+    var delaySemesters = options.delaySemesters || 10 * MINUTES;
+    var delayFields = options.delayFields || 60 * SECONDS;
+    var delaySubfields = options.delaySubfields || 2 * SECONDS;
+    var delayCoursesList = options.delayCoursesList || 100;
 
-    var n = o.n;
+    // TODO -> remove
+    // var n = options.n || 300;
 
     // create campus client
-    var client = new Campus({
-        cache: true,
-        db: db
-    });
+    const client = new Campus({cache: true, db: db});
 
     // log
     info('Starting getting data from CampusOffice');
     const startTime = +Date.now();
 
     // initialize the Campus client
-    const s = Rx.Observable.fromPromise(client._fake())
+    const s = Rx.Observable.fromPromise(client.init())
 
         // get semesters list
         .flatMap(() => {
@@ -49,6 +58,11 @@ function doJob(o) {
             return Parser.parseSemesters(semestersResponse);
         })
 
+        // here -> stream of semesters
+        // postpone semesters execution by "delaySemesters" time
+        .map(delayBy(delaySemesters))
+        .concatAll()
+
         // for each semester -> get all fields
         .flatMap(semester => {
             return client.getStudyFieldsBySemester(semester);
@@ -56,11 +70,16 @@ function doJob(o) {
 
         // parse raw response with list of fields
         .flatMap(fieldsListResponse => {
-            return Parser.parseFieldOfStudies(fieldsListResponse)
+            return Parser.parseFieldOfStudies(fieldsListResponse);
         })
 
         // TODO: remove
         .filter(field => field.name.indexOf('Informatik') == 0)
+
+        // here -> stream of fields
+        // postpone execution by "delayFields" time
+        .map(delayBy(delayFields))
+        .concatAll()
 
         // for each field -> request the subfields
         // NB: pass also the field (contains info about B.Sc. vs M.Sc. etc.)
@@ -86,14 +105,10 @@ function doJob(o) {
             });
         })
 
-        // delay 1000 ms
-        .map(function (value) {
-            return Rx.Observable.return(value).delay(1000);
-        })
+        // here -> stream of subfields
+        // postpone execution by "delaySubfields" time
+        .map(delayBy(delaySubfields))
         .concatAll()
-
-        // TODO: remove
-        .take(n)
 
         // request courses for each subfield
         .flatMap(object => {
@@ -109,9 +124,6 @@ function doJob(o) {
             });
         })
 
-        // TODO: remove
-        .take(n)
-
         // parse courses
         .flatMap(object => {
             let field = object.field;
@@ -126,6 +138,14 @@ function doJob(o) {
                 };
             });
         })
+
+        // TODO: remove
+        //.take(n)
+
+        // here -> stream of courses
+        // postpone execution by "delayCoursesList" time
+        .map(delayBy(delayCoursesList))
+        .concatAll()
 
         // request details for this course
         // and parse the result
@@ -159,9 +179,8 @@ function doJob(o) {
 
             // store in mongo
             return db.insertCourseInTemp(course, field).catch(e => {
-
-                // TODO: avoid multiple requests of same GGUID
                 error('Duplicate course with ID: ' + course.gguid + ' --> ' + e);
+                throw e;
             });
         })
 
@@ -193,6 +212,4 @@ function doJob(o) {
 
 exports.doJob = doJob;
 
-// N = 2
-//doJob(2);
-doJob(6);
+doJob();

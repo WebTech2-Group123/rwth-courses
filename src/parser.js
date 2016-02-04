@@ -150,9 +150,12 @@ function parseLanguage(language) {
 
 function parseECTS(ects) {
 
+    // default value
+    const def = [0];
+
     // some courses simply do not have a credit points numbers... return 0
     if (typeof ects === 'undefined') {
-        return [0];
+        return def;
     }
 
     // replace , with . (to identify numbers with comma, yes also this is present in Campus)
@@ -162,7 +165,7 @@ function parseECTS(ects) {
     var matches = ectsPoint.match(/\d+\.?(\d+)?(\s|$)/g);
 
     // transform in numbers
-    return matches ? matches.map(s => parseInt(s, 10)) : [];
+    return matches ? matches.map(s => parseInt(s, 10)) : def;
 }
 
 function parseType(type) {
