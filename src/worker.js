@@ -14,8 +14,17 @@ process.on('unhandledRejection', function (error) {
     throw error;
 });
 
+// time constants
+const SECONDS = 1000;
+
 // download courses list
-function doJob(n) {
+function doJob(o) {
+
+    // parse options to slow down the worker
+    var options = o || {};
+    var delaySemesters = options.delaySemesters || 30 * SECONDS;
+
+    var n = o.n;
 
     // create campus client
     var client = new Campus({
@@ -76,6 +85,12 @@ function doJob(n) {
                 };
             });
         })
+
+        // delay 1000 ms
+        .map(function (value) {
+            return Rx.Observable.return(value).delay(1000);
+        })
+        .concatAll()
 
         // TODO: remove
         .take(n)
