@@ -23,28 +23,39 @@ const CoursesSchema = new mongoose.Schema({
         unique: true
     },
     name: {
-        type: String
+        type: String,
+        required: true
     },
     name_de: {
         type: String
     },
     description: {
         type: String
+        //required: true
     },
     description_de: {
         type: String
     },
+    semester: {
+        type: String,
+        required: true
+    },
     ects: {
-        type: Array
+        type: Array,
+        required: true
     },
     language: {
-        type: Array
-    },
-    semester: {
-        type: String
+        type: Array,
+        required: true
     },
     type: {
-        type: Array
+        type: Array,
+        required: true
+    },
+    fields: {
+        type: Array,
+        //required: true,
+        index: true
     },
     details: {
         type: mongoose.Schema.Types.Mixed
@@ -55,7 +66,7 @@ const CoursesSchema = new mongoose.Schema({
     contact: {
         type: Array
     }
-}, {strict: true});
+});
 
 // Cache Schema
 const CacheSchema = new mongoose.Schema({
@@ -163,7 +174,7 @@ DB.prototype.getSemesters = function () {
 
 // get distinct study fields
 DB.prototype.getStudyFields = function () {
-    return this.Courses.distinct('field');
+    return this.Courses.distinct('fields.field');
 };
 
 // get courses (not temp)
@@ -178,14 +189,39 @@ DB.prototype.getCoursesByIds = function (gguids) {
 
 // insert course
 // throws on duplicates
-DB.prototype.insertCourseInTemp = function (course) {
-    var toSave = this.CoursesTemp(course);
-    return toSave.save();
+DB.prototype.insertCourseInTemp = function (course, field) {
+
+    // sanity check
+    if (!field) {
+        throw new Error('Please pass a field object to this method');
+    }
+
+    // find and update (if exists)
+    return this.CoursesTemp.findOneAndUpdate({gguid: course.gguid}, {$push: {fields: field}}).exec().then(doc => {
+
+        // doc !== null -> document found and updated
+        // doc === null -> document not found, need to insert it
+        let insert = doc === null;
+        log((insert ? 'Insert' : 'Update') + ' course [' + course.gguid + '] ' + course.name);
+
+        if (insert) {
+            var toSave = this.CoursesTemp(course);
+            toSave.fields = [field];
+
+            return toSave.save().then(() => true);
+        }
+
+        return false;
+    });
 };
 
 // test only: insert courses directly in courses table
-DB.prototype._insertCourses = function (courses) {
-    return this.Courses.create(courses);
+DB.prototype._insertCourses = function (courses, fields) {
+    if (!courses || !fields || courses.length !== fields.length) {
+        throw new Error('Please pass a courses array and the corresponding fields array to this method');
+    }
+    var promises = courses.map((course, index)=> this.insertCourseInTemp(course, fields[index]));
+    return Promise.all(promises).then(() => this.renameTempCourses());
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

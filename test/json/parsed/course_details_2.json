@@ -1,0 +1,45 @@
+{
+  "gguid": "0xB3ACFF5E65A39946A3529F61DDB88EB9",
+  "name": "Programming Concepts",
+  "name_de": "Programmierung (Globalübung)",
+  "description": "",
+  "description_de": "",
+  "semester": "WS 2015/2016",
+  "language": [
+    "DE"
+  ],
+  "ects": [
+    0
+  ],
+  "type": [
+    "Übung"
+  ],
+  "details": {
+    "follow": "",
+    "note": "",
+    "prereq": "",
+    "test": ""
+  },
+  "events": [
+    {
+      "end": 1448451900000,
+      "room": "1420|002",
+      "start": 1448446500000,
+      "weekday": 3
+    }
+  ],
+  "contact": [
+    {
+      "address": {
+        "department": "Lehr- und Forschungsgebiet Informatik 2 (Programmiersprachen und Verifikation)",
+        "room": "4208",
+        "street": "Ahornstraße 55",
+        "town": "Aachen",
+        "zip": "52074",
+        "building": "Informatikzentrum (E2) - 2356"
+      },
+      "mail": "hensel@informatik.rwth-aachen.de",
+      "name": "Jera Hensel"
+    }
+  ]
+}

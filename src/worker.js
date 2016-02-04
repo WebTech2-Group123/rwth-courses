@@ -28,7 +28,7 @@ function doJob(n) {
     const startTime = +Date.now();
 
     // initialize the Campus client
-    const s = Rx.Observable.fromPromise(client.init())
+    const s = Rx.Observable.fromPromise(client._fake())
 
         // get semesters list
         .flatMap(() => {
@@ -112,9 +112,6 @@ function doJob(n) {
             });
         })
 
-        // TODO: filter types of courses
-        .filter(course => true)
-
         // request details for this course
         // and parse the result
         .flatMap(object => {
@@ -133,19 +130,23 @@ function doJob(n) {
 
         // store course in the DB
         .flatMap(object => {
-            let field = object.field;
-            let subfield = object.subfield;
+
+            // extract course
             let course = object.course;
 
-            // combine useful info
-            course.group = field.group;
-            course.field = field.name;
-            course.subfield = subfield.name;
-            course.path = subfield.path;
+            // create field object
+            let field = {
+                group: object.field.group,
+                field: object.field.name,
+                subfield: object.subfield.name,
+                path: object.subfield.path
+            };
 
             // store in mongo
-            return db.insertCourseInTemp(course).catch(() => {
-                error('Duplicate course with ID: ' + course.gguid);
+            return db.insertCourseInTemp(course, field).catch(e => {
+
+                // TODO: avoid multiple requests of same GGUID
+                error('Duplicate course with ID: ' + course.gguid + ' --> ' + e);
             });
         })
 
