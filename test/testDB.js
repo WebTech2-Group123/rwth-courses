@@ -22,14 +22,18 @@ const filter = {
 
 describe('db.js', function () {
 
-    beforeEach('open connection to db & clean it', function (done) {
+    before('create the db instance', function (done) {
         this.db = new db.DB('mongodb://localhost:27017/rwth-courses-test');
+        this.db.connection.on('open', done);
+    });
+
+    beforeEach('open connection to db & clean it', function (done) {
         this.db._drop().then(() => {
             done();
         });
     });
 
-    afterEach('close the connection to the db', function (done) {
+    after('close the connection to the db', function (done) {
         this.db.close().then(() => done());
     });
 
