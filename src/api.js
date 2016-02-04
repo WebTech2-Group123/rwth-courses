@@ -48,8 +48,13 @@ router.route('/courses').get(function (req, res) {
         // filter object to pass to the db
         let filter = {};
 
+        // replace field with fields.field
+        if (typeof query.field !== 'undefined') {
+            query['fields.field'] = query.field;
+        }
+
         // select only allowed parameters
-        const allowed = ['semester', 'field', 'language'];
+        const allowed = ['semester', 'fields.field', 'language'];
         allowed.forEach(function (parameter) {
             if (typeof query[parameter] !== 'undefined') {
                 filter[parameter] = query[parameter];
