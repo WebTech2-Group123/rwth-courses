@@ -169,7 +169,7 @@ function parseType(type) {
 
     // some courses simply do not have a credit points numbers... return 0
     if (typeof type === 'undefined') {
-        return [];
+        return ['No Type'];
     }
 
     // mapping
@@ -305,7 +305,7 @@ function parseCourseDetails(result) {
                     room: utils.get(contact, 'work', 'attributes', 'office')
                 }
             }
-        }) || []).filter(contact => contact.name.indexOf('Stundenplaner') < 0 && contact.name.indexOf('Raumvergabe') < 0)
+        }) || []).filter(contact => !contains(contact.name, ['Stundenplaner', 'Raumvergabe', 'Prüfungsamt ZPA']))
     }
 }
 

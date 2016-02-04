@@ -202,6 +202,7 @@ DB.prototype.insertCourseInTemp = function (course, field) {
         // doc !== null -> document found and updated
         // doc === null -> document not found, need to insert it
         let insert = doc === null;
+        log((insert ? 'Insert' : 'Update') + ' course [' + course.gguid + '] ' + course.name);
 
         if (insert) {
             var toSave = this.CoursesTemp(course);
