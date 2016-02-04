@@ -32,7 +32,7 @@ function doJob(o) {
     var options = o || {};
     var delaySemesters = options.delaySemesters || 10 * MINUTES;
     var delayFields = options.delayFields || 60 * SECONDS;
-    var delaySubfields = options.delaySubfields || 2 * SECONDS;
+    var delaySubfields = options.delaySubfields || 1000;
     var delayCoursesList = options.delayCoursesList || 100;
 
     // TODO -> remove
@@ -75,6 +75,7 @@ function doJob(o) {
 
         // TODO: remove
         .filter(field => field.name.indexOf('Informatik') == 0)
+        // .take(20)
 
         // here -> stream of fields
         // postpone execution by "delayFields" time
@@ -139,9 +140,6 @@ function doJob(o) {
             });
         })
 
-        // TODO: remove
-        //.take(n)
-
         // here -> stream of courses
         // postpone execution by "delayCoursesList" time
         .map(delayBy(delayCoursesList))
@@ -179,7 +177,7 @@ function doJob(o) {
 
             // store in mongo
             return db.insertCourseInTemp(course, field).catch(e => {
-                error('Duplicate course with ID: ' + course.gguid + ' --> ' + e);
+                error('Error inserting the course with ID: ' + course.gguid + ' --> ' + e);
                 throw e;
             });
         })
@@ -199,7 +197,7 @@ function doJob(o) {
 
         // we are done
         const endTime = +Date.now();
-        info('Finish getting data from CampusOffice. Total time: ' + (endTime - startTime) + ' ms');
+        info('Finish getting data from CampusOffice. Total time: ' + (endTime - startTime) / 1000 + ' s');
 
         // switch collections
         db.renameTempCourses().then(function () {
