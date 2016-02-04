@@ -94,8 +94,8 @@ describe('db.js', function () {
                     return this.db.getCourses({});
                 }).then(courses => {
                     assert.equal(courses.length, 2);
-                    assert.deepEqual(courses[0], extend({fields: [FIELD_A]}, COURSE_A));
-                    assert.deepEqual(courses[1], extend({fields: [FIELD_B]}, COURSE_B));
+                    let expected = [extend({fields: [FIELD_A]}, COURSE_A), extend({fields: [FIELD_B]}, COURSE_B)];
+                    assert.sameDeepMembers(courses, expected);
                     done();
                 });
             });
