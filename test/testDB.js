@@ -29,8 +29,8 @@ describe('db.js', function () {
         });
     });
 
-    afterEach('close the connection to the db', function () {
-        this.db.close();
+    afterEach('close the connection to the db', function (done) {
+        this.db.close().then(() => done());
     });
 
     describe('.getInstance()', function () {
@@ -170,5 +170,4 @@ describe('db.js', function () {
         });
     });
 
-})
-;
+});
