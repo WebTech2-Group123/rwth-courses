@@ -30,11 +30,15 @@ const CoursesSchema = new mongoose.Schema({
         type: String
     },
     description: {
-        type: String,
-        required: true
+        type: String
+        //required: true
     },
     description_de: {
         type: String
+    },
+    semester: {
+        type: String,
+        required: true
     },
     ects: {
         type: Array,
@@ -44,17 +48,13 @@ const CoursesSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    semester: {
-        type: String,
-        required: true
-    },
     type: {
         type: Array,
         required: true
     },
     fields: {
         type: Array,
-        required: true,
+        //required: true,
         index: true
     },
     details: {
@@ -189,9 +189,32 @@ DB.prototype.getCoursesByIds = function (gguids) {
 
 // insert course
 // throws on duplicates
-DB.prototype.insertCourseInTemp = function (course) {
-    var toSave = this.CoursesTemp(course);
-    return toSave.save();
+DB.prototype.insertCourseInTemp = function (course, field) {
+
+    // sanity check
+    if (!field) {
+        throw new Error('Please pass a field object to this method');
+    }
+
+    // find and update (if exists)
+    return this.CoursesTemp.findOneAndUpdate({gguid: course.gguid}, {$push: {fields: field}}).exec().then(doc => {
+
+        // doc !== null -> document found and updated
+        // doc === null -> document not found, need to insert it
+        let insert = doc === null;
+
+        if (insert) {
+            var toSave = this.CoursesTemp(course);
+            toSave.fields = [field];
+
+            return toSave.save().then(() => true);
+        }
+
+        return false;
+    });
+
+    //var toSave = this.CoursesTemp(course);
+    //return toSave.save();
 };
 
 // test only: insert courses directly in courses table

@@ -1,13 +1,21 @@
 'use strict';
 
-var assert = require('chai').assert;
-var db = require('../src/db');
+const extend = require('util')._extend;
+const assert = require('chai').assert;
+const db = require('../src/db');
 
 // load test data
-const COURSE_A = require('./json/parsed/course_details.json');
+const COURSE_A = require('./json/parsed/course_details_1.json');
 const COURSE_B = require('./json/parsed/course_details_2.json');
 
-const ids = ['0x0001', '0x0002'];
+const FIELD_A = {
+    field: 'aaaa'
+};
+
+const FIELD_B = {
+    field: 'bbb'
+};
+
 const filter = {
     field: 'some value'
 };
@@ -33,29 +41,41 @@ describe('db.js', function () {
 
     describe('.Mongo', function () {
 
-        describe('#insertCourse()', function () {
-            //it('should insert a course', function (done) {
-            //    this.db.insertCourse(COURSE_A).then(result => {
-            //        assert.equal(result.upsertedCount, 1);
-            //        assert.equal(result.modifiedCount, 0);
-            //        return this.db.insertCourse(COURSE_B);
-            //    }).then(result => {
-            //        assert.equal(result.upsertedCount, 1);
-            //        assert.equal(result.modifiedCount, 0);
-            //        done();
-            //    });
-            //});
-            //it('should skip the course if already existing', function (done) {
-            //    this.db.insertCourse(COURSE_A).then(result => {
-            //        assert.equal(result.upsertedCount, 1);
-            //        assert.equal(result.modifiedCount, 0);
-            //        return this.db.insertCourse(COURSE_A);
-            //    }).then(result => {
-            //        assert.equal(result.upsertedCount, 0);
-            //        assert.equal(result.modifiedCount, 1);
-            //        done();
-            //    });
-            //});
+        describe('#insertCourseInTemp()', function () {
+            it('should insert a course and update an existing one', function (done) {
+                this.db.insertCourseInTemp(COURSE_A, FIELD_A).then(result => {
+                    assert.isTrue(result);
+                    return this.db.insertCourseInTemp(COURSE_A, FIELD_B);
+                }).then(result => {
+                    assert.isFalse(result);
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getCourses();
+                }).then(courses => {
+                    assert.equal(courses.length, 1);
+                    assert.deepEqual(courses[0].fields, [FIELD_A, FIELD_B]);
+
+                    let expected = extend({}, COURSE_A);
+                    expected.fields = [FIELD_A, FIELD_B];
+                    assert.deepEqual(expected, courses[0]);
+
+                    done();
+                });
+            });
+            it('should insert 2 different courses', function (done) {
+                this.db.insertCourseInTemp(COURSE_A, FIELD_A).then(result => {
+                    assert.isTrue(result);
+                    return this.db.insertCourseInTemp(COURSE_B, FIELD_B);
+                }).then(result => {
+                    assert.isTrue(result);
+                    return this.db.renameTempCourses();
+                }).then(() => {
+                    return this.db.getCourses();
+                }).then(courses => {
+                    assert.equal(courses.length, 2);
+                    done();
+                });
+            });
         });
 
         describe('#getCourses()', function () {
@@ -93,7 +113,7 @@ describe('db.js', function () {
                 }).then(() => {
                     return this.db.getSemesters();
                 }).then(semesters => {
-                    assert.equal(semesters.length, 2);
+                    assert.equal(semesters.length, 1);
                     done();
                 });
             });
@@ -117,7 +137,7 @@ describe('db.js', function () {
                 this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
                     return this.db.getCourses(filter);
                 }).then(() => {
-                    return this.db.getCoursesByIds(ids);
+                    return this.db.getCoursesByIds([COURSE_A.gguid, COURSE_B.gguid]);
                 }).then(courses => {
                     assert.equal(courses.length, 2);
                     done();
@@ -140,4 +160,5 @@ describe('db.js', function () {
         });
     });
 
-});
+})
+;
