@@ -15,9 +15,14 @@
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}" md-auto-select
+        <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}"
             ng-repeat="course in courses | orderBy: query.order | filterBy: ['name', 'lecturer', 'institute', 'subsection', 'creditpoints']: query.search | limitTo: query.limit: (query.page - 1) * query.limit">
-            <td md-cell>{{course.name}}</td>
+            <td md-cell>
+                <a ng-click="showDetails(course.gguid)">
+                    <md-tooltip md-direction="top">Show details</md-tooltip>
+                    {{course.name}}
+                </a>
+            </td>
             <td md-cell>{{course.lecturer}}</td>
             <td md-cell>{{course.contact[0].address.department}}</td>
             <td md-cell>{{course.subfield}}</td>

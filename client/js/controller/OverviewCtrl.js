@@ -12,8 +12,6 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
     // retrieve courses
     Courses.getByIDs(ids).then(function (courses) {
         $scope.courses = courses;
-        console.log('------------------------------');
-        console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
         $scope.loading = false;
     });
@@ -35,16 +33,18 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
 
         // update local storage
         localStorageService.set('selected', coursesIDs);
+
+        console.log(typeof localStorageService.get('selected'));
+        console.log(localStorageService.get('selected').length);
+
+        // go back to courses list if schedule is empty
+        if (localStorageService.get('selected').length == 0) {
+            $location.url(localStorageService.get('coursePath'));
+        }
     }
 
     // show details page
     $scope.goToDetails = function (gguid) {
         $location.url('details/' + gguid);
     }
-
-    // go back button
-    /*// TODO: got back to the rigth course list
-    $scope.goBack = function () {
-        $location.url($scope.$parent.courseRoute);
-    }*/
 });

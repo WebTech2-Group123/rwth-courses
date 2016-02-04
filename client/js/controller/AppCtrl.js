@@ -2,7 +2,7 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
 
     $scope.courseListExist = true;
 
-    if (localStorageService.get('selected') != []) {
+    if (localStorageService.get('selected').length > 0) {
         $scope.selectedCoursesExist = false;
     } else {
         $scope.selectedCoursesExist = true;
@@ -22,7 +22,12 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
                 var index = oldUrl.lastIndexOf('/courses');
                 var path = oldUrl.substr(index, oldUrl.length);
                 localStorageService.set('coursePath', path);
+                localStorageService.set('lastPath', path);
+            } else {
+                var path = oldUrl.substr(oldUrl.lastIndexOf('/'), oldUrl.length);
+                localStorageService.set('lastPath', path);
             }
+
         }
 
         $scope.courseActive = function (path) {
