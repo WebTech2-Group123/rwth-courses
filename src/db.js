@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const log = require('debug')('rwth-courses:db');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
@@ -188,7 +189,6 @@ DB.prototype.getCoursesByIds = function (gguids) {
 };
 
 // insert course
-// throws on duplicates
 DB.prototype.insertCourseInTemp = function (course, field) {
 
     // sanity check
@@ -196,23 +196,28 @@ DB.prototype.insertCourseInTemp = function (course, field) {
         throw new Error('Please pass a field object to this method');
     }
 
-    // find and update (if exists)
-    return this.CoursesTemp.findOneAndUpdate({gguid: course.gguid}, {$push: {fields: field}}).exec().then(doc => {
+    // try to insert -> if fails, update
+    var toSave = this.CoursesTemp(course);
+    toSave.fields = [field];
 
-        // doc !== null -> document found and updated
-        // doc === null -> document not found, need to insert it
-        let insert = doc === null;
-        log((insert ? 'Insert' : 'Update') + ' course [' + course.gguid + '] ' + course.name);
+    return toSave.save()
+        .then(() => {
+            log('Insert course [' + course.gguid + '] ' + course.name);
+            return true;
+        })
+        .catch(e => {
 
-        if (insert) {
-            var toSave = this.CoursesTemp(course);
-            toSave.fields = [field];
+            // find and update (if exists)
+            return this.CoursesTemp.findOneAndUpdate({gguid: course.gguid}, {$push: {fields: field}}).exec().then(doc => {
 
-            return toSave.save().then(() => true);
-        }
+                // doc !== null -> document found and updated
+                // doc === null -> document not found, need to insert it
+                assert(doc !== null);
 
-        return false;
-    });
+                log('Update course [' + course.gguid + '] ' + course.name);
+                return false;
+            });
+        });
 };
 
 // test only: insert courses directly in courses table
