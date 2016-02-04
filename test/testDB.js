@@ -9,7 +9,7 @@ const COURSE_A = require('./json/parsed/course_details_1.json');
 const COURSE_B = require('./json/parsed/course_details_2.json');
 
 const FIELD_A = {
-    field: 'aaaa'
+    field: 'some value'
 };
 
 const FIELD_B = {
@@ -17,7 +17,7 @@ const FIELD_B = {
 };
 
 const filter = {
-    field: 'some value'
+    'fields.field': 'some value'
 };
 
 describe('db.js', function () {
@@ -86,21 +86,21 @@ describe('db.js', function () {
                 });
             });
             it('should get all the courses if any present', function (done) {
-                this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
+                this.db._insertCourses([COURSE_A, COURSE_B], [FIELD_A, FIELD_B]).then(() => {
                     return this.db.getCourses({});
                 }).then(courses => {
                     assert.equal(courses.length, 2);
-                    assert.deepEqual(courses[0], COURSE_A);
-                    assert.deepEqual(courses[1], COURSE_B);
+                    assert.deepEqual(courses[0], extend({fields: [FIELD_A]}, COURSE_A));
+                    assert.deepEqual(courses[1], extend({fields: [FIELD_B]}, COURSE_B));
                     done();
                 });
             });
             it('should get only the courses which match the query object', function (done) {
-                this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
+                this.db._insertCourses([COURSE_A, COURSE_B], [FIELD_A, FIELD_B]).then(() => {
                     return this.db.getCourses(filter);
                 }).then(courses => {
                     assert.equal(courses.length, 1);
-                    assert.deepEqual(courses[0], COURSE_A);
+                    assert.deepEqual(courses[0], extend({fields: [FIELD_A]}, COURSE_A));
                     done();
                 });
             });
@@ -108,7 +108,7 @@ describe('db.js', function () {
 
         describe('#getSemesters()', function () {
             it('should return list of distinct semesters (in this case [WS 2015/2016, SS 2015])', function (done) {
-                this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
+                this.db._insertCourses([COURSE_A, COURSE_B], [FIELD_A, FIELD_B]).then(() => {
                     return this.db.getCourses(filter);
                 }).then(() => {
                     return this.db.getSemesters();
@@ -121,7 +121,7 @@ describe('db.js', function () {
 
         describe('#getStudyFields()', function () {
             it('should return list of distinct fields', function (done) {
-                this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
+                this.db._insertCourses([COURSE_A, COURSE_B], [FIELD_A, FIELD_B]).then(() => {
                     return this.db.getCourses(filter);
                 }).then(() => {
                     return this.db.getStudyFields();
@@ -133,8 +133,18 @@ describe('db.js', function () {
         });
 
         describe('#getCoursesByIds()', function () {
-            it('should return list of courses by the array of ids', function (done) {
-                this.db._insertCourses([COURSE_A, COURSE_B]).then(() => {
+            it('should return list of courses by the array of ids (1)', function (done) {
+                this.db._insertCourses([COURSE_A], [FIELD_A]).then(() => {
+                    return this.db.getCourses(filter);
+                }).then(() => {
+                    return this.db.getCoursesByIds([COURSE_A.gguid, COURSE_B.gguid]);
+                }).then(courses => {
+                    assert.equal(courses.length, 1);
+                    done();
+                });
+            });
+            it('should return list of courses by the array of ids (2)', function (done) {
+                this.db._insertCourses([COURSE_A, COURSE_B], [FIELD_A, FIELD_B]).then(() => {
                     return this.db.getCourses(filter);
                 }).then(() => {
                     return this.db.getCoursesByIds([COURSE_A.gguid, COURSE_B.gguid]);

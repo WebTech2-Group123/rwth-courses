@@ -174,7 +174,7 @@ DB.prototype.getSemesters = function () {
 
 // get distinct study fields
 DB.prototype.getStudyFields = function () {
-    return this.Courses.distinct('field');
+    return this.Courses.distinct('fields.field');
 };
 
 // get courses (not temp)
@@ -213,14 +213,15 @@ DB.prototype.insertCourseInTemp = function (course, field) {
 
         return false;
     });
-
-    //var toSave = this.CoursesTemp(course);
-    //return toSave.save();
 };
 
 // test only: insert courses directly in courses table
-DB.prototype._insertCourses = function (courses) {
-    return this.Courses.create(courses);
+DB.prototype._insertCourses = function (courses, fields) {
+    if (!courses || !fields || courses.length !== fields.length) {
+        throw new Error('Please pass a courses array and the corresponding fields array to this method');
+    }
+    var promises = courses.map((course, index)=> this.insertCourseInTemp(course, fields[index]));
+    return Promise.all(promises).then(() => this.renameTempCourses());
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
