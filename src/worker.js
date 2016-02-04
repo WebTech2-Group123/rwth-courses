@@ -144,6 +144,8 @@ function doJob(n) {
 
             // store in mongo
             return db.insertCourseInTemp(course, field).catch(e => {
+
+                // TODO: avoid multiple requests of same GGUID
                 error('Duplicate course with ID: ' + course.gguid + ' --> ' + e);
             });
         })
@@ -178,4 +180,4 @@ exports.doJob = doJob;
 
 // N = 2
 //doJob(2);
-doJob(1);
+doJob(6);
