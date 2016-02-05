@@ -34,7 +34,6 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         // update local storage
         localStorageService.set('selected', coursesIDs);
 
-        console.log(typeof localStorageService.get('selected'));
         console.log(localStorageService.get('selected').length);
 
         // go back to courses list if schedule is empty
@@ -47,4 +46,9 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
     $scope.goToDetails = function (gguid) {
         $location.url('details/' + gguid);
     }
+
+    $scope.goBack = function () {
+        $location.url(localStorageService.get('coursePath'));
+    }
+
 });

@@ -1,7 +1,10 @@
 app.controller('HomeCtrl', HomeCtrl);
 
 
-function HomeCtrl($scope, $filter, $location, $http, $log) {
+function HomeCtrl($scope, $filter, $location, $http, $log, Courses) {
+
+    // clear course list cache
+    Courses.clearCache();
 
     // TODO: get semesters from the backend
     var semesters = [];
@@ -40,15 +43,26 @@ function HomeCtrl($scope, $filter, $location, $http, $log) {
 
     $scope.getCourseList = function (semester, field) {
 
+        console.log('getCourseList...');
 
-        var semester = window.encodeURIComponent(semester);
+        var field = field;
+        var semester = semester;
 
         if (semester == undefined || field == null) {
             //some error message
+            console.log('return');
             return;
         }
 
-        $location.path('courses/' + semester + '/' + field);
+        semester = window.encodeURIComponent(semester);
+        field = window.encodeURIComponent(field);
+
+        console.log('Semester: ' + semester + ' >> Field: ' + field);
+
+        //$scope.$parent.courseListExist = false;
+
+        console.log('Path for courses list: courses/' + semester + '/' + field);
+        $location.url('courses/' + semester + '/' + field);
     };
 
 }

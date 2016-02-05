@@ -1,4 +1,4 @@
-app.factory('Courses', function ($q, $http, localStorageService) {
+app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
     //function mapByGGUID(courses) {
     //    return courses.reduce(function (accumulator, course) {
@@ -28,23 +28,51 @@ app.factory('Courses', function ($q, $http, localStorageService) {
         return strTime;
     }
 
+    // cache courses
+    var courses = [];
+
     return {
+
+        clearCache: function () {
+            courses = [];
+        },
+
         get: function (semester, field) {
 
             var defered = $q.defer();
 
-            // define query for the request to get the right courses
-            var query = {"semester": semester, "field": field};
+            console.log(courses.length);
 
-            // get courses from server
-            $http({
-                method: 'get',
-                url: '/api/courses?query=' + query
-            }).success(function (res) {
-                defered.resolve(res);
-            }).error(function (res) {
-                console.log(res);
-            });
+            // check if courses are cached
+            if (courses.length > 0) {
+                console.log('courses from cache...');
+                defered.resolve(courses);
+            }
+
+            else {
+                // define query for the request to get the right courses
+                //var query = {"semester": semester, "field": field};
+                //query = JSON.stringify(query);
+                //console.log(query);
+
+                // get courses from server
+                var semester = window.encodeURIComponent(semester);
+                var field = window.encodeURIComponent(field);
+
+                console.log(semester + ' >> ' + field);
+
+                $http({
+                    method: 'get',
+                    url: '/api/courses?semester=' + semester + '&field=' + field
+                }).success(function (res) {
+                    courses = res;
+                    //console.log(courses);
+                    console.log(courses.length);
+                    defered.resolve(res);
+                }).error(function (res) {
+                    console.log(res);
+                });
+            }
 
             return defered.promise;
         },
@@ -112,6 +140,11 @@ app.factory('Courses', function ($q, $http, localStorageService) {
             ];
 
             for (var i = 0; i < courses.length; i++) {
+                if (!courses[i].events[0]) {
+                    $log.warn(courses[i].name + ' has no events');
+                    break;
+                }
+
                 switch (convertTime(courses[i].events[0].start)) {
                     case '8:30h':
                         if (schedule[0][courses[i].events[0].weekday - 1] == null) {
@@ -122,6 +155,21 @@ app.factory('Courses', function ($q, $http, localStorageService) {
                             }]
                         } else {
                             schedule[0][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            });
+                        }
+                        break;
+                    case '9:30h':
+                        if (schedule[1][courses[i].events[0].weekday - 1] == null) {
+                            schedule[1][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {halfpast: true}
+                            }]
+                        } else {
+                            schedule[1][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
@@ -140,6 +188,21 @@ app.factory('Courses', function ($q, $http, localStorageService) {
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
+                            });
+                        }
+                        break;
+                    case '11:15h':
+                        if (schedule[3][courses[i].events[0].weekday - 1] == null) {
+                            schedule[3][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            }]
+                        } else {
+                            schedule[3][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
                             });
                         }
                         break;

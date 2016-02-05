@@ -1,13 +1,15 @@
 app.controller('CoursesCtrl', CoursesCtrl);
 
-function CoursesCtrl($scope, localStorageService, $routeParams, $location, Courses) {
+function CoursesCtrl($scope, localStorageService, $routeParams, $location, $log, Courses) {
 
-    // store route params
-    var semester = window.decodeURIComponent($routeParams.semester);
+    $scope.loading = true;
+
+    var semester = $routeParams.semester;
     var field = $routeParams.field;
 
-    // get courses from local storage
+    // get selected courses from local storage
     $scope.selected = localStorageService.get('selected') || [];
+    $log.info($scope.selected);
 
     // store courses into local storage on changes
     $scope.$watchCollection('selected', function (selected) {
@@ -15,10 +17,10 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
 
         if ($scope.selected.length != 0) {
             // enable tab
-            $scope.$parent.selectedCoursesExist = false;
+            $scope.disableBtn = false;
         } else {
             // disable tab
-            $scope.$parent.selectedCoursesExist = true;
+            $scope.disableBtn = true;
         }
     });
 
@@ -29,19 +31,23 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
         search: ''
     };
 
-
-    $scope.courses = [];
-
     Courses.get(semester, field).then(function (courses) {
         $scope.courses = courses;
-
-        $scope.$parent.courseListExist = false;
+        $scope.loading = false;
     });
 
     $scope.showDetails = function (gguid) {
         console.log(gguid);
         $location.url('/details/' + gguid);
-    }
+    };
+
+    $scope.goBack = function () {
+        $location.url('/');
+    };
+
+    $scope.showSchedule = function () {
+        $location.url('overview');
+    };
 
     $scope.clearAll = function () {
 
