@@ -15,6 +15,8 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, $log,
     $scope.$watchCollection('selected', function (selected) {
         localStorageService.set('selected', selected);
 
+        console.log(selected);
+
         if ($scope.selected.length != 0) {
             // enable tab
             $scope.disableBtn = false;
