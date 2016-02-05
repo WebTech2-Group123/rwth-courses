@@ -29,7 +29,7 @@
                 <td md-cell>{{course.lecturer}}</td>
                 <td md-cell>{{course.contact[0].address.department}}</td>
                 <td md-cell>{{course.subfield}}</td>
-                <td md-cell>{{course.ects}}</td>
+                <td md-cell>{{course.ects | credits}}</td>
             </tr>
             </tbody>
         </table>
