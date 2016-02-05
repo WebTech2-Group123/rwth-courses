@@ -95,7 +95,6 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                 method: 'get',
                 url: '/api/courses?ids=' + ids
             }).success(function (res) {
-                console.log(res);
 
                 defered.resolve(res);
 
@@ -123,6 +122,7 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
         },
 
         sort: function (courses) {
+
             var schedule = [
                 [null, null, null, null, null, null],
                 [null, null, null, null, null, null],
@@ -153,12 +153,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[0][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             });
+
+                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '9:30h':
@@ -168,12 +170,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[1][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             });
+
+                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '10:30h':
@@ -183,12 +187,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[2][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             });
+
+                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '11:15h':
@@ -198,12 +204,15 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[3][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[3][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            // put css marker on second event
+                            (schedule[3][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '12:15h':
@@ -213,19 +222,15 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
-                            if ((schedule[4][courses[i].events[0].weekday - 1]).length < 2){
-                                schedule[4][courses[i].events[0].weekday - 1].push({
-                                    name: courses[i].name,
-                                    gguid: courses[i].gguid,
-                                    offset: {quarterpast: true}
-                                });
+                        } else if ((schedule[4][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[4][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            });
 
-                                // put css marker on second event
-                                (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
-                            }
-
-                            console.log(schedule[4][courses[i].events[0].weekday - 1]);
+                            // put css marker on second event
+                            (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '13:15h':
