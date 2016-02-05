@@ -22,6 +22,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
         var hours = time.getHours();
         var min = time.getMinutes();
+
+        min == 0 ? min = '0' + min : min;
+
         var strTime = hours + ':' + min + 'h';
 
         console.log('Time: ' + strTime);
@@ -29,24 +32,24 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
     }
 
     // cache courses
-    var courses = [];
+    var cachedCourses = [];
 
     return {
 
         clearCache: function () {
-            courses = [];
+            cachedCourses = [];
         },
 
         get: function (semester, field) {
 
             var defered = $q.defer();
 
-            console.log(courses.length);
+            console.log(cachedCourses.length);
 
             // check if courses are cached
-            if (courses.length > 0) {
+            if (cachedCourses.length > 0) {
                 console.log('courses from cache...');
-                defered.resolve(courses);
+                defered.resolve(cachedCourses);
             }
 
             else {
@@ -65,9 +68,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                     method: 'get',
                     url: '/api/courses?semester=' + semester + '&field=' + field
                 }).success(function (res) {
-                    courses = res;
+                    cachedCourses = res;
                     //console.log(courses);
-                    console.log(courses.length);
+                    console.log(cachedCourses.length);
                     defered.resolve(res);
                 }).error(function (res) {
                     console.log(res);
@@ -180,6 +183,21 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
+                    case '10:00h':
+                        if (schedule[2][courses[i].events[0].weekday - 1] == null) {
+                            schedule[2][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[2][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+
+                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
+                        }
+                        break;
                     case '10:30h':
                         if (schedule[2][courses[i].events[0].weekday - 1] == null) {
                             schedule[2][courses[i].events[0].weekday - 1] = [{
@@ -215,6 +233,22 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             (schedule[3][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
+                    case '12:00h':
+                        if (schedule[4][courses[i].events[0].weekday - 1] == null) {
+                            schedule[4][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else if ((schedule[4][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[4][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+
+                            // put css marker on second event
+                            (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
+                        }
+                        break;
                     case '12:15h':
                         if (schedule[4][courses[i].events[0].weekday - 1] == null) {
                             schedule[4][courses[i].events[0].weekday - 1] = [{
@@ -240,12 +274,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[5][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[5][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[5][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '14:15h':
@@ -255,12 +291,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[6][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[6][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[6][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '15:15h':
@@ -270,12 +308,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[7][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[7][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[7][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '16:15h':
@@ -285,12 +325,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[8][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[8][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[8][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '17:15h':
@@ -300,12 +342,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[9][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[9][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[9][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '18:15h':
@@ -315,12 +359,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[10][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[10][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[10][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '19:15h':
@@ -330,12 +376,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[11][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[11][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[11][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                     case '20:15h':
@@ -345,12 +393,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             }]
-                        } else {
+                        } else if ((schedule[12][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[12][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
+
+                            (schedule[12][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
                 }

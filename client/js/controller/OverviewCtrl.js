@@ -12,6 +12,7 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
     // retrieve courses
     Courses.getByIDs(ids).then(function (courses) {
         $scope.courses = courses;
+        console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
         $scope.loading = false;
     });
