@@ -2,7 +2,7 @@ app.controller('AppCtrl', function ($scope, $location, localStorageService) {
 
     $scope.courseListExist = true;
 
-    if (localStorageService.get('selected').length > 0) {
+    if (localStorageService.get('selected') && localStorageService.get('selected').length > 0) {
         $scope.selectedCoursesExist = false;
     } else {
         $scope.selectedCoursesExist = true;
