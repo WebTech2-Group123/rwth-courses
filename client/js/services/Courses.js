@@ -214,11 +214,18 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 offset: {quarterpast: true}
                             }]
                         } else {
-                            schedule[4][courses[i].events[0].weekday - 1].push({
-                                name: courses[i].name,
-                                gguid: courses[i].gguid,
-                                offset: {quarterpast: true}
-                            });
+                            if ((schedule[4][courses[i].events[0].weekday - 1]).length < 2){
+                                schedule[4][courses[i].events[0].weekday - 1].push({
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid,
+                                    offset: {quarterpast: true}
+                                });
+
+                                // put css marker on second event
+                                (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
+                            }
+
+                            console.log(schedule[4][courses[i].events[0].weekday - 1]);
                         }
                         break;
                     case '13:15h':

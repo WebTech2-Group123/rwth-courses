@@ -20,7 +20,7 @@
                 <div layout="row">
                     <div class="event-ctn" flex ng-repeat="event in events track by $index">
                         <div class="event"
-                             ng-class="{'event-offset-15': event.offset.quarterpast,'event-offset-30': event.offset.halfpast,'event-offset-45': event.offset.quarterto}">
+                             ng-class="{'event-offset-15': event.offset.quarterpast,'event-offset-30': event.offset.halfpast,'event-offset-45': event.offset.quarterto, 'event-border' : event.css}">
                             <div>
                                 <a ng-click="goToDetails(event.gguid)">
                                     <md-tooltip md-direction="left">Show details</md-tooltip>
