@@ -1,16 +1,34 @@
-<p>Searching for courses in <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span></p>
 
-<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                 md-item-text="field" placeholder="Enter your field of study..." md-min-length="0"
-                 md-items="field in querySearch(searchText)">
 
-    <md-item-template>
-        <span md-highlight-text="searchText">{{field}}</span>
-    </md-item-template>
+<md-content class="md-padding" ng-style="{'background-color':'rgba(0,0,0,0)'}">
 
-    <md-not-found>
-        No matches found.
-    </md-not-found>
-</md-autocomplete>
+    <title>RWTH Courses</title>
+    <img ng-src="{{image[0].src}}" alt="RWTH Courses" layout-align="center center"/>
 
-<md-button class="md-raised" ng-click="getCourseList(selected, searchText)">Search</md-button>
+    <div layout="row" layout-xs="column" layout-align="center center">
+        <div flex="70" stretch>
+            <form ng-submit="$event.preventDefault()" name="searchForm">
+                <md-autocomplete md-selected-item="selectedItem"
+                                 md-input-name="autocompleteField"
+                                 md-search-text="searchText"
+                                 md-item-text="field"
+                                 placeholder="Enter your field of study..."
+                                 md-min-length="0"
+                                 md-items="field in querySearch(searchText)">
+                    <md-item-template>
+                        <span md-highlight-text="searchText">{{field}}</span>
+                    </md-item-template>
+
+                    <md-not-found>
+                        No such field found at RWTH. But you can show all courses.
+                    </md-not-found>
+                </md-autocomplete>
+            </form>
+        </div>
+            <div flex>
+                <div class="md-padding" align="start center">or <span class="semester-span" ng-click="getCourseList()">show all courses</span></div>
+            </div>
+    </div>
+    <div align="center" class="md-padding">in <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span></div>
+
+    </md-content>

@@ -9,3 +9,8 @@
     width:100%;
     max-width: 1024px;
 }
+
+.body-home {
+    background-color:#4451B9;
+    background-image:linear-gradient(to bottom right,#4874B9,#4451B9);
+}

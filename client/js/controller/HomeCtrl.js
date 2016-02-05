@@ -54,4 +54,8 @@ function HomeCtrl($scope, $filter, $location, $http) {
         $location.path('/courses');
     };
 
+        $scope.image = [{
+            src: 'img/logo-large.png'
+        }];
+
 }

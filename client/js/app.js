@@ -18,7 +18,7 @@ app.directive('app', function () {
 });
 
 // router & local storage
-app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider) {
+app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider, $mdThemingProvider) {
 
     // config for responsive design
     angular.extend($cssProvider.defaults, {
@@ -69,4 +69,10 @@ app.config(function ($routeProvider, localStorageServiceProvider, $cssProvider) 
         .setPrefix('Campus')
         .setStorageType('sessionStorage')
         .setNotify(true, true);
+
+    $mdThemingProvider
+        .theme('default')
+        .primaryPalette('orange')
+        .accentPalette('orange')
+        .warnPalette('red')
 });
