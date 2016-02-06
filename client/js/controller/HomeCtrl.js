@@ -1,7 +1,7 @@
 app.controller('HomeCtrl', HomeCtrl);
 
 
-function HomeCtrl($scope, $filter, $location, $http, $log, Courses) {
+function HomeCtrl($scope, $filter, $location, $http, $log, $mdDialog, Courses) {
 
     // clear course list cache
     Courses.clearCache();
@@ -43,15 +43,18 @@ function HomeCtrl($scope, $filter, $location, $http, $log, Courses) {
 
     $scope.getCourseList = function (semester, field) {
 
-        console.log('getCourseList...');
-
-        var field = field;
-        var semester = semester;
-
-        if (semester == undefined || field == null) {
+        if (semester == undefined || field == undefined || field == null) {
+            var alert;
             //some error message
-            console.log('return');
-            return;
+            alert = $mdDialog.alert()
+                .title('')
+                .textContent('Please select your field of study to proceed')
+                .ok('Close');
+            return $mdDialog
+                    .show( alert )
+                    .finally(function() {
+                        alert = undefined;
+                    });
         }
 
         semester = window.encodeURIComponent(semester);
