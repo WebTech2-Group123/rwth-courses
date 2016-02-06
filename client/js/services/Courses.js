@@ -1,21 +1,5 @@
 app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
-    //function mapByGGUID(courses) {
-    //    return courses.reduce(function (accumulator, course) {
-    //        var gguid = course.gguid;
-    //        accumulator[gguid] = course;
-    //        return accumulator;
-    //    }, {});
-    //}
-    //
-    //// courses is a cache of courses
-    //function coursesByIDS(coursesCache, ids) {
-    //    var indexedByID = mapByGGUID(coursesCache);
-    //    return ids.map(function (id) {
-    //        return indexedByID[id];
-    //    });
-    //}
-
     // convert the time into a string
     function convertTime(time) {
         time = new Date(time);
@@ -34,7 +18,26 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
     // cache courses
     var cachedCourses = [];
 
+    // cached unscheduled
+    var unscheduled = [];
+
+    function putUnscheduled(course) {
+
+        //TODO: delete duplicates
+        unscheduled.push(course);
+    }
+
     return {
+
+        getUnscheduled: function () {
+            return unscheduled;
+        },
+
+        deleteUnscheduled: function (gguid) {
+            unscheduled = unscheduled.filter(function (course) {
+                return gguid != course.gguid;
+            });
+        },
 
         clearCache: function () {
             cachedCourses = [];
@@ -80,8 +83,6 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
             return defered.promise;
         },
 
-        // TODO: create cache
-
         // get list of courses of specified IDs
         getByIDs: function (ids) {
             var defered = $q.defer();
@@ -100,25 +101,7 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
             }).success(function (res) {
 
                 defered.resolve(res);
-
-                //// get courses from cache
-                //var cachedCourses = coursesByIDS(res, ids);
-                //
-                //// check if all courses were found
-                //var allFound = cachedCourses.indexOf(undefined) == -1;
-                //
-                //// if all found -> return them
-                //if (allFound) {
-                //    defered.resolve(cachedCourses);
-                //}
-                //
-                //// else -> request to the server
-                //else {
-                //    // TODO
-                //    alert('Cache miss -> TODO');
-                //    defered.reject('Cache miss, TODO -> call server');
-                //}
-            })
+            });
 
 
             return defered.promise;
@@ -145,7 +128,8 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
             for (var i = 0; i < courses.length; i++) {
                 if (!courses[i].events[0]) {
                     $log.warn(courses[i].name + ' has no events');
-                    break;
+                    putUnscheduled(courses[i]);
+                    continue;
                 }
 
                 switch (convertTime(courses[i].events[0].start)) {
@@ -403,6 +387,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             (schedule[12][courses[i].events[0].weekday - 1])[1].css = true;
                         }
                         break;
+                    default:
+                        // save in browser
+                        putUnscheduled(courses[i]);
                 }
             }
 

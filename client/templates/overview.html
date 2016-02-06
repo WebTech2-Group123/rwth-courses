@@ -40,4 +40,16 @@
     </table>
 </md-table-container>
 
+<md-list>
+    <md-list-item ng-repeat="event in unscheduled track by $index">
+        <p>{{ event.name }}</p>
+        <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)">
+            <md-tooltip md-direction="bottom">Delete course</md-tooltip>
+            <md-icon md-svg-src='img/icons/ic_delete_black_18px.svg'></md-icon>
+        </md-button>
+    </md-list-item>
+</md-list>
+
 <md-button class="md-raised" ng-click="goBack()">Course list</md-button>
+
+<pre>{{ unscheduled }}</pre>

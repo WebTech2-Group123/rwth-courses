@@ -14,8 +14,12 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         $scope.courses = courses;
         console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
+        //$scope.unscheduled = localStorageService.get('unscheduled');
+        $scope.unscheduled = Courses.getUnscheduled();
         $scope.loading = false;
     });
+
+    //TODO: list unscheduled courses
 
     $scope.deleteCourse = function (gguid) {
 
@@ -24,8 +28,14 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
             return course.gguid != gguid;
         });
 
+        // filter unscheduled courses
+        Courses.deleteUnscheduled(gguid);
+
         // update schedule
         $scope.schedule = Courses.sort($scope.courses);
+
+        // update unscheduled
+        $scope.unscheduled = Courses.getUnscheduled();
 
         // filter local storage by deleted course
         var coursesIDs = localStorageService.get('selected').filter(function (storageGguid) {
