@@ -1,11 +1,15 @@
-<div class="app-container" layout="column">
+<div layout="column" layout-fill>
 
     <!-- top section -->
-    <md-toolbar layout="row">
-        <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
+    <md-toolbar class="md-medium-tall custom">
+        <div class="md-toolbar-tools">
+            <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
+            <span flex></span>
+            <md-button>Button</md-button>
+        </div>
     </md-toolbar>
 
     <!-- main content -->
-    <md-content ng-view ng-cloak class="content-ctn"></md-content>
+    <md-content layout-padding ng-view ng-cloak></md-content>
 
 </div>

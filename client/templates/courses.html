@@ -1,11 +1,34 @@
 <loading></loading>
 <div ng-show="!loading">
 
-    <!--search box-->
-    <md-input-container>
-        <label>Filter by Search</label>
-        <input type="text" ng-model="query.search">
-    </md-input-container>
+    <h2>{{field}} - {{semester}}</h2>
+
+    <div layout="row" layout-align="space-between stretch" layout-xs="column">
+
+        <!--filter-->
+        <md-input-container flex>
+            <label>Search</label>
+            <md-icon md-svg-src="img/icons/ic_delete_black_24px.svg"></md-icon>
+            <input type="text" ng-model="search">
+        </md-input-container>
+
+        <!--type-->
+        <md-input-container flex flex-offset="5">
+            <b>Type:</b>
+            <md-checkbox ng-model="type.vorlesung">Vorlesung</md-checkbox>
+            <md-checkbox ng-model="type.ubung">Übung</md-checkbox>
+            <md-checkbox ng-model="type.other">Other</md-checkbox>
+        </md-input-container>
+
+        <!--language-->
+        <md-input-container flex flex-offset="5">
+            <b>Language:</b>
+            <md-checkbox ng-model="languages.en">English</md-checkbox>
+            <md-checkbox ng-model="languages.de">German</md-checkbox>
+            <md-checkbox ng-model="languages.other">Other</md-checkbox>
+        </md-input-container>
+
+    </div>
 
     <!--table-->
     <md-table-container>
@@ -16,8 +39,9 @@
             <tr md-row>
                 <th md-column md-order-by="name"><span>Name</span></th>
                 <th md-column md-order-by="subsection">Subsection</th>
-                <th md-column md-order-by="ects" md-numeric>ECTS</th>
+                <th md-column md-order-by="type">Type</th>
                 <th md-column md-order-by="language">Language</th>
+                <th md-column md-order-by="ects" md-numeric>ECTS</th>
                 <th md-column md-order-by="contact"><span>Lecturer</span></th>
                 <th md-column md-order-by="units">Unit</th>
             </tr>
@@ -26,9 +50,10 @@
             <!--table body-->
             <tbody md-body>
             <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}"
-                ng-repeat="course in courses | orderBy: query.order |
-                filterBy: ['name', 'lecturer', 'institute', 'subsection', 'creditpoints']: query.search |
-                limitTo: query.limit: (query.page - 1) * query.limit">
+                ng-repeat="course in courses | orderBy: table.order |
+                filterBy: ['name', 'subsection', 'lecturer.name', 'ects']: search |
+                filter: languageFilter | filter: typeFilter |
+                limitTo: table.limit: (table.page - 1) * table.limit">
                 <td md-cell>
                     <a ng-click="showDetails(course.gguid)">
                         <md-tooltip md-direction="top">Show details</md-tooltip>
@@ -36,8 +61,13 @@
                     </a>
                 </td>
                 <td md-cell>{{course.subfield}}</td>
+                <td md-cell>
+                    <pre>{{course.type | join: '\n'}}</pre>
+                </td>
+                <td md-cell>
+                    <span ng-bind-html="course.language | languages"></span>
+                </td>
                 <td md-cell>{{course.ects | join: ' or '}}</td>
-                <td md-cell><span ng-bind-html="course.language | languages"></span></td>
                 <td md-cell>
                     <pre>{{course.contact | lecturers}}</pre>
                 </td>
@@ -50,7 +80,7 @@
     </md-table-container>
 
     <!--table pagination -->
-    <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{ courses.length }}"
+    <md-table-pagination md-limit="table.limit" md-page="table.page" md-total="{{ courses.length }}"
                          md-page-select md-options="[10, 15, 20, 40, 60, 80, 100]"></md-table-pagination>
 
     <!--buttons -->
