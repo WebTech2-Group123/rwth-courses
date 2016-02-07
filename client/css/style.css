@@ -9,7 +9,7 @@ app > #loading {
 }
 
 loading > div {
-    height: 60vh;
+    height: 80vh;
 }
 
 /***********************************************/
@@ -28,10 +28,17 @@ md-toolbar.custom a:hover {
     text-decoration: none;
 }
 
-/*.app-container {*/
-/*max-width: 1024px;*/
-/*margin: 0 auto;*/
-/*}*/
+/***********************************************/
+/*           table                             */
+/***********************************************/
+img.flag {
+    padding: 2px 4px;
+    width: 30px;
+}
+
+/***********************************************/
+/*           other                             */
+/***********************************************/
 
 .content-ctn {
     margin-bottom: 50px;

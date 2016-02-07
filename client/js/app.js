@@ -20,6 +20,7 @@ app.directive('app', function () {
 app.directive('loading', function () {
     return {
         restrict: 'E',
+        replace: true,
         template: '' +
         '<div layout="row" layout-align="center center" ng-show="loading">' +
         '    <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +

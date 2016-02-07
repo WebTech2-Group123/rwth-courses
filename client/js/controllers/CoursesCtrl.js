@@ -4,19 +4,52 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
 
     // initialize parameters
     $scope.loading = true;
-    $scope.query = {
+    $scope.table = {
         order: 'name',
         limit: 10,
-        page: 1,
-        search: ''
+        page: 1
+    };
+
+    $scope.search = '';
+    $scope.type = {
+        vorlesung: true,
+        ubung: false,
+        other: false
+    };
+    $scope.languages = {
+        en: true,
+        de: true,
+        other: true
+    };
+
+    // filter for languages
+    $scope.languageFilter = function (value) {
+        var language = value.language;
+        var en = $scope.languages.en;
+        var de = $scope.languages.de;
+        var other = $scope.languages.other;
+        return (en && language.indexOf('EN') >= 0) ||
+            (de && language.indexOf('DE') >= 0) ||
+            (other && language.indexOf('EN') < 0 && language.indexOf('DE'));
+    };
+
+    // filter for type
+    $scope.typeFilter = function (value) {
+        var type = value.type;
+        var vorlesung = $scope.type.vorlesung;
+        var ubung = $scope.type.ubung;
+        var other = $scope.type.other;
+        return (vorlesung && type.indexOf('Vorlesung') >= 0) ||
+            (ubung && type.indexOf('Übung') >= 0) ||
+            (other && type.indexOf('Vorlesung') === -1 && type.indexOf('Übung') === -1);
     };
 
     // get routing parameters
-    var semester = $routeParams.semester;
-    var field = $routeParams.field;
+    $scope.semester = $routeParams.semester;
+    $scope.field = $routeParams.field;
 
     // and load corresponding courses
-    Courses.get(semester, field).then(function (courses) {
+    Courses.get($scope.semester, $scope.field).then(function (courses) {
         $scope.courses = courses;
         $scope.loading = false;
     });
