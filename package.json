@@ -36,8 +36,8 @@
     "worker": "DEBUG=rwth-courses node src/job.js"
   },
   "engines": {
-    "node": "~5.5.0",
-    "npm": "~3.5.4"
+    "node": "^5.5.0",
+    "npm": "^3.7.1"
   },
   "repository": {
     "type": "git",

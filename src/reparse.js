@@ -6,7 +6,7 @@ const Job = require('./job');
 // execute the job
 Job.doJob({
     cacheOnly: true,
-    informatikOnly: true,
+    informatikOnly: false,
     delaySemesters: 0,
     delayFields: 0,
     delaySubfields: 0,
