@@ -244,6 +244,33 @@ function parseInfo(info) {
     return response;
 }
 
+function parseInstitute(institute) {
+    const TO_REMOVE = [
+        'Abteilung 1.2 - ',
+        'Abteilung 1.3 - ',
+        'CAMPUS-Testgruppe',
+        'Fachgruppe für ',
+        'Fachgruppe ',
+        'Fakultät für ',
+        'Lehrstuhl und Institut für ',
+        'Institut für ',
+        'Juniorprofessur für ',
+        'Lehr- und Forschungsgebiet ',
+        'Lehrstuhl A für ',
+        'Lehrstuhl B für ',
+        'Lehrstuhl D für ',
+        'Lehrstuhl I für ',
+        'Lehrstuhl II für ',
+        'Lehrstuhl für ',
+        'Lehrstuhl ',
+        'Profilbereich ',
+        'Zentrale Einrichtungen der  ',
+        'Zentrale Einrichtungen der ',
+        'Zentrum für '
+    ];
+    return TO_REMOVE.reduce((acc, el) => acc && acc.replace(el, ''), institute);
+}
+
 /**
  * Parse a Course response in a clean Course object.
  */
@@ -319,3 +346,4 @@ exports.parseLanguage = parseLanguage;
 exports.parseECTS = parseECTS;
 exports.parseType = parseType;
 exports.parseInfo = parseInfo;
+exports.parseInstitute = parseInstitute;
