@@ -24,7 +24,7 @@
                             <div>
                                 <a ng-click="goToDetails(event.gguid)">
                                     <md-tooltip md-direction="left">Show details</md-tooltip>
-                                    {{ event.name | course }}
+                                    {{ event.name | length }}
                                 </a>
                             </div>
                             <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)" ng-class="{'delete-btn-offset-15': event.offset.quarterpast}">
