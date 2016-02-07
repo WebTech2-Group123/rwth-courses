@@ -2,21 +2,10 @@
 
     <!-- top section -->
     <md-toolbar layout="row">
-        <h1>RWTH Courses</h1>
+        <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
     </md-toolbar>
 
     <!-- main content -->
     <md-content ng-view ng-cloak class="content-ctn"></md-content>
 
-    <!-- navigation -->
-    <!--<div class="bottom-navigation">-->
-    <!--<md-tabs md-stretch-tabs="always">-->
-    <!--<md-tab md-active="courseActive('/')" ng-click="goToRoute('home')" label="Home"></md-tab>-->
-    <!--<md-tab md-active="courseActive('/courses')" ng-click="goToRoute('courses')" label="Courses List"></md-tab>-->
-    <!--<md-tab md-active="courseActive('/overview')" ng-disabled="selectedCoursesExist" ng-click="goToRoute('overview')" label="Schedule"></md-tab>-->
-    <!--</md-tabs>-->
-    <!--</div>-->
 </div>
-
-
-<!--ng-disabled="courseListExist"-->

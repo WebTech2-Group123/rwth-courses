@@ -10,13 +10,14 @@ loading > div {
     height: 60vh;
 }
 
-/*.app-container {*/
-/*max-width: 1024px;*/
-/*margin: 0 auto;*/
-/*}*/
+.logo {
+    cursor: pointer;
+    outline: none;
+}
 
 .content-ctn {
     margin-bottom: 50px;
+    padding: 0 15px;
 }
 
 .bottom-navigation {
@@ -81,7 +82,7 @@ loading > div {
 }
 
 .event-border {
-    border: 1px solid #c2185b;
+    border: 2px dotted #c2185b;
 }
 
 a {
