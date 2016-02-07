@@ -33,7 +33,7 @@
     "start": "DEBUG=rwth-courses node index.js",
     "test": "mocha",
     "coverage": "istanbul cover _mocha test --include-all-sources",
-    "worker": "DEBUG=rwth-courses node src/worker.js"
+    "worker": "DEBUG=rwth-courses node src/job.js"
   },
   "engines": {
     "node": "~5.5.0",

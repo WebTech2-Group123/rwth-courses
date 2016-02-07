@@ -51,13 +51,6 @@ var Campus = function (o) {
     this.ready = false;
 };
 
-// TODO: remove
-Campus.prototype._fake = function () {
-    log('FAKEEE');
-    this.ready = true;
-    return Promise.resolve(1);
-};
-
 // create clients
 Campus.prototype.init = function () {
     log('Init: create all clients');

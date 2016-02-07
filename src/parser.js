@@ -7,14 +7,11 @@
 
 const striptags = require('striptags');
 const utils = require('./utils');
-const log = require('debug')('rwth-courses:parser');
 
 /**
  * Parse a Semesters response in an Array of semesters.
  */
 function parseSemesters(result) {
-    log('Parsing semesters list');
-
     return result['GetAllResult']['Term']
         .filter((value, index) => index <= 1)        // .filter -> take only 2 elements of the array
         .map(el => {
@@ -253,8 +250,6 @@ function parseInfo(info) {
 function parseCourseDetails(result) {
     var event = result['event'];
     var info = parseInfo(event['info']);
-
-    // TODO: some courses no type -> log?
 
     // TODO!
     // NB: some courses miss contact
