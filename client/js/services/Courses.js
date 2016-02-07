@@ -23,6 +23,10 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
     function putUnscheduled(course) {
 
+        unscheduled = unscheduled.filter(function (e) {
+            return course.gguid != e.gguid;
+        });
+
         //TODO: delete duplicates
         unscheduled.push(course);
     }
@@ -33,7 +37,14 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
             return unscheduled;
         },
 
-        deleteUnscheduled: function (gguid) {
+        deleteUnscheduled: function (gguid, all) {
+            console.log(gguid);
+            console.log(true);
+
+            if (all) {
+                unscheduled = [];
+            }
+
             unscheduled = unscheduled.filter(function (course) {
                 return gguid != course.gguid;
             });

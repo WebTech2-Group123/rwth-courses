@@ -55,5 +55,8 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, $log,
 
         // clear array
         $scope.selected = [];
+
+        // clear unschedulded
+        Courses.deleteUnscheduled('o', true);
     };
 }
