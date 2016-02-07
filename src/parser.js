@@ -329,7 +329,7 @@ function parseCourseDetails(result) {
                     room: utils.get(contact, 'work', 'attributes', 'office')
                 }
             }
-        }) || []).filter(contact => !contains(contact.name, ['Stundenplaner', 'Raumvergabe', 'Prüfungsamt ZPA']))
+        }) || []).filter(contact => !contains(contact.name, ['Stundenplaner', 'Raumvergabe', 'Prüfungsamt ZPA', 'Fachgruppe']))
     }
 }
 
