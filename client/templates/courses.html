@@ -1,48 +1,57 @@
 <loading></loading>
 <div ng-show="!loading">
+
+    <!--search box-->
     <md-input-container>
         <label>Filter by Search</label>
         <input type="text" ng-model="query.search">
     </md-input-container>
 
+    <!--table-->
     <md-table-container>
         <table md-table md-row-select ng-model="selected">
+
+            <!--table header-->
             <thead md-head md-order="query.order">
             <tr md-row>
                 <th md-column md-order-by="name"><span>Name</span></th>
-                <th md-column md-order-by="lecturer"><span>Lecturer</span></th>
-                <th md-column md-order-by="institute">Institute</th>
                 <th md-column md-order-by="subsection">Subsection</th>
-                <th md-column md-order-by="creditpoints" md-numeric>Creditpoints</th>
+                <th md-column md-order-by="ects" md-numeric>ECTS</th>
+                <th md-column md-order-by="contact"><span>Lecturer</span></th>
+                <th md-column md-order-by="institute">Institute</th>
             </tr>
             </thead>
+
+            <!--table body-->
             <tbody md-body>
             <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}"
-                ng-repeat="course in courses | orderBy: query.order | filterBy: ['name', 'lecturer', 'institute', 'subsection', 'creditpoints']: query.search | limitTo: query.limit: (query.page - 1) * query.limit">
+                ng-repeat="course in courses | orderBy: query.order |
+                filterBy: ['name', 'lecturer', 'institute', 'subsection', 'creditpoints']: query.search |
+                limitTo: query.limit: (query.page - 1) * query.limit">
                 <td md-cell>
                     <a ng-click="showDetails(course.gguid)">
                         <md-tooltip md-direction="top">Show details</md-tooltip>
-                        {{course.name}}
+                        {{course.name | course}}
                     </a>
                 </td>
-                <td md-cell>{{course.lecturer}}</td>
-                <td md-cell>{{course.contact[0].address.department}}</td>
                 <td md-cell>{{course.subfield}}</td>
                 <td md-cell>{{course.ects | credits}}</td>
+                <td md-cell>
+                    <pre>{{course.contact | lecturers}}</pre>
+                </td>
+                <td md-cell>{{course.contact[0].address.department}}</td>
             </tr>
             </tbody>
         </table>
     </md-table-container>
 
+    <!--table pagination -->
     <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{ courses.length }}"
-                         md-page-select></md-table-pagination>
+                         md-page-select md-options="[10, 15, 20, 40, 60, 80, 100]"></md-table-pagination>
 
+    <!--buttons -->
     <md-button class="md-raised" ng-click="goBack()">Back</md-button>
     <md-button class="md-raised" ng-click="clearAll()">Clear all</md-button>
     <md-button ng-disabled="disableBtn" class="md-raised" ng-click="showSchedule()">Schedule</md-button>
+
 </div>
-
-<!--<pre>{{selected | json}}</pre>-->
-
-<!--<pre>{{ $parent.courseListExist }}</pre>-->
-<!--<pre>{{ $parent }}</pre>-->

@@ -53,7 +53,7 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
         });
 
     localStorageServiceProvider
-        .setPrefix('Campus')
-        .setStorageType('sessionStorage')
+        .setPrefix('RWTH Courses')
+        .setStorageType('localStorage')
         .setNotify(true, true);
 });
