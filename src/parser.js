@@ -268,7 +268,7 @@ function parseInstitute(institute) {
         'Zentrale Einrichtungen der ',
         'Zentrum für '
     ];
-    return TO_REMOVE.reduce((acc, el) => acc && acc.replace(el, ''), institute);
+    return TO_REMOVE.reduce((acc, el) => acc && acc.replace(el, ''), institute).trim();
 }
 
 /**
@@ -277,10 +277,6 @@ function parseInstitute(institute) {
 function parseCourseDetails(result) {
     var event = result['event'];
     var info = parseInfo(event['info']);
-
-    // TODO!
-    // NB: some courses miss contact
-    // NB: some courses miss contact.email
 
     return {
         gguid: event['attributes']['gguid'],
@@ -315,6 +311,9 @@ function parseCourseDetails(result) {
                 room: appointment['room']
             }
         }),
+
+        // units
+        units: utils.map(event, 'unit', el => parseInstitute(el['attributes']['name'])) || [],
 
         // other info
         contact: (utils.map(event, 'address', contact => {
