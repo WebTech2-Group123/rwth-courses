@@ -23,19 +23,19 @@
       "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
     },
     "angular": {
-      "version": "1.4.9",
-      "from": "angular@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular/-/angular-1.4.9.tgz"
+      "version": "1.5.0",
+      "from": "angular@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular/-/angular-1.5.0.tgz"
     },
     "angular-animate": {
-      "version": "1.4.9",
-      "from": "angular-animate@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.4.9.tgz"
+      "version": "1.5.0",
+      "from": "angular-animate@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-animate/-/angular-animate-1.5.0.tgz"
     },
     "angular-aria": {
-      "version": "1.4.9",
-      "from": "angular-aria@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular-aria/-/angular-aria-1.4.9.tgz"
+      "version": "1.5.0",
+      "from": "angular-aria@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-aria/-/angular-aria-1.5.0.tgz"
     },
     "angular-css": {
       "version": "1.0.7",
@@ -53,9 +53,9 @@
       "resolved": "https://registry.npmjs.org/angular-local-storage/-/angular-local-storage-0.2.2.tgz"
     },
     "angular-material": {
-      "version": "1.0.4",
-      "from": "angular-material@>=1.0.2 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular-material/-/angular-material-1.0.4.tgz"
+      "version": "1.0.5",
+      "from": "angular-material@>=1.0.5 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-material/-/angular-material-1.0.5.tgz"
     },
     "angular-material-data-table": {
       "version": "0.9.9",
@@ -63,14 +63,14 @@
       "resolved": "https://registry.npmjs.org/angular-material-data-table/-/angular-material-data-table-0.9.9.tgz"
     },
     "angular-messages": {
-      "version": "1.4.9",
-      "from": "angular-messages@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular-messages/-/angular-messages-1.4.9.tgz"
+      "version": "1.5.0",
+      "from": "angular-messages@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-messages/-/angular-messages-1.5.0.tgz"
     },
     "angular-route": {
-      "version": "1.4.9",
-      "from": "angular-route@>=1.4.8 <2.0.0",
-      "resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.4.9.tgz"
+      "version": "1.5.0",
+      "from": "angular-route@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.5.0.tgz"
     },
     "ansi-regex": {
       "version": "2.0.0",
@@ -147,9 +147,9 @@
       }
     },
     "bluebird": {
-      "version": "3.2.1",
-      "from": "bluebird@3.2.1",
-      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.2.1.tgz"
+      "version": "3.2.2",
+      "from": "bluebird@>=3.2.2 <4.0.0",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.2.2.tgz"
     },
     "boom": {
       "version": "2.10.1",
@@ -180,11 +180,6 @@
       "version": "0.1.2",
       "from": "center-align@>=0.1.1 <0.2.0",
       "resolved": "https://registry.npmjs.org/center-align/-/center-align-0.1.2.tgz"
-    },
-    "chai": {
-      "version": "3.5.0",
-      "from": "chai@>=3.4.1 <4.0.0",
-      "resolved": "https://registry.npmjs.org/chai/-/chai-3.5.0.tgz"
     },
     "chalk": {
       "version": "1.1.1",
@@ -714,19 +709,19 @@
       }
     },
     "mongodb": {
-      "version": "2.1.4",
-      "from": "mongodb@2.1.4",
-      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-2.1.4.tgz"
+      "version": "2.1.5",
+      "from": "mongodb@2.1.5",
+      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-2.1.5.tgz"
     },
     "mongodb-core": {
-      "version": "1.2.32",
-      "from": "mongodb-core@1.2.32",
-      "resolved": "https://registry.npmjs.org/mongodb-core/-/mongodb-core-1.2.32.tgz"
+      "version": "1.3.0",
+      "from": "mongodb-core@1.3.0",
+      "resolved": "https://registry.npmjs.org/mongodb-core/-/mongodb-core-1.3.0.tgz"
     },
     "mongoose": {
-      "version": "4.4.1",
-      "from": "mongoose@>=4.3.7 <5.0.0",
-      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-4.4.1.tgz"
+      "version": "4.4.2",
+      "from": "mongoose@>=4.4.2 <5.0.0",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-4.4.2.tgz"
     },
     "mpath": {
       "version": "0.2.1",
@@ -901,10 +896,20 @@
         }
       }
     },
+    "require_optional": {
+      "version": "1.0.0",
+      "from": "require_optional@>=1.0.0 <1.1.0",
+      "resolved": "https://registry.npmjs.org/require_optional/-/require_optional-1.0.0.tgz"
+    },
     "resolve": {
       "version": "1.1.7",
       "from": "resolve@>=1.1.0 <1.2.0",
       "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.1.7.tgz"
+    },
+    "resolve-from": {
+      "version": "2.0.0",
+      "from": "resolve-from@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/resolve-from/-/resolve-from-2.0.0.tgz"
     },
     "right-align": {
       "version": "0.1.3",
@@ -925,6 +930,11 @@
       "version": "0.9.6",
       "from": "selectn@>=0.9.6 <0.10.0",
       "resolved": "https://registry.npmjs.org/selectn/-/selectn-0.9.6.tgz"
+    },
+    "semver": {
+      "version": "5.1.0",
+      "from": "semver@>=5.1.0 <6.0.0",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-5.1.0.tgz"
     },
     "send": {
       "version": "0.13.1",
