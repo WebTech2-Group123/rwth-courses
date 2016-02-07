@@ -6,6 +6,9 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
     // times for the schedule
     $scope.times = Courses.getTimes();
 
+    // arr for unscheduled courses
+    $scope.unscheduled = [];
+
     // load courses from local storage
     var ids = localStorageService.get('selected') || [];
 
@@ -14,12 +17,14 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         $scope.courses = courses;
         console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
-        //$scope.unscheduled = localStorageService.get('unscheduled');
         $scope.unscheduled = Courses.getUnscheduled();
         $scope.loading = false;
     });
 
-    //TODO: list unscheduled courses
+    // if arr unscheduled is not empty, display the panel for unscheduled courses
+    $scope.showUnscheduled = function () {
+        return $scope.unscheduled.length > 0 ? true : false;
+    }
 
     $scope.deleteCourse = function (gguid) {
 

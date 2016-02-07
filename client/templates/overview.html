@@ -16,18 +16,18 @@
         <tbody md-body>
         <tr md-row ng-repeat="items in schedule track by $index">
             <td md-cell>{{ times[$index] }}</td>
-            <td md-cell ng-repeat="events in items track by $index">
+            <td md-cell ng-repeat="events in items track by $index" class="no-padding">
                 <div layout="row">
                     <div class="event-ctn" flex ng-repeat="event in events track by $index">
                         <div class="event"
                              ng-class="{'event-offset-15': event.offset.quarterpast,'event-offset-30': event.offset.halfpast,'event-offset-45': event.offset.quarterto, 'event-border' : event.css}">
-                            <div>
+                            <div class="overview-name-ctn">
                                 <a ng-click="goToDetails(event.gguid)">
                                     <md-tooltip md-direction="left">Show details</md-tooltip>
                                     {{ event.name | length }}
                                 </a>
                             </div>
-                            <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)" ng-class="{'delete-btn-offset-15': event.offset.quarterpast}">
+                            <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)" ng-class="{'delete-btn-offset-15': event.offset.quarterpast, 'delete-btn-offset-30': event.offset.halfpast}">
                                 <md-tooltip md-direction="bottom">Delete course</md-tooltip>
                                 <md-icon md-svg-src='img/icons/ic_delete_black_18px.svg'></md-icon>
                             </md-button>
@@ -40,7 +40,7 @@
     </table>
 </md-table-container>
 
-<md-list class="unscheduled-ctn">
+<md-list class="unscheduled-ctn" ng-show="showUnscheduled()">
     <md-subheader class="md-no-sticky">These events don't have a specific time</md-subheader>
     <md-list-item ng-repeat="event in unscheduled track by $index">
         <p>{{ event.name }}</p>
