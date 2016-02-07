@@ -17,6 +17,7 @@
                 <th md-column md-order-by="name"><span>Name</span></th>
                 <th md-column md-order-by="subsection">Subsection</th>
                 <th md-column md-order-by="ects" md-numeric>ECTS</th>
+                <th md-column md-order-by="language">Language</th>
                 <th md-column md-order-by="contact"><span>Lecturer</span></th>
                 <th md-column md-order-by="units">Unit</th>
             </tr>
@@ -36,6 +37,7 @@
                 </td>
                 <td md-cell>{{course.subfield}}</td>
                 <td md-cell>{{course.ects | join: ' or '}}</td>
+                <td md-cell><span ng-bind-html="course.language | languages"></span></td>
                 <td md-cell>
                     <pre>{{course.contact | lecturers}}</pre>
                 </td>
