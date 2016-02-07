@@ -1,4 +1,6 @@
-/* center on page */
+/***********************************************/
+/*           loading screen                    */
+/***********************************************/
 app > #loading {
     margin: auto;
     position: absolute;
@@ -10,9 +12,25 @@ loading > div {
     height: 60vh;
 }
 
+/***********************************************/
+/*           custom navbar                     */
+/***********************************************/
+md-toolbar.custom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+md-toolbar.custom h1 {
+    font-size: 1.8em;
+}
+
+md-toolbar.custom a:hover {
+    text-decoration: none;
+}
+
 /*.app-container {*/
-    /*max-width: 1024px;*/
-    /*margin: 0 auto;*/
+/*max-width: 1024px;*/
+/*margin: 0 auto;*/
 /*}*/
 
 .content-ctn {
