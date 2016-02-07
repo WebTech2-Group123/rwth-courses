@@ -290,7 +290,7 @@ function parseCourseDetails(result) {
         // important info
         ects: parseECTS(event['attributes']['ects']),
         language: parseLanguage(event['attributes']['language']),
-        semester: event['attributes']['termname'],
+        semester: event['attributes']['termname'].replace('/', '-'),
         type: parseType(event['attributes']['type']),
 
         // other details
