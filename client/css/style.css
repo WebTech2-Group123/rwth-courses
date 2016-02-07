@@ -11,8 +11,8 @@ loading > div {
 }
 
 /*.app-container {*/
-    /*max-width: 1024px;*/
-    /*margin: 0 auto;*/
+/*max-width: 1024px;*/
+/*margin: 0 auto;*/
 /*}*/
 
 .content-ctn {
@@ -102,4 +102,11 @@ a:hover {
 .icon-ctn {
     float: right;
     margin: 15px;
+}
+
+.unscheduled-ctn {
+    width: 80%;
+    margin: 50px auto;
+    box-shadow: 1px 1px 5px rgb(170, 170, 170);
+    padding: 10px;
 }

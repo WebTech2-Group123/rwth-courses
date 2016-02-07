@@ -40,7 +40,8 @@
     </table>
 </md-table-container>
 
-<md-list>
+<md-list class="unscheduled-ctn">
+    <md-subheader class="md-no-sticky">These events don't have a specific time</md-subheader>
     <md-list-item ng-repeat="event in unscheduled track by $index">
         <p>{{ event.name }}</p>
         <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)">
