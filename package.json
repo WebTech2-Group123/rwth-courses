@@ -30,10 +30,11 @@
     "chai": "^3.5.0"
   },
   "scripts": {
-    "start": "DEBUG=rwth-courses node index.js",
+    "start": "DEBUG=rwth-courses node src/index.js",
     "test": "mocha",
     "coverage": "istanbul cover _mocha test --include-all-sources",
-    "worker": "DEBUG=rwth-courses node src/job.js"
+    "worker": "DEBUG=rwth-courses node src/worker.js",
+    "reparse": "DEBUG=rwth-courses node src/reparse.js"
   },
   "engines": {
     "node": "^5.5.0",
