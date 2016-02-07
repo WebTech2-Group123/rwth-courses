@@ -65,6 +65,9 @@ const CoursesSchema = new mongoose.Schema({
     events: {
         type: Array
     },
+    units: {
+        type: Array
+    },
     contact: {
         type: Array
     }
