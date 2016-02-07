@@ -10,10 +10,10 @@ loading > div {
     height: 60vh;
 }
 
-.app-container {
-    max-width: 1024px;
-    margin: 0 auto;
-}
+/*.app-container {*/
+    /*max-width: 1024px;*/
+    /*margin: 0 auto;*/
+/*}*/
 
 .content-ctn {
     margin-bottom: 50px;
