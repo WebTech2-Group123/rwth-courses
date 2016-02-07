@@ -35,7 +35,7 @@
                     </a>
                 </td>
                 <td md-cell>{{course.subfield}}</td>
-                <td md-cell>{{course.ects | credits}}</td>
+                <td md-cell>{{course.ects | join: ' or '}}</td>
                 <td md-cell>
                     <pre>{{course.contact | lecturers}}</pre>
                 </td>
