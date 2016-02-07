@@ -6,6 +6,10 @@ app > #loading {
     left: 50%;
 }
 
+loading > div {
+    height: 60vh;
+}
+
 .app-container {
     max-width: 1024px;
     margin: 0 auto;
@@ -72,7 +76,7 @@ app > #loading {
     margin-right: 5px;
 }
 
-.event-border{
+.event-border {
     border: 1px solid #c2185b;
 }
 

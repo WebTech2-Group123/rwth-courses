@@ -1,11 +1,10 @@
-<md-input-container>
-    <label>Filter by Search</label>
-    <input type="text" ng-model="query.search">
-</md-input-container>
-
-<p ng-show="loading">Loading...</p>
-
+<loading></loading>
 <div ng-show="!loading">
+    <md-input-container>
+        <label>Filter by Search</label>
+        <input type="text" ng-model="query.search">
+    </md-input-container>
+
     <md-table-container>
         <table md-table md-row-select ng-model="selected">
             <thead md-head md-order="query.order">

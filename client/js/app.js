@@ -16,6 +16,18 @@ app.directive('app', function () {
     };
 });
 
+// simple directive to show a circular progress bar
+app.directive('loading', function () {
+    return {
+        restrict: 'E',
+        template: '' +
+        '<div layout="row" layout-align="center center" ng-show="loading">' +
+        '    <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
+        '    <p>Loading...</p>' +
+        '</div>'
+    }
+});
+
 // router & local storage
 app.config(function ($routeProvider, localStorageServiceProvider) {
 
