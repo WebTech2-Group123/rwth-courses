@@ -30,11 +30,12 @@ function doJob(o) {
 
     // parse options to slow down the worker
     var options = o || {};
-    var informatikOnly = options.informatikOnly || false;
-    var delaySemesters = options.delaySemesters || 30 * MINUTES;
-    var delayFields = options.delayFields || 40 * SECONDS;
-    var delaySubfields = options.delaySubfields || 800;
-    var delayCoursesList = options.delayCoursesList || 100;
+    var cacheOnly = typeof options.cacheOnly !== 'undefined' ? options.cacheOnly : false;   // use only for development
+    var informatikOnly = typeof options.informatikOnly !== 'undefined' ? options.informatikOnly : false;
+    var delaySemesters = typeof options.delaySemesters !== 'undefined' ? options.delaySemesters : 30 * MINUTES;
+    var delayFields = typeof options.delayFields !== 'undefined' ? options.delayFields : 40 * SECONDS;
+    var delaySubfields = typeof options.delaySubfields !== 'undefined' ? options.delaySubfields : 800;
+    var delayCoursesList = typeof options.delayCoursesList !== 'undefined' ? options.delayCoursesList : 100;
 
     // create campus client
     const client = new Campus({cache: true, db: db});
@@ -44,7 +45,7 @@ function doJob(o) {
     const startTime = +Date.now();
 
     // initialize the Campus client
-    const s = Rx.Observable.fromPromise(client.init())
+    const s = Rx.Observable.fromPromise(client.init(cacheOnly))
 
         // get semesters list
         .flatMap(() => {

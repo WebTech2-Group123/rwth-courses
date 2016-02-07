@@ -52,8 +52,14 @@ var Campus = function (o) {
 };
 
 // create clients
-Campus.prototype.init = function () {
-    log('Init: create all clients');
+Campus.prototype.init = function (cacheOnly) {
+    log('Init: create all clients. CacheOnly: ' + cacheOnly);
+
+    // if cacheOnly (ONLY DEVELOPMENT)
+    if (cacheOnly === true) {
+        this.ready = true;
+        return Promise.resolve();
+    }
 
     // parallel create clients
     return Promise.all([this._getTermClient(), this._getFieldClient(), this._getEventClient()]).then(clients => {
