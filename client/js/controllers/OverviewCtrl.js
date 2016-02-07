@@ -15,7 +15,6 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
     // retrieve courses
     Courses.getByIDs(ids).then(function (courses) {
         $scope.courses = courses;
-        console.log(courses);
         $scope.schedule = Courses.sort($scope.courses);
         $scope.unscheduled = Courses.getUnscheduled();
         $scope.loading = false;
@@ -28,18 +27,44 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
 
     $scope.deleteCourse = function (gguid) {
 
+        //TODO update unscheduled when event is deleted in schedule
+
+        console.log('Length of courses arr: ' + $scope.courses.length);
+
         // filter courses by deleted course
         $scope.courses = $scope.courses.filter(function (course) {
             return course.gguid != gguid;
         });
 
+        console.log('Length of courses arr after: ' + $scope.courses.length);
+
+        console.log($scope.courses.indexOf(gguid));
+
+        console.log('Unscheduled with deleted one');
+        console.log(Courses.getUnscheduled().length);
+        console.log('----------------------------');
+
         // filter unscheduled courses
         Courses.deleteUnscheduled(gguid);
 
-        // update schedule
-        $scope.schedule = Courses.sort($scope.courses);
+        console.log('Unscheduled without deleted one');
+        console.log(Courses.getUnscheduled().length);
+        console.log('----------------------------');
+
+        var tmpUnscheduled = Courses.getUnscheduled();
+
+        // delete all unscheduled
+        Courses.deleteUnscheduled('o', true);
+
+        // update schedule (both: events already in schedule an those which are not)
+        $scope.schedule = Courses.sort($scope.courses.concat(tmpUnscheduled));
+
+        console.log('Unscheduled after sort()');
+        console.log(Courses.getUnscheduled().length);
+        console.log('----------------------------');
 
         // update unscheduled
+        //$scope.unscheduled = Courses.getUnscheduled();
         $scope.unscheduled = Courses.getUnscheduled();
 
         // filter local storage by deleted course
@@ -49,8 +74,6 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
 
         // update local storage
         localStorageService.set('selected', coursesIDs);
-
-        console.log(localStorageService.get('selected').length);
 
         // go back to courses list if schedule is empty
         if (localStorageService.get('selected').length == 0) {

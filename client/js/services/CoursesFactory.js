@@ -1,4 +1,4 @@
-app.factory('Courses', function ($q, $http, $log, localStorageService) {
+app.factory('Courses', function ($q, $http, $log) {
 
     // convert the time into a string
     function convertTime(time) {
@@ -11,7 +11,6 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
         var strTime = hours + ':' + min + 'h';
 
-        console.log('Time: ' + strTime);
         return strTime;
     }
 
@@ -23,11 +22,12 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
     function putUnscheduled(course) {
 
+        // delete event in unscheduled if it already exists
         unscheduled = unscheduled.filter(function (e) {
             return course.gguid != e.gguid;
         });
 
-        //TODO: delete duplicates
+        // push course to unscheduled arr
         unscheduled.push(course);
     }
 
@@ -38,11 +38,11 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
         },
 
         deleteUnscheduled: function (gguid, all) {
-            console.log(gguid);
-            console.log(true);
 
+            // delete the whole arr
             if (all) {
                 unscheduled = [];
+                return;
             }
 
             unscheduled = unscheduled.filter(function (course) {
@@ -67,11 +67,6 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
             }
 
             else {
-                // define query for the request to get the right courses
-                //var query = {"semester": semester, "field": field};
-                //query = JSON.stringify(query);
-                //console.log(query);
-
                 // get courses from server
                 var semester = window.encodeURIComponent(semester);
                 var field = window.encodeURIComponent(field);
@@ -97,14 +92,6 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
         // get list of courses of specified IDs
         getByIDs: function (ids) {
             var defered = $q.defer();
-
-            //var coursesList = localStorageService.get('courses');
-
-            // api call to get courses by id
-
-            // convert array of ids into string
-            //var ids = ids.join();
-            console.log('IDs string: ' + ids);
 
             $http({
                 method: 'get',
@@ -143,6 +130,12 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                     continue;
                 }
 
+                if (!courses[i].events[0].weekday) {
+                    $log.warn(courses[i].name + ' has no weekday');
+                    putUnscheduled(courses[i]);
+                    continue;
+                }
+
                 switch (convertTime(courses[i].events[0].start)) {
                     case '8:30h':
                         if (schedule[0][courses[i].events[0].weekday - 1] == null) {
@@ -159,6 +152,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '9:30h':
@@ -168,14 +164,17 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             }]
-                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
+                        } else if ((schedule[1][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[1][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             });
 
-                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
+                            (schedule[1][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '10:00h':
@@ -184,13 +183,16 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 name: courses[i].name,
                                 gguid: courses[i].gguid
                             }]
-                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
+                        } else if ((schedule[2][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[2][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid
                             });
 
-                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
+                            (schedule[2][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '10:30h':
@@ -200,14 +202,17 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             }]
-                        } else if ((schedule[0][courses[i].events[0].weekday - 1]).length < 2) {
+                        } else if ((schedule[2][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[2][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {halfpast: true}
                             });
 
-                            (schedule[0][courses[i].events[0].weekday - 1])[1].css = true;
+                            (schedule[2][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '11:15h':
@@ -226,6 +231,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
                             // put css marker on second event
                             (schedule[3][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '12:00h':
@@ -242,6 +250,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
                             // put css marker on second event
                             (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '12:15h':
@@ -260,6 +271,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
 
                             // put css marker on second event
                             (schedule[4][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '13:15h':
@@ -277,6 +291,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[5][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '14:15h':
@@ -294,57 +311,88 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[6][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '15:15h':
                         if (schedule[7][courses[i].events[0].weekday - 1] == null) {
-                            schedule[7][courses[i].events[0].weekday - 1] = [{
-                                name: courses[i].name,
-                                gguid: courses[i].gguid,
-                                offset: {quarterpast: true}
-                            }]
+                            // check for any conflict a hour before
+                            if (schedule[6][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                // push the first course
+                                schedule[7][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid,
+                                    offset: {quarterpast: true}
+                                }]
+                            }
                         } else if ((schedule[7][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
                             schedule[7][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
-
+                            // put a css-marker on the second course
                             (schedule[7][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '16:15h':
                         if (schedule[8][courses[i].events[0].weekday - 1] == null) {
-                            schedule[8][courses[i].events[0].weekday - 1] = [{
-                                name: courses[i].name,
-                                gguid: courses[i].gguid,
-                                offset: {quarterpast: true}
-                            }]
+                            // check for any conflict a hour before
+                            if (schedule[7][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                schedule[8][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid,
+                                    offset: {quarterpast: true}
+                                }]
+                            }
                         } else if ((schedule[8][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
                             schedule[8][courses[i].events[0].weekday - 1].push({
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
-
+                            // put a css-marker on the second course
                             (schedule[8][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '17:15h':
                         if (schedule[9][courses[i].events[0].weekday - 1] == null) {
-                            schedule[9][courses[i].events[0].weekday - 1] = [{
-                                name: courses[i].name,
-                                gguid: courses[i].gguid,
-                                offset: {quarterpast: true}
-                            }]
+                            // check for any conflict a hour before
+                            if (schedule[8][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                schedule[9][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid,
+                                    offset: {quarterpast: true}
+                                }]
+                            }
                         } else if ((schedule[9][courses[i].events[0].weekday - 1]).length < 2) {
                             schedule[9][courses[i].events[0].weekday - 1].push({
+                                // push the second course
                                 name: courses[i].name,
                                 gguid: courses[i].gguid,
                                 offset: {quarterpast: true}
                             });
-
+                            // put a css-marker on the second course
                             (schedule[9][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else{
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '18:15h':
@@ -362,6 +410,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[10][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else{
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '19:15h':
@@ -379,6 +430,9 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[11][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else{
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     case '20:15h':
@@ -396,10 +450,13 @@ app.factory('Courses', function ($q, $http, $log, localStorageService) {
                             });
 
                             (schedule[12][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else{
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
                         }
                         break;
                     default:
-                        // save in browser
+                        // save these without specific time
                         putUnscheduled(courses[i]);
                 }
             }
