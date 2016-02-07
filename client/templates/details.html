@@ -1,7 +1,68 @@
-<div class="icon-ctn">
+<div class="icon-ctn" xmlns="http://www.w3.org/1999/html">
     <md-icon ng-click="closeDetails()" md-svg-src='img/icons/ic_clear_black_48px.svg'></md-icon>
 </div>
 
-<h2>Details</h2>
+<h2>{{ course.name }} ({{ course.semester }}) <span ng-bind-html="course.language | languages"></span></h2>
+<h2 class="subheader" ng-show="showNameDe()">{{ course.name_de }}</h2>
 
-<p>Gguid des Courses: {{ gguid }}</p>
+
+
+
+
+<div class="description">
+    <h2 class="subheader">Info</h2>
+
+    <p class="info">
+        <span ng-repeat="event in course.events">On {{ event.weekday | week }} from {{ event.start | time }} to {{ event.end | time }} in room {{ event.room }}</span>
+    </p>
+
+    <p>
+       Typ: <span>{{ course.type | join: ' & ' }}</span>
+    </p>
+
+    <p>
+        ECTS: <span>{{ course.ects | join: ' or ' }}</span>
+    </p>
+</div>
+
+<!-- TODO: URL decoding -->
+<div ng-show="showItem(course.description)" class="description">
+    <h2 class="subheader">Description</h2>
+
+    <p>{{ course.description }}</p>
+</div>
+
+<div ng-show="showDescriptionDe()" class="description">
+    <h2 class="subheader">Beschreibung</h2>
+
+    <p>{{ course.description_de }}</p>
+</div>
+
+<div ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
+     class="description">
+    <h2 class="subheader">Details</h2>
+
+    <p ng-show="showItem(course.details.test)"><i>Exam:</i> {{ course.details.test }}</p>
+
+    <p ng-show="showItem(course.details.prereq)"><i>Requirements:</i> {{ course.details.prereq }}</p>
+
+    <p ng-show="showItem(course.details.follow)"><i>Follow:</i> {{ course.details.follow }}</p>
+
+    <p ng-show="showItem(course.details.note)"><i>Note:</i> {{ course.details.note }}</p>
+</div>
+
+<div class="description">
+    <h2 class="subheader">Address</h2>
+
+    <div class="contact description" ng-repeat="contact in course.contact">
+        <p>{{ contact.name }}</p>
+        <span>{{ contact.address.department }}</span><br>
+        <span>{{ contact.address.street }}</span><br>
+        <span>Building: {{ contact.address.building }}</span><br>
+        <span>Room: {{ contact.address.room }}</span><br>
+        <!--TODO: Add hyperlink here-->
+        <span>{{ contact.mail }}</span>
+    </div>
+</div>
+
+<pre>{{ course | json }}</pre>
