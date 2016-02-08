@@ -101,7 +101,9 @@ function parseCoursesList(result) {
 
     // remove exams
     return courses.filter(course => {
-        return course.type !== 'Klausur (Kl)' && course.type !== 'Mündliche Prüfung (MP)';
+        return course.type !== 'Klausur (Kl)' &&
+            course.type !== 'Mündliche Prüfung (MP)' &&
+            course.type !== 'Fragestunde (F)';
     });
 }
 
@@ -172,20 +174,69 @@ function parseType(type) {
         return ['No Type'];
     }
 
+    //Übung (Ü),
+    //Vorlesung (V),
+    //Tutorium (Tut),
+    //Proseminar (PS),
+    //Vorlesung/Übung/Praktikum (VÜP),
+    //Praktikum (P),
+    //Vorlesung/Praktikum (VP),
+    //Seminar (S),
+    //Vorlesung/Übung (VÜ),
+    //Arbeitsgemeinschaft (AG),
+    //Hauptseminar (HS),
+    //Fragestunde (F),
+    //Sprachkurs (SK),
+    //Laborübungen (LÜ),
+    //Vorlesung/Praktikum/Seminar (VPS),
+    //Übung/Praktikum (ÜP),
+    //Hausarbeit (H),
+    //Kolloquium (K),
+    //Programmierübungen (PÜ),
+    //Forschungskolloquium (FK),
+    //Präsentation (Prä),
+    //Vorlesung/Kolloquium (VK),
+    //Exkursion (E),
+    //Doktorandenkolloquium (DoK),
+    //Benotetes Protokoll (BP),
+    //Examenskolloquium (EK),
+    //Proseminar I (PS I),
+    //Proseminar II (PS II),
+    //Proseminar III (PS III),
+    //Oberseminar (OS),
+    //Intensivkurs (I)
+
+
     // mapping
     const MAPPING = Object.freeze({
         "Vorlesung": "Lecture",
-        "Proseminar": "Seminar",
         "Übung": "Exercise",
         "Praktikum": "Internship",
         "Tutorium": "Tutorium",
         "Seminar": "Seminar",
-        "Arbeitsgemeinschaft": "Project group",
-        "Hauptseminar": "Seminar"
+        "Arbeitsgemeinschaft": "Group Project",
+        "Hauptseminar": "Seminar",
+        "Sprachkurs": "Language Course",
+        "Laborübungen": "Exercise",
+        "Kolloquium": "Kolloquium",
+        "Hausarbeit": "Seminar Paper",
+        "Programmierübungen": "Exercise",
+        "Forschungskolloquium": "Kolloquium",
+        "Präsentation": "Presentation",
+        "Exkursion": "Excursion",
+        "Doktorandenkolloquium": "Kolloquium",
+        "Examenskolloquium": "Kolloquium",
+        "Proseminar": "Seminar",
+        "Proseminar I": "Seminar",
+        "Proseminar II": "Seminar",
+        "Proseminar III": "Seminar",
+        "Oberseminar": "Seminar",
+        "Intensivkurs": "Crash Course",
+        "Benotetes Protokoll": "Graded Protocol"
     });
 
     // remove abbreviations
-    var typeWithoutAbbreviations = type.split(' ')[0];
+    var typeWithoutAbbreviations = type.split(' (')[0];
 
     // split types
     var types = typeWithoutAbbreviations.split('/');
