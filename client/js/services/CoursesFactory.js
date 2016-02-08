@@ -61,17 +61,8 @@ app.factory('Courses', function ($q, $http, $log) {
             return unscheduled;
         },
 
-        deleteUnscheduled: function (gguid, all) {
-
-            // delete the whole arr
-            if (all) {
-                unscheduled = [];
-                return;
-            }
-
-            unscheduled = unscheduled.filter(function (course) {
-                return gguid != course.gguid;
-            });
+        resetUnscheduled: function () {
+            unscheduled = [];
         },
 
         clearCache: function () {

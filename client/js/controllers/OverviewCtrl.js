@@ -28,8 +28,8 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
             return course.gguid != gguid;
         });
 
-        // filter unscheduled courses
-        Courses.deleteUnscheduled(gguid);
+        // reset unscheduled courses
+        Courses.resetUnscheduled();
 
         // update schedule (both: events already in schedule an those which are not)
         $scope.schedule = Courses.sort($scope.courses);
