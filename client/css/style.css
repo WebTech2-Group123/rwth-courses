@@ -8,10 +8,6 @@ app > #loading {
     left: 50%;
 }
 
-loading > div {
-    height: 80vh;
-}
-
 /***********************************************/
 /*           custom navbar                     */
 /***********************************************/
@@ -31,6 +27,19 @@ md-toolbar.custom h1 {
 
 md-toolbar.custom a:hover {
     text-decoration: none;
+}
+
+/***********************************************/
+/*           footer                            */
+/***********************************************/
+
+footer {
+    background-color: rgb(63, 81, 181);
+    color: white;
+}
+
+footer a {
+    color: white;
 }
 
 /***********************************************/
