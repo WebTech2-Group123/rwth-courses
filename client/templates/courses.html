@@ -50,7 +50,7 @@
             <tbody md-body>
             <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}"
                 ng-repeat="course in courses | orderBy: table.order |
-                filterBy: ['name', 'subsection', 'lecturer.name', 'ects']: search |
+                filterBy: ['name', 'lecturer.name', 'ects']: search |
                 filter: languageFilter | filter: typeFilter |
                 limitTo: table.limit: (table.page - 1) * table.limit">
                 <td md-cell>
