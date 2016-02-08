@@ -1,5 +1,11 @@
 app.controller('AppCtrl', function ($scope, $location, $log, localStorageService) {
 
+    // check if home page
+    $scope.home = true;
+    $scope.$on('$locationChangeSuccess', function () {
+        $scope.home = $location.path() === '/';
+    });
+
     if (localStorageService.get('selected') && localStorageService.get('selected').length > 0) {
         $scope.selectedCoursesExist = false;
     } else {
@@ -21,7 +27,7 @@ app.controller('AppCtrl', function ($scope, $location, $log, localStorageService
             }
         }
 
-        if($location.url().indexOf('/details') == -1){
+        if ($location.url().indexOf('/details') == -1) {
             $scope.close = false;
         }
 
@@ -29,7 +35,7 @@ app.controller('AppCtrl', function ($scope, $location, $log, localStorageService
 
     $scope.goHome = function () {
         $location.url('/');
-    }
+    };
 
     $scope.goToRoute = function (target) {
         switch (target) {

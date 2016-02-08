@@ -34,8 +34,7 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
 
     $routeProvider
         .when('/', {
-            templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl'
+            // managed in the AppCtrl and app.html template
         })
         .when('/courses/:semester/:field', {
             templateUrl: 'templates/courses.html',
