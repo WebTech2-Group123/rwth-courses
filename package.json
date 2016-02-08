@@ -1,7 +1,7 @@
 {
   "name": "rwth-courses",
   "version": "0.1.0",
-  "description": "RWTH Courses: a better CampusOffice for everybody!",
+  "description": "RWTH Courses: find your courses easily",
   "main": "index.js",
   "dependencies": {
     "angular": "^1.5.0",
