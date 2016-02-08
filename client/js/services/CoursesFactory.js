@@ -159,8 +159,6 @@ app.factory('Courses', function ($q, $http, $log) {
                     continue;
                 }
 
-                console.log('Course: ' + courses[i].name + ' time: ' + convertTime(courses[i].events[0].start));
-
                 switch (convertTime(courses[i].events[0].start)) {
                     case '8:30h':
                         if (schedule[0][courses[i].events[0].weekday - 1] == null) {
@@ -290,6 +288,31 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '11:00h':
+                        if (schedule[3][courses[i].events[0].weekday - 1] == null) {
+                            // check for any conflict a hour before
+                            if (schedule[2][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                // push the first course
+                                schedule[3][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid
+                                }]
+                            }
+                        } else if ((schedule[3][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
+                            schedule[3][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                            // put css marker on second event
+                            (schedule[3][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '11:15h':
                         if (schedule[3][courses[i].events[0].weekday - 1] == null) {
                             // check for any conflict a hour before
@@ -369,6 +392,31 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '13:00h':
+                        if (schedule[5][courses[i].events[0].weekday - 1] == null) {
+                            // check for any conflict a hour before
+                            if (schedule[5][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                // push the first course
+                                schedule[5][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid
+                                }]
+                            }
+                        } else if ((schedule[5][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
+                            schedule[5][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                            // put a css-marker on the second course
+                            (schedule[5][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '13:15h':
                         if (schedule[5][courses[i].events[0].weekday - 1] == null) {
                             // check for any conflict a hour before
@@ -391,6 +439,31 @@ app.factory('Courses', function ($q, $http, $log) {
                             });
                             // put a css-marker on the second course
                             (schedule[5][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
+                    case '14:00h':
+                        if (schedule[6][courses[i].events[0].weekday - 1] == null) {
+                            // check for any conflict a hour before
+                            if (schedule[5][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                // push the first course
+                                schedule[6][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid
+                                }]
+                            }
+                        } else if ((schedule[6][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
+                            schedule[6][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                            // put a css-marker on the second course
+                            (schedule[6][courses[i].events[0].weekday - 1])[1].css = true;
                         } else {
                             // if there already exist 2 entries for a specific time
                             putUnscheduled(courses[i]);
@@ -450,6 +523,30 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '16:00h':
+                        if (schedule[8][courses[i].events[0].weekday - 1] == null) {
+                            // check for any conflict a hour before
+                            if (schedule[7][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                schedule[8][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid
+                                }]
+                            }
+                        } else if ((schedule[8][courses[i].events[0].weekday - 1]).length < 2) {
+                            // push the second course
+                            schedule[8][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                            // put a css-marker on the second course
+                            (schedule[8][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '16:15h':
                         if (schedule[8][courses[i].events[0].weekday - 1] == null) {
                             // check for any conflict a hour before
@@ -471,6 +568,30 @@ app.factory('Courses', function ($q, $http, $log) {
                             });
                             // put a css-marker on the second course
                             (schedule[8][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
+                    case '17:00h':
+                        if (schedule[9][courses[i].events[0].weekday - 1] == null) {
+                            // check for any conflict a hour before
+                            if (schedule[8][courses[i].events[0].weekday - 1] != null) {
+                                putUnscheduled(courses[i]);
+                            } else {
+                                schedule[9][courses[i].events[0].weekday - 1] = [{
+                                    name: courses[i].name,
+                                    gguid: courses[i].gguid
+                                }]
+                            }
+                        } else if ((schedule[9][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[9][courses[i].events[0].weekday - 1].push({
+                                // push the second course
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+                            // put a css-marker on the second course
+                            (schedule[9][courses[i].events[0].weekday - 1])[1].css = true;
                         } else {
                             // if there already exist 2 entries for a specific time
                             putUnscheduled(courses[i]);
@@ -502,6 +623,24 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '18:00h':
+                        if (schedule[10][courses[i].events[0].weekday - 1] == null) {
+                            schedule[10][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else if ((schedule[10][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[10][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+
+                            (schedule[10][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '18:15h':
                         if (schedule[10][courses[i].events[0].weekday - 1] == null) {
                             schedule[10][courses[i].events[0].weekday - 1] = [{
@@ -522,6 +661,24 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '19:00h':
+                        if (schedule[11][courses[i].events[0].weekday - 1] == null) {
+                            schedule[11][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else if ((schedule[11][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[11][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+
+                            (schedule[11][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '19:15h':
                         if (schedule[11][courses[i].events[0].weekday - 1] == null) {
                             schedule[11][courses[i].events[0].weekday - 1] = [{
@@ -537,6 +694,24 @@ app.factory('Courses', function ($q, $http, $log) {
                             });
 
                             (schedule[11][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
+                    case '20:00h':
+                        if (schedule[12][courses[i].events[0].weekday - 1] == null) {
+                            schedule[12][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            }]
+                        } else if ((schedule[12][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[12][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid
+                            });
+
+                            (schedule[12][courses[i].events[0].weekday - 1])[1].css = true;
                         } else {
                             // if there already exist 2 entries for a specific time
                             putUnscheduled(courses[i]);
