@@ -21,11 +21,7 @@ app.directive('loading', function () {
     return {
         restrict: 'E',
         replace: true,
-        template: '' +
-        '<div flex layout="column" layout-fill><div layout="row" layout-align="center center" ng-show="loading" flex>' +
-        '    <md-progress-circular md-mode="indeterminate" md-diameter="100"></md-progress-circular>' +
-        '    <p>Loading...</p>' +
-        '</div></div>'
+        templateUrl: 'templates/loading.html'
     }
 });
 
