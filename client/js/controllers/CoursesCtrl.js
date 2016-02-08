@@ -22,9 +22,42 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
         other: true
     };
 
+    function normalize(string) {
+        return string.toLowerCase()
+            .replace(/ä/g, 'a')
+            .replace(/ö/g, 'o')
+            .replace(/ü/g, 'u')
+            .replace(/ß/g, 'ss');
+    }
+
+    function contains(string, query) {
+        return normalize(string).indexOf(normalize(query)) >= 0;
+    }
+
+    function containsArray(array, query) {
+        return array.reduce(function (acc, string) {
+            return acc || contains(string, query);
+        }, false);
+    }
+
+    // filter by text
+    $scope.textFilter = function (course) {
+        var query = $scope.search.trim();
+        if (query.length === 0) {
+            return true;
+        } else {
+            var lecturers = course.contact.map(function (el) {
+                return el.name;
+            });
+            return contains(course.name, query) ||
+                containsArray(lecturers, query) ||
+                containsArray(course.units, query);
+        }
+    };
+
     // filter for languages
-    $scope.languageFilter = function (value) {
-        var language = value.language;
+    $scope.languageFilter = function (course) {
+        var language = course.language;
         var en = $scope.languages.en;
         var de = $scope.languages.de;
         var other = $scope.languages.other;
@@ -34,8 +67,8 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     };
 
     // filter for type
-    $scope.typeFilter = function (value) {
-        var type = value.type;
+    $scope.typeFilter = function (course) {
+        var type = course.type;
         var lecture = $scope.type.lecture;
         var exercise = $scope.type.exercise;
         var other = $scope.type.other;
