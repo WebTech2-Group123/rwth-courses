@@ -3,26 +3,30 @@
 
     <h2>{{field}} - {{semester}}</h2>
 
-    <div layout="row" layout-align="space-between stretch" layout-xs="column">
+    <div layout-align="space-between center" layout="column" layout-gt-sm="row">
 
         <!--filter-->
-        <md-input-container flex>
+        <md-input-container flex="100" flex-gt-sm="45">
             <label>Search</label>
             <md-icon md-svg-src="img/icons/ic_search_black_36px.svg"></md-icon>
             <input type="text" ng-model="search">
         </md-input-container>
 
+        <div flex="0" flex-gt-sm="5"></div>
+
         <!--type-->
-        <md-input-container flex flex-offset="5">
-            <b>Type:</b>
+        <md-input-container flex="100" flex-gt-sm="20" class="julian">
+            <!--<b>Type:</b>-->
             <md-checkbox ng-model="type.lecture">Lecture</md-checkbox>
             <md-checkbox ng-model="type.exercise">Exercise</md-checkbox>
             <md-checkbox ng-model="type.other">Other</md-checkbox>
         </md-input-container>
 
+        <div flex="0" flex-gt-sm="5"></div>
+
         <!--language-->
-        <md-input-container flex flex-offset="5">
-            <b>Language:</b>
+        <md-input-container flex="100" flex-gt-sm="25" class="julian">
+            <!--<b>Language:</b>-->
             <md-checkbox ng-model="languages.en" aria-label="English">
                 <img class="flag" src="img/flags/en.png" alt="English">
             </md-checkbox>
