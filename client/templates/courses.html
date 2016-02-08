@@ -3,8 +3,6 @@
 <loading></loading>
 <div ng-show="!loading" class="margin">
 
-    <h2>{{field}} - {{semester}}</h2>
-
     <div layout-align="space-between center" layout="column" layout-gt-sm="row">
 
         <!--filter-->
@@ -17,7 +15,7 @@
         <div flex="0" flex-gt-sm="5"></div>
 
         <!--type-->
-        <md-input-container flex="100" flex-gt-sm="20" class="julian">
+        <md-input-container flex="100" flex-gt-sm="20" class="space">
             <!--<b>Type:</b>-->
             <md-checkbox ng-model="type.lecture">Lecture</md-checkbox>
             <md-checkbox ng-model="type.exercise">Exercise</md-checkbox>
@@ -27,7 +25,7 @@
         <div flex="0" flex-gt-sm="5"></div>
 
         <!--language-->
-        <md-input-container flex="100" flex-gt-sm="25" class="julian">
+        <md-input-container flex="100" flex-gt-sm="25" class="space">
             <!--<b>Language:</b>-->
             <md-checkbox ng-model="languages.en" aria-label="English">
                 <img class="flag" src="img/flags/en.png" alt="English">
@@ -102,6 +100,6 @@
 </md-button>
 
 <!-- clear button -->
-<md-button id="clear" class="md-fab" aria-label="Clear All" ng-click="clearAll()">
+<md-button id="clear" class="md-fab" aria-label="Clear All" ng-disabled="disableBtn" ng-click="clearAll()">
     <md-icon md-svg-src="img/icons/ic_delete_white_24px.svg"></md-icon>
 </md-button>
