@@ -1,11 +1,26 @@
-<div class="app-container" layout="column">
+<!-- application container -->
+<div layout="column" layout-fill>
 
-    <!-- top section -->
-    <md-toolbar layout="row">
-        <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
-    </md-toolbar>
+    <!-- header -->
+    <header>
+        <md-toolbar class="md-medium-tall custom">
+            <div class="md-toolbar-tools">
+                <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
+                <span flex></span>
+                <md-button>Button</md-button>
+            </div>
+        </md-toolbar>
+    </header>
 
     <!-- main content -->
-    <md-content ng-view ng-cloak class="content-ctn"></md-content>
+    <main ng-view ng-cloak flex layout="column" layout-padding></main>
+
+    <!-- footer -->
+    <footer>
+        <div layout="row" layout-align="center center">
+            <p>Coded with <3 by Group 123 - See on <a
+                    href="https://github.com/WebTech2-Group123/rwth-courses">GitHub</a></p>
+        </div>
+    </footer>
 
 </div>
