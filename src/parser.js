@@ -174,13 +174,13 @@ function parseType(type) {
 
     // mapping
     const MAPPING = Object.freeze({
-        "Vorlesung": "Vorlesung",
+        "Vorlesung": "Lecture",
         "Proseminar": "Seminar",
-        "Übung": "Übung",
-        "Praktikum": "Praktikum",
+        "Übung": "Exercise",
+        "Praktikum": "Internship",
         "Tutorium": "Tutorium",
         "Seminar": "Seminar",
-        "Arbeitsgemeinschaft": "Arbeitsgemeinschaft",
+        "Arbeitsgemeinschaft": "Project group",
         "Hauptseminar": "Seminar"
     });
 

@@ -12,8 +12,8 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
 
     $scope.search = '';
     $scope.type = {
-        vorlesung: true,
-        ubung: false,
+        lecture: true,
+        exercise: false,
         other: false
     };
     $scope.languages = {
@@ -36,12 +36,12 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     // filter for type
     $scope.typeFilter = function (value) {
         var type = value.type;
-        var vorlesung = $scope.type.vorlesung;
-        var ubung = $scope.type.ubung;
+        var lecture = $scope.type.lecture;
+        var exercise = $scope.type.exercise;
         var other = $scope.type.other;
-        return (vorlesung && type.indexOf('Vorlesung') >= 0) ||
-            (ubung && type.indexOf('Übung') >= 0) ||
-            (other && type.indexOf('Vorlesung') === -1 && type.indexOf('Übung') === -1);
+        return (lecture && type.indexOf('Lecture') >= 0) ||
+            (exercise && type.indexOf('Exercise') >= 0) ||
+            (other && type.indexOf('Lecture') === -1 && type.indexOf('Exercise') === -1);
     };
 
     // get routing parameters
