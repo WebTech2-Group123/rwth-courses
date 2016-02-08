@@ -52,6 +52,7 @@ app > #loading {
 md-toolbar.custom {
     padding-top: 20px;
     padding-bottom: 20px;
+    background-image: linear-gradient(to bottom right, #4874B9, #4451B9);
 }
 
 md-toolbar.custom h1 {
