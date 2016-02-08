@@ -6,23 +6,6 @@
 <!-- application container -->
 <div ng-hide="home">
 
-    <!-- header -->
-    <header>
-        <md-toolbar class="md-medium-tall custom">
-            <div class="md-toolbar-tools">
-                <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
-                <span flex></span>
-                <md-button ng-show="close" ng-click="goToCampus()">
-                    <md-tooltip md-direction="bottom">Switch to Campus Office</md-tooltip>
-                    See in Campus
-                </md-button>
-                <div ng-show="close" class="icon-ctn" xmlns="http://www.w3.org/1999/html">
-                    <md-icon ng-click="closeDetails()" md-svg-src='img/icons/ic_clear_white_36px.svg'></md-icon>
-                </div>
-            </div>
-        </md-toolbar>
-    </header>
-
     <!-- main content -->
     <main ng-view ng-cloak layout="column" layout-padding></main>
 

@@ -27,10 +27,6 @@ app.controller('AppCtrl', function ($scope, $location, $log, localStorageService
             }
         }
 
-        if ($location.url().indexOf('/details') == -1) {
-            $scope.close = false;
-        }
-
     });
 
     $scope.goHome = function () {

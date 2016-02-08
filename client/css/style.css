@@ -40,10 +40,6 @@ app > #loading {
 /***********************************************/
 /*           custom navbar                     */
 /***********************************************/
-.logo {
-    cursor: pointer;
-    outline: none;
-}
 
 md-toolbar.custom {
     padding-top: 20px;
@@ -82,7 +78,6 @@ md-table-container pre {
     font-size: 20px;
     font-weight: 300;
     padding-left: 20px;
-    margin-top: -15px;
 }
 
 .description {
@@ -115,6 +110,18 @@ md-table-container pre {
 
 .info > span:not(:first-child) {
     padding-top: 10px;
+}
+
+.img-ctn > img{
+    vertical-align: middle;
+}
+
+button.see-in-campus-btn {
+    float: right;
+}
+
+header {
+    margin: -16px -16px 0px;
 }
 
 /***********************************************/
@@ -216,14 +223,13 @@ a:hover {
 }
 
 .icon-ctn > md-icon {
-    width: 48px;
-    height: 48px;
+    width: 35px;
     cursor: pointer;
-    outline: none;
+    outline: medium none;
+    margin-left: -20px;
 }
 
 .icon-ctn {
-    float: right;
     margin: 15px;
 }
 

@@ -1,12 +1,35 @@
-<h2>{{ course.name }} ({{ course.semester }}) <span ng-show="course.language != 'UNKNOWN'" ng-bind-html="course.language | languages"></span></h2>
+<!-- header -->
+<header>
+    <md-toolbar class="md-medium-tall custom">
+        <div class="md-toolbar-tools">
+            <div class="icon-ctn" xmlns="http://www.w3.org/1999/html">
+                <md-icon ng-click="closeDetails()" md-svg-src='img/icons/ic_arrow_back_white_48px.svg'></md-icon>
+            </div>
+            <h2>{{ course.name }} ({{ course.semester }})</h2>
+            <span ng-show="course.language != 'UNKNOWN'"
+                  ng-bind-html="course.language | languages"
+                  class="img-ctn"></span>
+        </div>
+    </md-toolbar>
+</header>
+
+<!--<h2>{{ course.name }} ({{ course.semester }}) <span ng-show="course.language != 'UNKNOWN'" ng-bind-html="course.language | languages"></span></h2>-->
 <h2 class="subheader" ng-show="showNameDe()">{{ course.name_de }}</h2>
 
 <!-- first row -->
 
 <!-- info box -->
 <div class="no-margin no-padding" layout="row" layout-xs="column" layout-margin>
-    <div flex="33" flex-xs="100" class="description">
-        <h2 class="subheader">Info</h2>
+    <div flex flex-xs="100" class="description">
+        <div layout="row" layout-align="space-between center">
+            <h2 flex class="subheader">Info</h2>
+
+            <span flex>
+                <md-button class="md-raised see-in-campus-btn" ng-click="goToCampus()">
+                    See in Campus
+                </md-button>
+            </span>
+        </div>
 
         <p class="info">
             <span ng-repeat="event in course.events">On <b>{{ event.weekday | week }}</b> from <b>{{ event.start | time
