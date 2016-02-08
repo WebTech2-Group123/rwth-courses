@@ -68,7 +68,7 @@
                 <td md-cell>
                     <a ng-click="showDetails(course.gguid)">
                         <md-tooltip md-direction="top">Show details</md-tooltip>
-                        <pre>{{course.name | length:50}}</pre>
+                        <pre>{{course.name | capitalize | length:50}}</pre>
                     </a>
                 </td>
                 <td md-cell>
