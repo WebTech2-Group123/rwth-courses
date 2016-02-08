@@ -1,7 +1,3 @@
-.julian md-checkbox:not(:last-child) {
-    margin-right: 30px;
-}
-
 /***********************************************/
 /*           loading screen                    */
 /***********************************************/
@@ -96,6 +92,22 @@ md-table-container pre {
 
 .margin {
     margin-bottom: 80px;
+}
+
+.space md-checkbox:not(:last-child) {
+    margin-right: 30px;
+}
+
+/***********************************************/
+/*           overview                          */
+/***********************************************/
+
+#list {
+    position: fixed;
+    top: auto;
+    left: auto;
+    bottom: 20px;
+    right: 20px;
 }
 
 /***********************************************/

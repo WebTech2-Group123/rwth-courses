@@ -18,8 +18,8 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
 
     // if arr unscheduled is not empty, display the panel for unscheduled courses
     $scope.showUnscheduled = function () {
-        return $scope.unscheduled.length > 0 ? true : false;
-    }
+        return $scope.unscheduled.length > 0;
+    };
 
     $scope.deleteCourse = function (gguid) {
 
@@ -49,15 +49,15 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         if (localStorageService.get('selected').length == 0) {
             $location.url(localStorageService.get('coursePath'));
         }
-    }
+    };
 
     // show details page
     $scope.goToDetails = function (gguid) {
         $location.url('details/' + gguid);
-    }
+    };
 
     $scope.goBack = function () {
         $location.url(localStorageService.get('coursePath'));
-    }
+    };
 
 });
