@@ -37,7 +37,7 @@ img.flag {
     width: 30px;
 }
 
-.overview-table{
+.overview-table {
     overflow: visible;
 }
 
@@ -78,6 +78,14 @@ img.flag {
 /***********************************************/
 /*           other                             */
 /***********************************************/
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
 .content-ctn {
     margin-bottom: 50px;
     padding: 0 15px;
@@ -174,10 +182,6 @@ a:hover {
     margin: 50px auto;
     box-shadow: 1px 1px 5px rgb(170, 170, 170);
     padding: 10px;
-}
-
-.no-padding {
-    padding: 0 !important;
 }
 
 .overview-name-ctn {
