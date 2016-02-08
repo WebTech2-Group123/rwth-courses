@@ -86,9 +86,9 @@ img.flag {
     padding: 0 !important;
 }
 
-.content-ctn {
-    margin-bottom: 50px;
-    padding: 0 15px;
+.home-ctn {
+    width:60%;
+    margin: 0 auto;
 }
 
 .bottom-navigation {
@@ -124,7 +124,7 @@ img.flag {
 .event {
     height: 72px;
     padding: 0 6px;
-    background-color: #aed581;
+    background-color: #b2ebf2;
 }
 
 .event-offset-15 {

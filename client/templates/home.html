@@ -1,19 +1,23 @@
-<h2>What do you study?</h2>
+<div layout="row" layout-align="center center">
+    <div flex="66" flex-xs="100">
+        <h2>What do you study?</h2>
 
-<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                 md-item-text="field" placeholder="My Amazing Study Field..." md-min-length="0"
-                 md-items="field in querySearch(searchText)">
+        <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                         md-item-text="field" placeholder="My Amazing Study Field..." md-min-length="0"
+                         md-items="field in querySearch(searchText)">
 
-    <md-item-template>
-        <span md-highlight-text="searchText">{{field}}</span>
-    </md-item-template>
+            <md-item-template>
+                <span md-highlight-text="searchText">{{field}}</span>
+            </md-item-template>
 
-    <md-not-found>
-        No matches found.
-    </md-not-found>
-</md-autocomplete>
+            <md-not-found>
+                No matches found.
+            </md-not-found>
+        </md-autocomplete>
 
-<p>Searching for courses in <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span></p>
+        <p>Searching for courses in <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span></p>
 
 
-<md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
+        <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
+    </div>
+</div>
