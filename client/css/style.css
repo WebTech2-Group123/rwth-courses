@@ -1,3 +1,7 @@
+.julian md-checkbox:not(:last-child) {
+    margin-right: 30px;
+}
+
 /***********************************************/
 /*           loading screen                    */
 /***********************************************/
@@ -136,7 +140,7 @@ md-table-container pre {
     padding-top: 10px;
 }
 
-.img-ctn > img{
+.img-ctn > img {
     vertical-align: middle;
 }
 
