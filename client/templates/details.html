@@ -6,63 +6,70 @@
 <h2 class="subheader" ng-show="showNameDe()">{{ course.name_de }}</h2>
 
 
+<!-- first row -->
 
+<!-- info box -->
+<div layout="row" layout-xs="column" layout-margin>
+    <div flex="33" flex-xs="100" class="description">
+        <h2 class="subheader">Info</h2>
 
+        <p class="info">
+            <span ng-repeat="event in course.events">On <b>{{ event.weekday | week }}</b> from <b>{{ event.start | time }}</b> to <b>{{ event.end | time }}</b> in room {{ event.room }}</span>
+        </p>
 
-<div class="description">
-    <h2 class="subheader">Info</h2>
+        <p>
+            Typ: <span>{{ course.type | join: ' & ' }}</span>
+        </p>
 
-    <p class="info">
-        <span ng-repeat="event in course.events">On {{ event.weekday | week }} from {{ event.start | time }} to {{ event.end | time }} in room {{ event.room }}</span>
-    </p>
+        <p>
+            ECTS: <span>{{ course.ects | join: ' or ' }}</span>
+        </p>
+    </div>
 
-    <p>
-       Typ: <span>{{ course.type | join: ' & ' }}</span>
-    </p>
+    <!-- TODO: URL decoding -->
+    <div flex="66" flex-xs="100" ng-show="showItem(course.description)" class="description">
+        <h2 class="subheader">Description</h2>
 
-    <p>
-        ECTS: <span>{{ course.ects | join: ' or ' }}</span>
-    </p>
-</div>
-
-<!-- TODO: URL decoding -->
-<div ng-show="showItem(course.description)" class="description">
-    <h2 class="subheader">Description</h2>
-
-    <p>{{ course.description }}</p>
-</div>
-
-<div ng-show="showDescriptionDe()" class="description">
-    <h2 class="subheader">Beschreibung</h2>
-
-    <p>{{ course.description_de }}</p>
-</div>
-
-<div ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
-     class="description">
-    <h2 class="subheader">Details</h2>
-
-    <p ng-show="showItem(course.details.test)"><i>Exam:</i> {{ course.details.test }}</p>
-
-    <p ng-show="showItem(course.details.prereq)"><i>Requirements:</i> {{ course.details.prereq }}</p>
-
-    <p ng-show="showItem(course.details.follow)"><i>Follow:</i> {{ course.details.follow }}</p>
-
-    <p ng-show="showItem(course.details.note)"><i>Note:</i> {{ course.details.note }}</p>
-</div>
-
-<div class="description">
-    <h2 class="subheader">Address</h2>
-
-    <div class="contact description" ng-repeat="contact in course.contact">
-        <p>{{ contact.name }}</p>
-        <span>{{ contact.address.department }}</span><br>
-        <span>{{ contact.address.street }}</span><br>
-        <span>Building: {{ contact.address.building }}</span><br>
-        <span>Room: {{ contact.address.room }}</span><br>
-        <!--TODO: Add hyperlink here-->
-        <span>{{ contact.mail }}</span>
+        <p>{{ course.description }}</p>
     </div>
 </div>
 
-<pre>{{ course | json }}</pre>
+<!-- second row -->
+<div layout="row" layout-xs="column" layout-margin>
+    <div flex="50" flex-xs="100" ng-show="showDescriptionDe()" class="description">
+        <h2 class="subheader">Beschreibung</h2>
+
+        <p>{{ course.description_de }}</p>
+    </div>
+
+    <div flex="50" flex-xs="100" ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
+         class="description">
+        <h2 class="subheader">Details</h2>
+
+        <p ng-show="showItem(course.details.test)"><i>Exam:</i> {{ course.details.test }}</p>
+
+        <p ng-show="showItem(course.details.prereq)"><i>Requirements:</i> {{ course.details.prereq }}</p>
+
+        <p ng-show="showItem(course.details.follow)"><i>Follow:</i> {{ course.details.follow }}</p>
+
+        <p ng-show="showItem(course.details.note)"><i>Note:</i> {{ course.details.note }}</p>
+    </div>
+</div>
+
+<div class="description" layout="column" layout-margin>
+    <h2 class="subheader">Address</h2>
+
+    <div layout="row" layout-margin>
+        <div flex="50" class="contact description" ng-repeat="contact in course.contact">
+            <p>{{ contact.name }}</p>
+            <span>{{ contact.address.department }}</span><br>
+            <span>{{ contact.address.street }}</span><br>
+            <span>Building: {{ contact.address.building }}</span><br>
+            <span>Room: {{ contact.address.room }}</span><br>
+            <!--TODO: Add hyperlink here-->
+            <span>{{ contact.mail }}</span>
+        </div>
+    </div>
+</div>
+
+<!--<pre>{{ course | json }}</pre>-->

@@ -178,7 +178,7 @@ a:hover {
 }
 
 .description {
-    margin: 50px auto;
+    /*margin: 50px auto;*/
     box-shadow: 1px 1px 5px rgb(170, 170, 170);
     padding: 10px;
 }
