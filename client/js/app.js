@@ -40,6 +40,13 @@ app.directive('ngEnter', function () {
     };
 });
 
+app.directive('header', function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'templates/header.html'
+    }
+});
+
 // router & local storage
 app.config(function ($routeProvider, localStorageServiceProvider, $mdThemingProvider) {
 

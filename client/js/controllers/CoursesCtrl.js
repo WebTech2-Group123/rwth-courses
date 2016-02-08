@@ -84,6 +84,9 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     $scope.semester = $routeParams.semester;
     $scope.field = $routeParams.field;
 
+    // set headline
+    $scope.headline = $scope.field + ' - ' + $scope.semester;
+
     // and load corresponding courses
     Courses.get($scope.semester, $scope.field).then(function (courses) {
         $scope.courses = courses;

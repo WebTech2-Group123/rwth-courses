@@ -15,6 +15,9 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, $sce, l
         // take the course
         $scope.course = courses.pop();
 
+        // set up heading
+        $scope.headline = $scope.course.name + ' (' + $scope.course.semester + ')';
+
         // show german name if it differs from english one
         $scope.showNameDe = function () {
             return compareString($scope.course.name, $scope.course.name_de);
@@ -38,12 +41,12 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, $sce, l
         };
     });
 
-    $scope.$parent.goToCampus = function () {
+    $scope.goToCampus = function () {
         const BASE_URL = 'https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=';
         $window.open(BASE_URL + gguid, '_blank');
     };
 
-    $scope.$parent.closeDetails = function () {
+    $scope.goBack = function () {
         $location.url(localStorageService.get('lastPath'));
     };
 });

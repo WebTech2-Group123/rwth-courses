@@ -1,0 +1,11 @@
+<md-toolbar class="md-medium-tall custom">
+    <div class="md-toolbar-tools">
+        <div class="icon-ctn" xmlns="http://www.w3.org/1999/html">
+            <md-icon ng-click="goBack()" md-svg-src='img/icons/ic_arrow_back_white_48px.svg'></md-icon>
+        </div>
+        <h2>{{ headline }}</h2>
+        <span ng-show="course.language != 'UNKNOWN'"
+              ng-bind-html="course.language | languages"
+              class="img-ctn"></span>
+    </div>
+</md-toolbar>
