@@ -1,12 +1,11 @@
-
-
 <md-content class="md-padding" ng-style="{'background-color':'rgba(0,0,0,0)'}">
 
-    <title>RWTH Courses</title>
     <img ng-src="{{image[0].src}}" alt="RWTH Courses" layout-align="center center"/>
+    <div class="title" layout-align="center center">RWTH Courses</div>
+    <div class="subtitle">Find your courses easily</div>
 
     <div layout="row" layout-xs="column" layout-align="center center">
-        <div flex="70" stretch>
+        <div flex="70">
             <form ng-submit="$event.preventDefault()" name="searchForm">
                 <md-autocomplete md-selected-item="selectedItem"
                                  md-input-name="autocompleteField"
