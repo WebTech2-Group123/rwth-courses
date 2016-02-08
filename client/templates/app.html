@@ -7,6 +7,10 @@
             <div class="md-toolbar-tools">
                 <h1 class="logo" ng-click="goHome()">RWTH Courses</h1>
                 <span flex></span>
+                <a ng-show="close" class="rwth-logo" ng-href="{{ goToCampus() }}" target="_blank">
+                    <md-tooltip md-direction="bottom">Switch to Campus Office</md-tooltip>
+                    <img src="img/rwthaachen.png">
+                </a>
                 <div ng-show="close" class="icon-ctn" xmlns="http://www.w3.org/1999/html">
                     <md-icon ng-click="closeDetails()" md-svg-src='img/icons/ic_clear_white_36px.svg'></md-icon>
                 </div>

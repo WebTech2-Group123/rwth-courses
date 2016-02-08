@@ -1,5 +1,5 @@
-app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localStorageService, Courses) {
-    $scope.gguid = $routeParams.gguid;
+app.controller('DetailsCtrl', function ($scope, $routeParams, $location, $sce, localStorageService, Courses) {
+    var gguid = $routeParams.gguid;
 
     $scope.$parent.close = true;
 
@@ -11,7 +11,7 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localSt
         return item.length > 0 ? true : false;
     }
 
-    Courses.getByIDs($scope.gguid).then(function (courses) {
+    Courses.getByIDs(gguid).then(function (courses) {
 
         // take the course
         $scope.course = courses.pop();
@@ -34,13 +34,21 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localSt
         // show box if at least one item is available
         $scope.showBox = function (items) {
             return items.map(function (item) {
-                return testEmpty(item);
-            }).indexOf(true) != -1;
+                    return testEmpty(item);
+                }).indexOf(true) != -1;
         }
     });
+
+    $scope.$parent.goToCampus = function () {
+        const BASE_URL = 'https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=';
+
+        console.log(BASE_URL + gguid);
+
+        return $sce.trustAsResourceUrl(BASE_URL + gguid);
+    }
 
     $scope.$parent.closeDetails = function () {
         $scope.$parent.close = false;
         $location.url(localStorageService.get('lastPath'));
     }
-})
+});
