@@ -19,7 +19,10 @@ app.controller('AppCtrl', function ($scope, $location, $log, localStorageService
                 var path = oldUrl.substr(oldUrl.lastIndexOf('/'), oldUrl.length);
                 localStorageService.set('lastPath', path);
             }
+        }
 
+        if($location.url().indexOf('/details') == -1){
+            $scope.close = false;
         }
 
     });

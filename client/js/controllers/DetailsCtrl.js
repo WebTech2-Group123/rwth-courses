@@ -40,11 +40,7 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, $sce, l
     });
 
     $scope.$parent.goToCampus = function () {
-        const BASE_URL = 'https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=';
-
-        console.log(BASE_URL + gguid);
-
-        return $sce.trustAsResourceUrl(BASE_URL + gguid);
+        return $sce.trustAsResourceUrl('https://www.campus.rwth-aachen.de/rwth/all/event.asp?gguid=' + gguid);
     }
 
     $scope.$parent.closeDetails = function () {
