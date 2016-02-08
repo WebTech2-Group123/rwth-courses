@@ -5,7 +5,7 @@ app.filter('time', function () {
             var min = input.getMinutes() != 0 ? input.getMinutes() : '0' + input.getMinutes();
             return input.getHours() + ':' + min + 'h';
         }else{
-            return 'no time';
+            return '';
         }
     }
 });

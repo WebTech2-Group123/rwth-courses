@@ -22,7 +22,7 @@ app.filter('week', function () {
                     break;
             }
         } else {
-            return 'no day';
+            return '';
         }
     }
 });
