@@ -15,8 +15,8 @@
         <!--type-->
         <md-input-container flex flex-offset="5">
             <b>Type:</b>
-            <md-checkbox ng-model="type.vorlesung">Vorlesung</md-checkbox>
-            <md-checkbox ng-model="type.ubung">Übung</md-checkbox>
+            <md-checkbox ng-model="type.lecture">Lecture</md-checkbox>
+            <md-checkbox ng-model="type.exercise">Exercise</md-checkbox>
             <md-checkbox ng-model="type.other">Other</md-checkbox>
         </md-input-container>
 
@@ -78,7 +78,7 @@
 
     <!--table pagination -->
     <md-table-pagination md-limit="table.limit" md-page="table.page" md-total="{{ filtered.length }}"
-                         md-page-select md-options="[10, 15, 20, 40, 60, 80, 100]"></md-table-pagination>
+                         md-page-select md-options="[10, 20, 50, 100]"></md-table-pagination>
 
     <!--buttons -->
     <md-button class="md-raised" ng-click="goBack()">Back</md-button>
