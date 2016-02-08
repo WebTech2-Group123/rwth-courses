@@ -19,7 +19,8 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     $scope.languages = {
         en: true,
         de: true,
-        other: true
+        other: true,
+        unknown: true
     };
 
     function normalize(string) {
@@ -61,9 +62,11 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
         var en = $scope.languages.en;
         var de = $scope.languages.de;
         var other = $scope.languages.other;
+        var unknown = $scope.languages.unknown;
         return (en && language.indexOf('EN') >= 0) ||
             (de && language.indexOf('DE') >= 0) ||
-            (other && language.indexOf('EN') < 0 && language.indexOf('DE'));
+            (other && language.indexOf('OTHER') >= 0) ||
+            (unknown && language.indexOf('UNKNOWN') >= 0);
     };
 
     // filter for type

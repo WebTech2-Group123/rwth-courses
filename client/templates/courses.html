@@ -23,9 +23,18 @@
         <!--language-->
         <md-input-container flex flex-offset="5">
             <b>Language:</b>
-            <md-checkbox ng-model="languages.en">English</md-checkbox>
-            <md-checkbox ng-model="languages.de">German</md-checkbox>
-            <md-checkbox ng-model="languages.other">Other</md-checkbox>
+            <md-checkbox ng-model="languages.en">
+                <img class="flag" src="img/flags/en.png" alt="English">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.de">
+                <img class="flag" src="img/flags/de.png" alt="German">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.other">
+                <img class="flag" src="img/flags/other.png" alt="Others">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.unknown">
+                <img class="flag" src="img/flags/unknown.png" alt="Unknown">
+            </md-checkbox>
         </md-input-container>
 
     </div>
