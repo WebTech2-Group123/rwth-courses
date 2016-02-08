@@ -35,8 +35,8 @@
 </div>
 
 <!-- second row -->
-<div layout="row" layout-xs="column" layout-margin>
-    <div flex="50" flex-xs="100" ng-show="showDescriptionDe()" class="description">
+<div layout="row" layout-xs="column" layout-margin ng-show="showDescriptionDe()">
+    <div flex="50" flex-xs="100" class="description">
         <h2 class="subheader">Beschreibung</h2>
 
         <p>{{ course.description_de }}</p>
@@ -56,11 +56,23 @@
     </div>
 </div>
 
+<!-- third row -->
+<div layout="column" layout-margin class="description">
+    <h2 class="subheader">Fields of studies</h2>
+    <div layout="row" layout-wrap>
+        <div flex="33" flex-xs="100" ng-repeat="field in course.fields">
+            <h3>{{ field.field }}</h3>
+            <span>{{ field.group }}</span><br>
+            <span>{{ field.subfield }}</span>
+        </div>
+    </div>
+</div>
+
 <div class="description" layout="column" layout-margin>
     <h2 class="subheader">Address</h2>
 
-    <div layout="row" layout-margin>
-        <div flex="50" class="contact description" ng-repeat="contact in course.contact">
+    <div layout="row" layout-margin layout-wrap layout-align="center center">
+        <div flex="45" flex-xs="100" class="contact description" ng-repeat="contact in course.contact">
             <p>{{ contact.name }}</p>
             <span>{{ contact.address.department }}</span><br>
             <span>{{ contact.address.street }}</span><br>
@@ -72,4 +84,4 @@
     </div>
 </div>
 
-<!--<pre>{{ course | json }}</pre>-->
+<pre>{{ course | json }}</pre>
