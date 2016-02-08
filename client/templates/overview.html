@@ -1,6 +1,6 @@
 <h2>Overview</h2>
 
-<md-table-container>
+<md-table-container class="overview-table">
     <table md-table>
         <thead md-head>
         <tr md-row>
@@ -41,7 +41,7 @@
 </md-table-container>
 
 <md-list class="unscheduled-ctn" ng-show="showUnscheduled()">
-    <md-subheader class="md-no-sticky">These events don't have a specific time</md-subheader>
+    <md-subheader class="md-no-sticky">These events are not displayed in the schedule</md-subheader>
     <md-list-item ng-repeat="event in unscheduled track by $index">
         <p>{{ event.name }} | {{ event.events[0].weekday | week }} {{ event.events[0].start | time }}</p>
         <md-button class="delete-btn" ng-click="deleteCourse(event.gguid)">

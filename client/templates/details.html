@@ -1,7 +1,3 @@
-<div class="icon-ctn" xmlns="http://www.w3.org/1999/html">
-    <md-icon ng-click="closeDetails()" md-svg-src='img/icons/ic_clear_black_48px.svg'></md-icon>
-</div>
-
 <h2>{{ course.name }} ({{ course.semester }}) <span ng-bind-html="course.language | languages"></span></h2>
 <h2 class="subheader" ng-show="showNameDe()">{{ course.name_de }}</h2>
 
@@ -14,7 +10,8 @@
         <h2 class="subheader">Info</h2>
 
         <p class="info">
-            <span ng-repeat="event in course.events">On <b>{{ event.weekday | week }}</b> from <b>{{ event.start | time }}</b> to <b>{{ event.end | time }}</b> in room {{ event.room }}</span>
+            <span ng-repeat="event in course.events">On <b>{{ event.weekday | week }}</b> from <b>{{ event.start | time
+                }}</b> to <b>{{ event.end | time }}</b> in room {{ event.room }}</span>
         </p>
 
         <p>
@@ -29,7 +26,6 @@
     <div flex="66" flex-xs="100" ng-show="showItem(course.description)" class="description">
         <h2 class="subheader">Description</h2>
 
-        <!--<p>{{ course.description | html }}</p>-->
         <p ng-bind-html="course.description | html"></p>
     </div>
 </div>
@@ -42,23 +38,29 @@
         <p ng-bind-html="course.description_de | html"></p>
     </div>
 
-    <div flex="50" flex-xs="100" ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
+    <div flex="50" flex-xs="100"
+         ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
          class="description">
         <h2 class="subheader">Details</h2>
 
-        <p ng-show="showItem(course.details.test)"><i>Exam: </i><span ng-bind-html="course.details.test | html"></span></p>
+        <p ng-show="showItem(course.details.test)"><i>Exam: </i><span ng-bind-html="course.details.test | html"></span>
+        </p>
 
-        <p ng-show="showItem(course.details.prereq)"><i>Requirements: </i><span ng-bind-html="course.details.prereq | html"></span></p>
+        <p ng-show="showItem(course.details.prereq)"><i>Requirements: </i><span
+                ng-bind-html="course.details.prereq | html"></span></p>
 
-        <p ng-show="showItem(course.details.follow)"><i>Follow: </i><span ng-bind-html="course.details.follow | html"></span></p>
+        <p ng-show="showItem(course.details.follow)"><i>Follow: </i><span
+                ng-bind-html="course.details.follow | html"></span></p>
 
-        <p ng-show="showItem(course.details.note)"><i>Note: </i><span ng-bind-html="course.details.note | html"></span></p>
+        <p ng-show="showItem(course.details.note)"><i>Note: </i><span ng-bind-html="course.details.note | html"></span>
+        </p>
     </div>
 </div>
 
 <!-- third row -->
 <div layout="column" layout-margin class="description">
     <h2 class="subheader">Fields of studies</h2>
+
     <div layout="row" layout-wrap>
         <div flex="33" flex-xs="100" ng-repeat="field in course.fields">
             <h3>{{ field.field }}</h3>
@@ -76,12 +78,11 @@
             <p>{{ contact.name }}</p>
             <span>{{ contact.address.department }}</span><br ng-show="showItem(contact.address.department)">
             <span>{{ contact.address.street }}</span><br ng-show="showItem(contact.address.street)">
-            <span ng-show="showItem(contact.address.building)">Building: {{ contact.address.building }}</span><br ng-show="showItem(contact.address.building)">
-            <span ng-show="showItem(contact.address.room)">Room: {{ contact.address.room }}</span><br ng-show="showItem(contact.address.room)">
-            <!--TODO: Add hyperlink here-->
+            <span ng-show="showItem(contact.address.building)">Building: {{ contact.address.building }}</span><br
+                ng-show="showItem(contact.address.building)">
+            <span ng-show="showItem(contact.address.room)">Room: {{ contact.address.room }}</span><br
+                ng-show="showItem(contact.address.room)">
             <span>{{ contact.mail }}</span>
         </div>
     </div>
 </div>
-
-<pre>{{ course | json }}</pre>

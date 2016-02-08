@@ -195,6 +195,26 @@ app.factory('Courses', function ($q, $http, $log) {
                             putUnscheduled(courses[i]);
                         }
                         break;
+                    case '10:15h':
+                        if (schedule[2][courses[i].events[0].weekday - 1] == null) {
+                            schedule[2][courses[i].events[0].weekday - 1] = [{
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            }]
+                        } else if ((schedule[2][courses[i].events[0].weekday - 1]).length < 2) {
+                            schedule[2][courses[i].events[0].weekday - 1].push({
+                                name: courses[i].name,
+                                gguid: courses[i].gguid,
+                                offset: {quarterpast: true}
+                            });
+
+                            (schedule[2][courses[i].events[0].weekday - 1])[1].css = true;
+                        } else {
+                            // if there already exist 2 entries for a specific time
+                            putUnscheduled(courses[i]);
+                        }
+                        break;
                     case '10:30h':
                         if (schedule[2][courses[i].events[0].weekday - 1] == null) {
                             schedule[2][courses[i].events[0].weekday - 1] = [{

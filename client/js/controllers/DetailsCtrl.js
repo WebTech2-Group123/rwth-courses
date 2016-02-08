@@ -1,6 +1,8 @@
 app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localStorageService, Courses) {
     $scope.gguid = $routeParams.gguid;
 
+    $scope.$parent.close = true;
+
     function compareString(str1, str2) {
         return str1.indexOf(str2);
     }
@@ -37,7 +39,8 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localSt
         }
     });
 
-    $scope.closeDetails = function () {
+    $scope.$parent.closeDetails = function () {
+        $scope.$parent.close = false;
         $location.url(localStorageService.get('lastPath'));
     }
 })
