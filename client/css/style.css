@@ -37,6 +37,10 @@ app > #loading {
     text-align: center;
 }
 
+.body-home md-autocomplete {
+    /*max-width: 800px;*/
+}
+
 /***********************************************/
 /*           custom navbar                     */
 /***********************************************/
