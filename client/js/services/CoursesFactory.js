@@ -122,6 +122,7 @@ app.factory('Courses', function ($q, $http, $log) {
                 [null, null, null, null, null, null],
                 [null, null, null, null, null, null],
                 [null, null, null, null, null, null],
+                [null, null, null, null, null, null],
                 [null, null, null, null, null, null]
             ];
 
@@ -858,7 +859,7 @@ app.factory('Courses', function ($q, $http, $log) {
         },
 
         getTimes: function () {
-            return ['8:00h', '9:00h', '10:00h', '11:00h', '12:00h', '13:00h', '14:00h', '15:00h', '16:00h', '17:00h', '18:00h', '19:00h', '20:00h'];
+            return ['8:00h', '9:00h', '10:00h', '11:00h', '12:00h', '13:00h', '14:00h', '15:00h', '16:00h', '17:00h', '18:00h', '19:00h', '20:00h', '21:00h'];
         }
     }
 });
