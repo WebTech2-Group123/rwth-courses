@@ -52,6 +52,18 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     Courses.get($scope.semester, $scope.field).then(function (courses) {
         $scope.courses = courses;
         $scope.loading = false;
+
+        // if no lectures, show everything
+        var numberOfLectures = courses.reduce(function (acc, curr) {
+            return acc + ((curr.type.indexOf('Lecture') >= 0) ? 1 : 0);
+        }, 0);
+        if (numberOfLectures === 0) {
+            $scope.type = {
+                lecture: true,
+                exercise: true,
+                other: true
+            }
+        }
     });
 
     // get selected courses from local storage
