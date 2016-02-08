@@ -35,7 +35,7 @@
         <table md-table md-row-select ng-model="selected">
 
             <!--table header-->
-            <thead md-head md-order="query.order">
+            <thead md-head md-order="table.order">
             <tr md-row>
                 <th md-column md-order-by="name"><span>Name</span></th>
                 <th md-column md-order-by="type">Type</th>
@@ -79,6 +79,9 @@
     <!--table pagination -->
     <md-table-pagination md-limit="table.limit" md-page="table.page" md-total="{{ filtered.length }}"
                          md-page-select md-options="[10, 20, 50, 100]"></md-table-pagination>
+
+
+    <pre>{{query.order|json}}</pre>
 
     <!--buttons -->
     <md-button class="md-raised" ng-click="goBack()">Back</md-button>
