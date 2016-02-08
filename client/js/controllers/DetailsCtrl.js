@@ -26,7 +26,7 @@ app.controller('DetailsCtrl', function ($scope, $routeParams, $location, localSt
 
         // show item if available
         $scope.showItem = function (item) {
-            return testEmpty(item);
+            return item ? testEmpty(item) : false;
         }
 
         // show box if at least one item is available

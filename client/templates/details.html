@@ -26,11 +26,11 @@
         </p>
     </div>
 
-    <!-- TODO: URL decoding -->
     <div flex="66" flex-xs="100" ng-show="showItem(course.description)" class="description">
         <h2 class="subheader">Description</h2>
 
-        <p>{{ course.description }}</p>
+        <!--<p>{{ course.description | html }}</p>-->
+        <p ng-bind-html="course.description | html"></p>
     </div>
 </div>
 
@@ -39,20 +39,20 @@
     <div flex="50" flex-xs="100" class="description">
         <h2 class="subheader">Beschreibung</h2>
 
-        <p>{{ course.description_de }}</p>
+        <p ng-bind-html="course.description_de | html"></p>
     </div>
 
     <div flex="50" flex-xs="100" ng-show="showBox([course.details.test, course.details.prereq, course.details.follow, course.details.note])"
          class="description">
         <h2 class="subheader">Details</h2>
 
-        <p ng-show="showItem(course.details.test)"><i>Exam:</i> {{ course.details.test }}</p>
+        <p ng-show="showItem(course.details.test)"><i>Exam: </i><span ng-bind-html="course.details.test | html"></span></p>
 
-        <p ng-show="showItem(course.details.prereq)"><i>Requirements:</i> {{ course.details.prereq }}</p>
+        <p ng-show="showItem(course.details.prereq)"><i>Requirements: </i><span ng-bind-html="course.details.prereq | html"></span></p>
 
-        <p ng-show="showItem(course.details.follow)"><i>Follow:</i> {{ course.details.follow }}</p>
+        <p ng-show="showItem(course.details.follow)"><i>Follow: </i><span ng-bind-html="course.details.follow | html"></span></p>
 
-        <p ng-show="showItem(course.details.note)"><i>Note:</i> {{ course.details.note }}</p>
+        <p ng-show="showItem(course.details.note)"><i>Note: </i><span ng-bind-html="course.details.note | html"></span></p>
     </div>
 </div>
 
@@ -74,10 +74,10 @@
     <div layout="row" layout-margin layout-wrap layout-align="center center">
         <div flex="45" flex-xs="100" class="contact description" ng-repeat="contact in course.contact">
             <p>{{ contact.name }}</p>
-            <span>{{ contact.address.department }}</span><br>
-            <span>{{ contact.address.street }}</span><br>
-            <span>Building: {{ contact.address.building }}</span><br>
-            <span>Room: {{ contact.address.room }}</span><br>
+            <span>{{ contact.address.department }}</span><br ng-show="showItem(contact.address.department)">
+            <span>{{ contact.address.street }}</span><br ng-show="showItem(contact.address.street)">
+            <span ng-show="showItem(contact.address.building)">Building: {{ contact.address.building }}</span><br ng-show="showItem(contact.address.building)">
+            <span ng-show="showItem(contact.address.room)">Room: {{ contact.address.room }}</span><br ng-show="showItem(contact.address.room)">
             <!--TODO: Add hyperlink here-->
             <span>{{ contact.mail }}</span>
         </div>
