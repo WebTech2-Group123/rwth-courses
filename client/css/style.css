@@ -12,8 +12,29 @@ app > #loading {
 /*           home                              */
 /***********************************************/
 .body-home {
-    background-color:#4874B9;
-    background-image:linear-gradient(to bottom right,#4874B9,#4451B9);
+    background-color: #4874B9;
+    background-image: linear-gradient(to bottom right, #4874B9, #4451B9);
+}
+
+.body-home .title {
+    font-weight: 200;
+    font-size: 36pt;
+    color: white;
+    opacity: 0.8;
+    margin-top: 30px;
+}
+
+.body-home .subtitle {
+    font-size: 14pt;
+    color: white;
+    line-height: 38px;
+    opacity: 0.8;
+}
+
+.body-home .white {
+    color: white;
+    opacity: 0.8;
+    text-align: center;
 }
 
 /***********************************************/

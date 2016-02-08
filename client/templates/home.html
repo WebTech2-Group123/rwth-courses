@@ -1,8 +1,14 @@
-<loading></loading>
-<div layout="row" layout-align="center center" ng-show="!loading">
+<!-- logo -->
+<div flex layout="column" layout-align="center center">
+    <img hide-gt-xs src="img/logo-small.png" alt="RWTH Courses">
+    <img hide-xs src="img/logo.png" alt="RWTH Courses">
+    <div class="title">RWTH Courses</div>
+    <div class="subtitle">Find your courses easily</div>
+</div>
 
+<!-- search -->
+<div flex layout="row" layout-align="center center" layout-padding>
     <div flex="66" flex-xs="100">
-        <h2>What do you study?</h2>
 
         <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
                          md-item-text="field" placeholder="My Amazing Study Field..." md-min-length="0"
@@ -17,11 +23,14 @@
             </md-not-found>
         </md-autocomplete>
 
-        <p>
+        <p class="white">
             Searching for courses in
             <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span>
         </p>
-
-        <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
     </div>
+</div>
+
+<!-- search button -->
+<div flex layout="row" layout-align="center center" layout-padding>
+    <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
 </div>
