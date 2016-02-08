@@ -41,6 +41,10 @@ img.flag {
     overflow: visible;
 }
 
+md-table-container pre {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 /***********************************************/
 /*           details                           */
 /***********************************************/
