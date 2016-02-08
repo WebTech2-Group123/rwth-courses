@@ -1,5 +1,8 @@
 app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService, $location, $log, Courses) {
 
+    // title
+    $scope.headline = 'Schedule';
+
     // times for the schedule
     $scope.times = Courses.getTimes();
 
