@@ -8,7 +8,7 @@
         <!--filter-->
         <md-input-container flex>
             <label>Search</label>
-            <md-icon md-svg-src="img/icons/ic_delete_black_24px.svg"></md-icon>
+            <md-icon md-svg-src="img/icons/ic_search_black_36px.svg"></md-icon>
             <input type="text" ng-model="search">
         </md-input-container>
 
@@ -38,7 +38,6 @@
             <thead md-head md-order="query.order">
             <tr md-row>
                 <th md-column md-order-by="name"><span>Name</span></th>
-                <th md-column md-order-by="subsection">Subsection</th>
                 <th md-column md-order-by="type">Type</th>
                 <th md-column md-order-by="language">Language</th>
                 <th md-column md-order-by="ects" md-numeric>ECTS</th>
@@ -57,10 +56,9 @@
                 <td md-cell>
                     <a ng-click="showDetails(course.gguid)">
                         <md-tooltip md-direction="top">Show details</md-tooltip>
-                        {{course.name | length:50}}
+                        <pre>{{course.name | length:50}}</pre>
                     </a>
                 </td>
-                <td md-cell>{{course.subfield}}</td>
                 <td md-cell>
                     <pre>{{course.type | join: '\n'}}</pre>
                 </td>
