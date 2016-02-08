@@ -23,9 +23,18 @@
         <!--language-->
         <md-input-container flex flex-offset="5">
             <b>Language:</b>
-            <md-checkbox ng-model="languages.en">English</md-checkbox>
-            <md-checkbox ng-model="languages.de">German</md-checkbox>
-            <md-checkbox ng-model="languages.other">Other</md-checkbox>
+            <md-checkbox ng-model="languages.en" aria-label="English">
+                <img class="flag" src="img/flags/en.png" alt="English">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.de" aria-label="German">
+                <img class="flag" src="img/flags/de.png" alt="German">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.other" aria-label="Others">
+                <img class="flag" src="img/flags/other.png" alt="Others">
+            </md-checkbox>
+            <md-checkbox ng-model="languages.unknown" aria-label="Unknown">
+                <img class="flag" src="img/flags/unknown.png" alt="Unknown">
+            </md-checkbox>
         </md-input-container>
 
     </div>
@@ -50,7 +59,7 @@
             <tbody md-body>
             <tr md-row md-select="course.gguid" md-select-id="{{course.gguid}}"
                 ng-repeat="course in filtered = (courses  | orderBy: table.order |
-                filterBy: ['name', 'lecturer.name', 'ects']: search | filter: languageFilter | filter: typeFilter) |
+                filter: textFilter | filter: languageFilter | filter: typeFilter) |
                 limitTo: table.limit: (table.page - 1) * table.limit">
                 <td md-cell>
                     <a ng-click="showDetails(course.gguid)">
