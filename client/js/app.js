@@ -41,7 +41,7 @@ app.directive('ngEnter', function () {
 });
 
 // router & local storage
-app.config(function ($routeProvider, localStorageServiceProvider) {
+app.config(function ($routeProvider, localStorageServiceProvider, $mdThemingProvider) {
 
     $routeProvider
         .when('/', {
@@ -67,4 +67,10 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
         .setPrefix('RWTH Courses')
         .setStorageType('localStorage')
         .setNotify(true, true);
+
+    $mdThemingProvider
+        .theme('default')
+        .primaryPalette('indigo')
+        .accentPalette('indigo')
+        .warnPalette('red');
 });

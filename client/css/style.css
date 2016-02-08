@@ -74,6 +74,26 @@ md-table-container pre {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+#schedule {
+    position: fixed;
+    top: auto;
+    left: auto;
+    bottom: 20px;
+    right: 20px;
+}
+
+#clear {
+    position: fixed;
+    top: auto;
+    left: auto;
+    bottom: 20px;
+    right: 100px;
+}
+
+.margin {
+    margin-bottom: 80px;
+}
+
 /***********************************************/
 /*           details                           */
 /***********************************************/

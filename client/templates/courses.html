@@ -1,5 +1,5 @@
 <loading></loading>
-<div ng-show="!loading">
+<div ng-show="!loading" class="margin">
 
     <h2>{{field}} - {{semester}}</h2>
 
@@ -88,10 +88,14 @@
     <!--table pagination -->
     <md-table-pagination md-limit="table.limit" md-page="table.page" md-total="{{ filtered.length }}"
                          md-page-select md-options="[10, 20, 50, 100]"></md-table-pagination>
-
-    <!--buttons -->
-    <md-button class="md-raised" ng-click="goBack()">Back</md-button>
-    <md-button class="md-raised" ng-click="clearAll()">Clear all</md-button>
-    <md-button ng-disabled="disableBtn" class="md-raised" ng-click="showSchedule()">Schedule</md-button>
-
 </div>
+
+<!-- schedule button -->
+<md-button id="schedule" class="md-fab" aria-label="Schedule" ng-disabled="disableBtn" ng-click="showSchedule()">
+    <md-icon md-svg-src="img/icons/ic_event_available_white_24px.svg"></md-icon>
+</md-button>
+
+<!-- clear button -->
+<md-button id="clear" class="md-fab" aria-label="Clear All" ng-click="clearAll()">
+    <md-icon md-svg-src="img/icons/ic_delete_white_24px.svg"></md-icon>
+</md-button>
