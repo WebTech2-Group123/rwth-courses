@@ -1,36 +1,38 @@
-<!-- logo -->
-<div flex layout="column" layout-align="center center">
-    <img hide-gt-xs src="img/logo-small.png" alt="RWTH Courses">
-    <img hide-xs src="img/logo.png" alt="RWTH Courses">
-    <div class="title">RWTH Courses</div>
-    <div class="subtitle">Find your courses easily</div>
-</div>
-
-<!-- search -->
-<div flex layout="row" layout-align="center center" layout-padding>
-    <div flex="66" flex-xs="100" flex-xl="50">
-
-        <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
-                         md-item-text="field" placeholder="Enter your Field of Study..." md-min-length="0"
-                         md-items="field in querySearch(searchText)">
-
-            <md-item-template>
-                <span md-highlight-text="searchText">{{field}}</span>
-            </md-item-template>
-
-            <md-not-found>
-                No matches found.
-            </md-not-found>
-        </md-autocomplete>
-
-        <p class="white">
-            Searching for courses in
-            <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span>
-        </p>
+<div>
+    <!-- logo -->
+    <div flex layout="column" layout-align="center center">
+        <img hide-gt-xs src="img/logo-small.png" alt="RWTH Courses">
+        <img hide-xs src="img/logo.png" alt="RWTH Courses">
+        <div class="title">RWTH Courses</div>
+        <div class="subtitle">Find your courses easily</div>
     </div>
-</div>
 
-<!-- search button -->
-<div flex layout="row" layout-align="center center" layout-padding>
-    <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
+    <!-- search -->
+    <div flex layout="row" layout-align="center center" layout-padding>
+        <div flex="66" flex-xs="100" flex-xl="50">
+
+            <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
+                             md-item-text="field" placeholder="Enter your Field of Study..." md-min-length="0"
+                             md-items="field in querySearch(searchText)">
+
+                <md-item-template>
+                    <span md-highlight-text="searchText">{{field}}</span>
+                </md-item-template>
+
+                <md-not-found>
+                    No matches found.
+                </md-not-found>
+            </md-autocomplete>
+
+            <p class="white">
+                Searching for courses in
+                <span class="semester-span" ng-click="changeSemester()">{{ currentSemester }}</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- search button -->
+    <div flex layout="row" layout-align="center center" layout-padding>
+        <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
+    </div>
 </div>
