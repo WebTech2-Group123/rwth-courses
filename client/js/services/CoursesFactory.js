@@ -14,9 +14,6 @@ app.factory('Courses', function ($q, $http, $log) {
         return strTime;
     }
 
-    // cache courses
-    var cachedCourses = [];
-
     // cached unscheduled
     var unscheduled = [];
 
@@ -69,39 +66,29 @@ app.factory('Courses', function ($q, $http, $log) {
             cachedCourses = [];
         },
 
+        // get list of semesters from the server
+        getSemesters: function () {
+            return $http.get('/api/semesters').then(function (response) {
+                return response.data;
+            });
+        },
+
+        // get list of fields from the server
+        getFields: function () {
+            return $http.get('/api/fields').then(function (response) {
+                return response.data;
+            });
+        },
+
         get: function (semester, field) {
 
-            var defered = $q.defer();
+            // get courses from server
+            var semesterEncoded = window.encodeURIComponent(semester);
+            var fieldEncoded = window.encodeURIComponent(field);
 
-            console.log(cachedCourses.length);
-
-            // check if courses are cached
-            if (cachedCourses.length > 0) {
-                console.log('courses from cache...');
-                defered.resolve(cachedCourses);
-            }
-
-            else {
-                // get courses from server
-                var semester = window.encodeURIComponent(semester);
-                var field = window.encodeURIComponent(field);
-
-                console.log(semester + ' >> ' + field);
-
-                $http({
-                    method: 'get',
-                    url: '/api/courses?semester=' + semester + '&field=' + field
-                }).success(function (res) {
-                    cachedCourses = res;
-                    //console.log(courses);
-                    console.log(cachedCourses.length);
-                    defered.resolve(res);
-                }).error(function (res) {
-                    console.log(res);
-                });
-            }
-
-            return defered.promise;
+            return $http.get('/api/courses?semester=' + semesterEncoded + '&field=' + fieldEncoded).then(function (response) {
+                return response.data;
+            });
         },
 
         // get list of courses of specified IDs
