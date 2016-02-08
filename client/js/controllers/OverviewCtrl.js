@@ -1,8 +1,5 @@
 app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService, $location, $log, Courses) {
 
-    // TODO: useful?
-    $scope.loading = true;
-
     // times for the schedule
     $scope.times = Courses.getTimes();
 
@@ -17,7 +14,6 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         $scope.courses = courses;
         $scope.schedule = Courses.sort($scope.courses);
         $scope.unscheduled = Courses.getUnscheduled();
-        $scope.loading = false;
     });
 
     // if arr unscheduled is not empty, display the panel for unscheduled courses
@@ -35,13 +31,8 @@ app.controller('OverviewCtrl', function ($scope, $rootScope, localStorageService
         // filter unscheduled courses
         Courses.deleteUnscheduled(gguid);
 
-        var tmpUnscheduled = Courses.getUnscheduled();
-
-        // delete all unscheduled
-        Courses.deleteUnscheduled('o', true);
-
         // update schedule (both: events already in schedule an those which are not)
-        $scope.schedule = Courses.sort($scope.courses.concat(tmpUnscheduled));
+        $scope.schedule = Courses.sort($scope.courses);
 
         // update unscheduled
         $scope.unscheduled = Courses.getUnscheduled();
