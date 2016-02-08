@@ -7,7 +7,7 @@
 </div>
 
 <!-- search -->
-<div flex layout="row" layout-align="center center" layout-padding>
+<div flex layout="row" layout-align="center center" layout-padding ng-enter="getCourseList(currentSemester, searchText)">
     <div flex="66" flex-xs="100" flex-xl="50">
 
         <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
@@ -32,5 +32,6 @@
 
 <!-- search button -->
 <div flex layout="row" layout-align="center center" layout-padding>
-    <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search</md-button>
+    <md-button class="md-raised" ng-click="getCourseList(currentSemester, searchText)">Search
+    </md-button>
 </div>

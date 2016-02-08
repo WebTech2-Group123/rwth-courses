@@ -41,9 +41,7 @@ function HomeCtrl($scope, $filter, $location, $mdDialog, $q, Courses) {
     $scope.getCourseList = function (semester, field) {
 
         if (semester == undefined || field == undefined || field == null) {
-            var alert;
-            //some error message
-            alert = $mdDialog.alert()
+            var alert = $mdDialog.alert()
                 .title('')
                 .textContent('Please select your field of study to proceed')
                 .ok('Close');
@@ -54,15 +52,14 @@ function HomeCtrl($scope, $filter, $location, $mdDialog, $q, Courses) {
                 });
         }
 
-        semester = window.encodeURIComponent(semester);
-        field = window.encodeURIComponent(field);
+        else {
 
-        console.log('Semester: ' + semester + ' >> Field: ' + field);
-
-        //$scope.$parent.courseListExist = false;
-
-        console.log('Path for courses list: courses/' + semester + '/' + field);
-        $location.url('courses/' + semester + '/' + field);
+            // check the field to be valid
+            if ($scope.fields.indexOf(field) !== -1) {
+                var semesterEncoded = window.encodeURIComponent(semester);
+                var fieldEncoded = window.encodeURIComponent(field);
+                $location.url('courses/' + semesterEncoded + '/' + fieldEncoded);
+            }
+        }
     };
-
 }
