@@ -11,12 +11,12 @@ app > #loading {
 /***********************************************/
 /*           home                              */
 /***********************************************/
-.body-home {
+.home {
     background-color: #4874B9;
     background-image: linear-gradient(to bottom right, #4874B9, #4451B9);
 }
 
-.body-home .title {
+.home .title {
     font-weight: 200;
     font-size: 36pt;
     color: white;
@@ -24,21 +24,17 @@ app > #loading {
     margin-top: 30px;
 }
 
-.body-home .subtitle {
+.home .subtitle {
     font-size: 14pt;
     color: white;
     line-height: 38px;
     opacity: 0.8;
 }
 
-.body-home .white {
+.home .white {
     color: white;
     opacity: 0.8;
     text-align: center;
-}
-
-.body-home md-autocomplete {
-    /*max-width: 800px;*/
 }
 
 /***********************************************/
