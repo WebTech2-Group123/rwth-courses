@@ -255,11 +255,11 @@ function parseInfo(info) {
         switch (el['attributes']['lang']) {
             case 'gb':
                 response.name = el['title'] ? striptags(el['title']) : undefined;
-                response.description = el['description'] ? striptags(el['description']) : undefined;
+                response.description = el['description'] ? parseHTML(el['description']) : undefined;
                 break;
             case 'de':
                 response.name_de = el['title'] ? striptags(el['title']) : undefined;
-                response.description_de = el['description'] ? striptags(el['description']) : undefined;
+                response.description_de = el['description'] ? parseHTML(el['description']) : undefined;
                 break;
         }
     });
@@ -322,6 +322,10 @@ function parseInstitute(institute) {
     return TO_REMOVE.reduce((acc, el) => acc && acc.replace(el, ''), institute).trim();
 }
 
+function parseHTML(text) {
+    return striptags(text, '<p><ul><li><ol><br>');
+}
+
 /**
  * Parse a Course response in a clean Course object.
  */
@@ -346,10 +350,10 @@ function parseCourseDetails(result) {
 
         // other details
         details: {
-            test: striptags(event['test']),
-            prereq: striptags(event['prereq']),
-            follow: striptags(event['follow']),
-            note: striptags(event['note'])
+            test: parseHTML(event['test']),
+            prereq: parseHTML(event['prereq']),
+            follow: parseHTML(event['follow']),
+            note: parseHTML(event['note'])
         },
 
         // seminars do not have this field!
