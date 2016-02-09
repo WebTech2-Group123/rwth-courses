@@ -17,7 +17,7 @@
 
             <md-autocomplete md-selected-item="selectedItem" md-search-text="searchText"
                              md-item-text="field" placeholder="Enter your Field of Study..." md-min-length="0"
-                             md-items="field in querySearch(searchText)">
+                             md-items="field in querySearch(searchText) | orderBy: ''">
 
                 <md-item-template>
                     <span md-highlight-text="searchText">{{field}}</span>
