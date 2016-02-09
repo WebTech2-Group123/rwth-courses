@@ -14,7 +14,7 @@ function CoursesCtrl($scope, localStorageService, $routeParams, $location, Cours
     $scope.type = {
         lecture: true,
         exercise: false,
-        other: false
+        other: true
     };
     $scope.languages = {
         en: true,
