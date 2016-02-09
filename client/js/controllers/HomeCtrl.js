@@ -33,9 +33,22 @@ function HomeCtrl($scope, $filter, $location, $mdDialog, $q, Courses) {
         }
     };
 
+    function normalize(string) {
+        return string.toLowerCase()
+            .replace(/ä/g, 'a')
+            .replace(/ö/g, 'o')
+            .replace(/ü/g, 'u')
+            .replace(/ß/g, 'ss');
+    }
+
+    function contains(string, query) {
+        return normalize(string).indexOf(normalize(query)) >= 0;
+    }
 
     $scope.querySearch = function querySearch(query) {
-        return query ? $filter('filter')($scope.fields, query) : $scope.fields;
+        return query ? $filter('filter')($scope.fields, function(value) {
+            return contains(value, query);
+        }) : $scope.fields;
     };
 
     $scope.getCourseList = function (semester, field) {
